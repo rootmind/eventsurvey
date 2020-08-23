@@ -22,10 +22,10 @@
 #import "EventData.h"
 #import "EventTemplateData.h"
 #import "UsersData.h"
-#import "Classes/UsersMO+CoreDataProperties.h"
-
+#import "UsersMO+CoreDataClass.h"
+#import "SurveyData.h"
 #import "UserMenuData.h"
-#import "Classes/MST_UserMenuMO+CoreDataProperties.h"
+#import "MST_UserMenuMO+CoreDataClass.h"
 
 @interface QueueViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate,NSFetchedResultsControllerDelegate,UITabBarDelegate>
 
@@ -68,7 +68,21 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSMutableArray *eventDataArray;
 
+
+@property (strong, nonatomic) UITableView *tableView;
+
+
 @property (strong, nonatomic) NSArray *resultsEvent;
 
+@property (nonatomic, retain) UITabBarController *tabBar;
+
+@property (strong, nonatomic) NSMutableArray *surveyDataArray;
+@property (strong, nonatomic) SurveyData *surveyData;
+
+@property (strong, nonatomic) NSString *userMenuAccess;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSDate *currentDate;
+@property (strong, nonatomic) UIImage *eventImage;
 
 @end

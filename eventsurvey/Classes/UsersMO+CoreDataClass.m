@@ -10,4 +10,17 @@
 
 @implementation UsersMO
 
++ (NSFetchRequest<UsersMO *> *)fetchRequest {
+	return [[NSFetchRequest alloc] initWithEntityName:@"Users"];
+}
+
+@dynamic lastLoginDate;
+@dynamic name;
+@dynamic password;
+@dynamic sessionid;
+@dynamic status;
+@dynamic userGroup;
+@dynamic userid;
+
+
 @end

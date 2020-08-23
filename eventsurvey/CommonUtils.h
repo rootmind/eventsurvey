@@ -51,6 +51,11 @@
 
 + (void) connectHostImage:(NSString *)methodAction :(NSDictionary *) jsonDictionary :(UIViewController *) viewcontroller : (UIImage *)imageToPost : (NSString *)targetFileName : (NSString *)folderName : (void (^)(NSDictionary *))successResponse;
 
+
++(NSData *)resizeImage:(UIImage *)image;
+
++(UIImage *)resizeImage:(UIImage *)image : (float) maxWidth : (float) maxHeight;
+
 +(NSString *)getIPAddress;
 
 //+(void) popoverData: (UITextField *)sender :(NSString *)tableName :(NSString *)dateField :(NSString *)dateRange :(NSString *) dateFormat :(UIViewController *) viewController;

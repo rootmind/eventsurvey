@@ -297,16 +297,12 @@
         [self.view addSubview:tableView];
         
         
-
-        
-        
-        
-        
+     
         //---header UIView
         
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.1 constant:0]];
         
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.9 constant:0]];
 
@@ -347,8 +343,8 @@
 
         
         
-        if([multiSelect isEqualToString:@"Y"])
-        {
+        //if([multiSelect isEqualToString:@"Y"])
+        //{
             NSLog(@"inside multiselect");
         
             UIToolbar *dateToolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
@@ -362,7 +358,7 @@
             [dateToolBar setItems:barItems animated:YES];
             
             [self.view addSubview:dateToolBar];
-        }
+        //}
 
 
         
@@ -409,8 +405,12 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-        
-        return nil;
+        if(section==0)
+        {
+            return nil; //tableName
+        }
+        else
+            return nil;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -1086,7 +1086,7 @@
     {
         //[picker setDate:[NSDate date]];
         
-        [picker setMaximumDate:[NSDate date]];
+        //[picker setMaximumDate:[NSDate date]];
         
         NSLog(@"eq date %@", dateRange);
     }
@@ -1406,7 +1406,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         NSError *error=nil;
        
         
-        [request setPredicate:[NSPredicate predicateWithFormat:@"tableName == %@", tableName]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"tableName==%@", tableName]];
         NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
         
         if (!results) {
@@ -1415,7 +1415,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
         
-        NSLog(@"Return values from ListMaster MO  results %@",results);
+        //NSLog(@"Return values from ListMaster MO  results %@",results);
         
         NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"desc" ascending:YES];
  

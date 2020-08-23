@@ -264,9 +264,8 @@
         
         
                                     //----------start parsing response---------//
-                                    NSString *myData = [[NSString alloc] initWithData:data
-                                                                             encoding:NSUTF8StringEncoding];
-                                    NSLog(@"JSON data = %@", myData);
+                                    //NSString *myData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                    //NSLog(@"JSON data = %@", myData);
                                     NSError *error = nil;
                                     
                                     //parsing the JSON response
@@ -290,7 +289,7 @@
                                         
                                                 NSDictionary *dataDictionary =[jsonObject objectForKey:methodAction];
                                                 
-                                                NSLog(@"Dictionary: %@", [dataDictionary description]);
+                                                //NSLog(@"Dictionary: %@", [dataDictionary description]);
                                                 
                                                 
                                                 /*for(NSString *key in [dataDictionary allKeys]) {
@@ -661,15 +660,15 @@
         NSURL* requestURL = [NSURL URLWithString:myUrlString];
         
         // create request
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-        [request setHTTPShouldHandleCookies:NO];
-        [request setTimeoutInterval:30];
-        [request setHTTPMethod:@"POST"];
+        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+        [urlRequest setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+        [urlRequest setHTTPShouldHandleCookies:NO];
+        [urlRequest setTimeoutInterval:30];
+        [urlRequest setHTTPMethod:@"POST"];
         
         // set Content-Type in HTTP header
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
-        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+        [urlRequest setValue:contentType forHTTPHeaderField: @"Content-Type"];
         
         // post body
         NSMutableData *body = [NSMutableData data];
@@ -701,18 +700,18 @@
         
         //NSLog(@"body1 %d",[body length]);
         
-        NSLog(@"body length %d",[body length]);
+        NSLog(@"body length %lu",(unsigned long)[body length]);
         
         
         // setting the body of the post to the reqeust
-        [request setHTTPBody:body];
+        [urlRequest setHTTPBody:body];
         
         // set the content-length
-        NSString *postLength = [NSString stringWithFormat:@"%d", [body length]];
-        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
+        [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
         
         // set URL
-        [request setURL:requestURL];
+        [urlRequest setURL:requestURL];
         
         
         //NSLog(@"Request body %@", [[NSString alloc] initWithData:[urlRequest HTTPBody] encoding:NSUTF8StringEncoding]);
@@ -769,19 +768,21 @@
         
 
                 NSURLSession *session = [NSURLSession sharedSession];
-                NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest
                           completionHandler:^(NSData *data,
                                               NSURLResponse *response,
                                               NSError *error) {
                             // handle response
                             
                             
-                        NSLog(@"Got response %@ with error %@.\n", response, error);
-                        NSLog(@"DATA:\n%@\nEND DATA\n", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                        //NSLog(@"Got response %@ with error %@.\n", response, error);
+                        //NSLog(@"DATA:\n%@\nEND DATA\n", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         
+                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                        
+                        NSLog(@"HTTP status code: %ld", (long)[httpResponse statusCode]);
                             
-                                                        
-                        if ([data length] >0 && error == nil){
+                        if (httpResponse.statusCode==200 && [data length] >0 && error == nil){
                             //process the JSON response
                             //use the main queue so that we can interact with the screen
                             
@@ -823,18 +824,34 @@
                                                 NSLog(@"Dictionary: %@", [dataDictionary description]);
                                                 
                                                 
-                                                for(NSString *key in [dataDictionary allKeys]) {
+                                                /*for(NSString *key in [dataDictionary allKeys]) {
                                                     NSLog(@"key code: %@",key);
                                                     NSLog(@"key: %@",[dataDictionary objectForKey:key]);
                                                     
                                                     //NSLog(@"value: %@",[customerInfo valueForKey:@"amountOutStanding"]);
                                                     
+                                                }*/
+                                            
+                                                 NSNumber *validSession = [dataDictionary objectForKey:@"validSession"];
+                                            
+                                                NSLog(@"validSession: %@", validSession);
+                                            
+                                                if([validSession boolValue]==YES)
+                                                {
+
+                                                    //[NSMutableDictionary dictionaryWithDictionary:returnDictionary];
+                                                    successResponse(dataDictionary);
+
+                                                }
+                                                else
+                                                {
+                                                    NSLog(@"Session is invalid...");
+                                                    
+                                                    [self showMessage:@"Invalid Session":viewcontroller];
+                                                    
+                                                    
                                                 }
                                             
-                                                //[NSMutableDictionary dictionaryWithDictionary:returnDictionary];
-                                                successResponse(dataDictionary);
-                                            
-
                                         
                                                         
                                         }
@@ -855,9 +872,15 @@
                         
                             
                         }
-                        else if ([data length] == 0 && error == nil){
+                        else if (httpResponse.statusCode==200 && [data length] == 0 && error == nil){
                             NSLog(@"Empty Response, not sure why?");
                             [self showMessage:@"No response from host system":viewcontroller];
+                        }
+                        else if (httpResponse.statusCode!=200 ){
+                            NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+                            NSLog(@"response status description: %@", [httpResponse description]);
+                            [self showMessage:[NSString stringWithFormat: @"Due to network issue unable to connect to server, please retry again %ld",(long)[httpResponse statusCode]]:viewcontroller];
+                            
                         }
                         else if (error != nil){
                             NSLog(@"Not again, what is the error = %@", error);
@@ -933,6 +956,52 @@
     return imageData;
     
     //return [UIImage imageWithData:imageData];
+    
+}
+
++(UIImage *)resizeImage:(UIImage *)image : (float) maxWidth : (float) maxHeight
+{
+    float actualHeight = image.size.height;
+    float actualWidth = image.size.width;
+    //float maxHeight = 300.0;
+    //float maxWidth = 400.0;
+    float imgRatio = actualWidth/actualHeight;
+    float maxRatio = maxWidth/maxHeight;
+    float compressionQuality = 1.0;//50 percent compression
+    
+    if (actualHeight > maxHeight || actualWidth > maxWidth)
+    {
+        if(imgRatio < maxRatio)
+        {
+            //adjust width according to maxHeight
+            imgRatio = maxHeight / actualHeight;
+            actualWidth = imgRatio * actualWidth;
+            actualHeight = maxHeight;
+        }
+        else if(imgRatio > maxRatio)
+        {
+            //adjust height according to maxWidth
+            imgRatio = maxWidth / actualWidth;
+            actualHeight = imgRatio * actualHeight;
+            actualWidth = maxWidth;
+        }
+        else
+        {
+            actualHeight = maxHeight;
+            actualWidth = maxWidth;
+        }
+    }
+    
+    CGRect rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+    UIGraphicsBeginImageContext(rect.size);
+    [image drawInRect:rect];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    NSData *imageData = UIImageJPEGRepresentation(img, compressionQuality);
+    UIGraphicsEndImageContext();
+    
+    //return imageData;
+    
+    return [UIImage imageWithData:imageData];
     
 }
 

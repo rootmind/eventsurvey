@@ -20,7 +20,7 @@
     static UIImageView *imageView;
     
 
-    imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DetailDisclosureBlue.png"]];
+    imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"khalifalogo-icon.png"]];
 
     //imageView.backgroundColor=[UIColor grayColor];
     //imageView.layer.cornerRadius = roundf(imageView.frame.size.width/2.0);

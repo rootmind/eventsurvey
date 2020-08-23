@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "UIColor+Constants.h"
-#import "StatusViewController.h"
+//#import "QueueViewController.h"
 
 //#import "MasterViewController.h"
 //#import "DetailViewController.h"
@@ -29,13 +29,13 @@
 @implementation AppDelegate
 
 
-@synthesize tabBar;
+//@synthesize tabBar;
 //@synthesize detailTabBar;
 
 
 
 LoginViewController *loginViewController;
-StatusViewController *statusViewController;
+//QueueViewController *queueViewController;
 
 //MasterViewController* masterViewController;
 //DetailViewController* detailViewController;
@@ -53,7 +53,7 @@ StatusViewController *statusViewController;
     [CoreDataController sharedCoreDataController];
 
     
-    self.tabBar=[[UITabBarController alloc]init];
+    //self.tabBar=[[UITabBarController alloc]init];
     
    LoginViewController *loginViewController=[[LoginViewController alloc]initWithNibName:nil bundle:nil];
    loginViewController.title=@"Login";
@@ -61,25 +61,26 @@ StatusViewController *statusViewController;
     loginViewController.tabBarItem.image=[[UIImage imageNamed:@"home-icon.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
   
     UINavigationController *loginNavigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    
-    StatusViewController *statusViewController=[[StatusViewController alloc]initWithNibName:nil bundle:nil];
-    statusViewController.title=@"Status";
-    
-    statusViewController.tabBarItem.image=[[UIImage imageNamed:@"home-icon.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    UINavigationController *statusNavigationController = [[UINavigationController alloc] initWithRootViewController:statusViewController];
+//
+//    QueueViewController *queueViewController=[[QueueViewController alloc]initWithNibName:nil bundle:nil];
+//    queueViewController.title=@"Status";
+//    
+//    queueViewController.tabBarItem.image=[[UIImage imageNamed:@"home-icon.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//
+//    UINavigationController *queueNavigationController = [[UINavigationController alloc] initWithRootViewController:queueViewController];
     
     
   
   
     
     
-    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setBarTintColor:[UIColor navigatorColor]];
+    [[UITabBar appearance] setTintColor:[UIColor blueColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     [loginNavigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
-    [statusNavigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+    //[queueNavigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
     
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"userid"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"userName"];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"sessionid"];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"userGroup"];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"lastLoginDate"];
@@ -91,7 +92,9 @@ StatusViewController *statusViewController;
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:[UIColor strongAzureColor]];//[UIColor navyBlueColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    //self.tabBar.viewControllers=[NSArray arrayWithObjects:loginNavigationController, nil];
+    
+    //self.tabBar.viewControllers=[NSArray arrayWithObjects:loginViewController,queueViewController, nil];
+
     //[navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

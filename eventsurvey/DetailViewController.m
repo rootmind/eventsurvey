@@ -279,18 +279,18 @@
 }
 
 
-//detailedView delegate methods
-- (void)splitViewController:(UISplitViewController*)svc
-     willHideViewController:(UIViewController *)aViewController
-          withBarButtonItem:(UIBarButtonItem*)barButtonItem
-       forPopoverController:(UIPopoverController*)pc
-{
-    [barButtonItem setTitle:@"your title"];
-    
-    
-    
-    self.navigationItem.leftBarButtonItem = barButtonItem;
-}
+////detailedView delegate methods
+//- (void)splitViewController:(UISplitViewController*)svc
+//     willHideViewController:(UIViewController *)aViewController
+//          withBarButtonItem:(UIBarButtonItem*)barButtonItem
+//       forPopoverController:(UIPopoverController*)pc
+//{
+//    [barButtonItem setTitle:@"your title"];
+//    
+//    
+//    
+//    self.navigationItem.leftBarButtonItem = barButtonItem;
+//}
 
 
 - (void)splitViewController:(UISplitViewController*)svc

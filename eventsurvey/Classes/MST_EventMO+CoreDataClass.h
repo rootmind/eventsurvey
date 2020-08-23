@@ -23,11 +23,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *makerDateTime;
 @property (nullable, nonatomic, copy) NSString *instituteName;
 @property (nullable, nonatomic, copy) NSString *instituteID;
-@property (nullable, nonatomic, copy) NSString *expiryDate;
+@property (nullable, nonatomic, copy) NSDate *expiryDate;
 @property (nullable, nonatomic, copy) NSString *startDate;
 @property (nullable, nonatomic, copy) NSString *desc;
 @property (nullable, nonatomic, copy) NSString *code;
 @property (nullable, nonatomic, copy) NSString *expiryDate1;
+@property (nullable, nonatomic, copy) NSDate *dtStartDate;
+@property (nullable, nonatomic, copy) NSDate *dtExpiryDate;
+@property (nullable, nonatomic, copy) NSData *image;
+@property (nullable, nonatomic, copy) NSString *imageFound;
+@property (nullable, nonatomic, copy) NSString *avatarImageFound;
+
 
 @end
 

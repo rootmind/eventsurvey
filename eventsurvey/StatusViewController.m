@@ -423,7 +423,7 @@
     
     NSLog(@"userid filter %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]));
     
-    [requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid == %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"])]];
+    [requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid==%@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"])]];
     
     resultsEvent = [managedObjectContext executeFetchRequest:requestEvent error:&error];
     if (!resultsEvent) {
@@ -2495,7 +2495,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Survey"];
         [request setReturnsObjectsAsFaults:NO];
         NSError *error=nil;
-        [request setPredicate:[NSPredicate predicateWithFormat:@"sync == %@", @"N"]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"sync==%@", @"N"]];
         
         NSArray *resultsSurveyData = [managedObjectContext executeFetchRequest:request error:&error];
         if (!resultsSurveyData) {

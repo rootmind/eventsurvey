@@ -15,11 +15,8 @@
 #import "UIColor+Constants.h"
 #import "UIImage+Constants.h"
 #import "PopoverViewController.h"
-//#import "IdentificationViewController.h"
-//#import "DedupViewController.h"
 #import "QueueViewController.h"
-
-//#import "EventT.h"
+#import <QuartzCore/CALayer.h>
 
 
 
@@ -49,14 +46,14 @@ CGFloat constraintPer1Y=1.0f;
 CGFloat constraintPer1Width=0.3f;
 CGFloat constraintPer1Height=0.8f;
 
-CGFloat lblConstraintPer2X=0.6f;//1.52f;
+CGFloat lblConstraintPer2X=0.50f;//1.52f;
 CGFloat lblConstraintPer2Y=1.0f;//1.0f;
-CGFloat lblConstraintPer2Width=0.5f;
+CGFloat lblConstraintPer2Width=0.45f;
 CGFloat lblConstraintPer2Height=0.8f;
 
-CGFloat constraintPer2X=1.20f;   //1.69f;
+CGFloat constraintPer2X=1.45f;   //1.69f;
 CGFloat constraintPer2Y=1.0f;
-CGFloat constraintPer2Width= 0.6f;//0.3f;
+CGFloat constraintPer2Width= 0.5f;//0.3f;
 CGFloat constraintPer2Height=0.8f;
 
 
@@ -75,8 +72,8 @@ CGFloat constraintPer2Height=0.8f;
 
 
 
-@synthesize personalArray;
-@synthesize personalData;
+//@synthesize personalArray;
+//@synthesize personalData;
 
 @synthesize dateToolBar;
 @synthesize datePicker;
@@ -91,43 +88,43 @@ CGFloat constraintPer2Height=0.8f;
 //@synthesize componentsName2Array;
 @synthesize dataArray;
 
-@synthesize webView;
+//@synthesize webView;
 //@synthesize activityIndicator;
 @synthesize lblLoading;
 
-@synthesize timerView;
-@synthesize switchFlag;
+//@synthesize timerView;
+//@synthesize switchFlag;
 
 //int hours, minutes, seconds,secondsLeft;
 
 
 
-@synthesize accountType;
-@synthesize refNo;
-@synthesize existingCustomerFlag;
-@synthesize existingRefNo;
-@synthesize txtRefNo;
-@synthesize swtExistingCustomer;
-@synthesize txtExtRelation;
-@synthesize txtExtRelationNo;
+//@synthesize accountType;
+//@synthesize refNo;
+//@synthesize existingCustomerFlag;
+//@synthesize existingRefNo;
+//@synthesize txtRefNo;
+//@synthesize swtExistingCustomer;
+//@synthesize txtExtRelation;
+//@synthesize txtExtRelationNo;
+//
+//@synthesize txtCustomerName;
+//@synthesize txtFirstName;
+//@synthesize txtMiddleName;
+//@synthesize txtLastName;
 
-@synthesize txtCustomerName;
-@synthesize txtFirstName;
-@synthesize txtMiddleName;
-@synthesize txtLastName;
 
-
-@synthesize txtTitle;
-@synthesize txtCategoryType;
-@synthesize txtBranch;
-@synthesize txtJointOwn;
-@synthesize txtNatureOfRelation;
-@synthesize txtResidenceStatus;
-@synthesize txtNationality;
-@synthesize txtDateOfBirth;
-@synthesize txtEducation;
-@synthesize txtMaritalStatus;
-@synthesize txtGender;
+//@synthesize txtTitle;
+//@synthesize txtCategoryType;
+//@synthesize txtBranch;
+//@synthesize txtJointOwn;
+//@synthesize txtNatureOfRelation;
+//@synthesize txtResidenceStatus;
+//@synthesize txtNationality;
+//@synthesize txtDateOfBirth;
+//@synthesize txtEducation;
+//@synthesize txtMaritalStatus;
+//@synthesize txtGender;
 
 //@synthesize txtMotherMaidenName;
 //@synthesize txtSegment;
@@ -140,24 +137,24 @@ CGFloat constraintPer2Height=0.8f;
 //@synthesize txtFavCity;
 //@synthesize txtDomicile;
 
-@synthesize txtPassportNo;
-@synthesize txtPassportExpDate;
-@synthesize txtPassportIssueDate;
-@synthesize txtPassportIssuePlace;
-@synthesize txtPassportIssueCountry;
-@synthesize txtEmiratesId;
-@synthesize txtEmiratesIdExpDate;
+//@synthesize txtPassportNo;
+//@synthesize txtPassportExpDate;
+//@synthesize txtPassportIssueDate;
+//@synthesize txtPassportIssuePlace;
+//@synthesize txtPassportIssueCountry;
+//@synthesize txtEmiratesId;
+//@synthesize txtEmiratesIdExpDate;
 
 @synthesize errorArray;
 @synthesize errorData;
 
 
-@synthesize recordStatus;
-@synthesize btnExtRelationshipNo;
-
+//@synthesize recordStatus;
+//@synthesize btnExtRelationshipNo;
+//
 @synthesize popoverCodeValue;
-@synthesize pathArray;
-@synthesize pathData;
+//@synthesize pathArray;
+//@synthesize pathData;
 
 @synthesize managedObjectContext;
 @synthesize managedObjectModel;
@@ -168,6 +165,10 @@ CGFloat constraintPer2Height=0.8f;
 @synthesize results;
 @synthesize resultsEventTemplate;
 
+@synthesize resultsEventTemplatePage1;
+@synthesize resultsEventTemplatePage2;
+@synthesize resultsEventTemplatePage3;
+
 @synthesize txtComponent;
 @synthesize swtComponent;
 @synthesize listTableName;
@@ -175,19 +176,35 @@ CGFloat constraintPer2Height=0.8f;
 @synthesize dateFields;
 @synthesize numericFields;
 @synthesize fieldNames;
+@synthesize mandatoryFields;
+@synthesize inActiveFields;
+@synthesize maxLengthFields;
+//@synthesize dataEntryValues;
+
+//@synthesize numberFormatter;
 
 @synthesize surveyDataDictionary;
-@synthesize tableView;
+@synthesize tableViewPage1;
+@synthesize tableViewPage2;
+@synthesize tableViewPage3;
 
 @synthesize eventID;
 @synthesize eventName;
 @synthesize instituteID;
 @synthesize instituteName;
-
-
-
+@synthesize screenView1;
+@synthesize screenView2;
+@synthesize screenView3;
+@synthesize segmentedControl;
+@synthesize eventImage;
+@synthesize btnSubmit;
+@synthesize popoverTag;
 
 - (void)viewDidLoad {
+
+    @try{
+
+
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -225,7 +242,7 @@ CGFloat constraintPer2Height=0.8f;
     
    
     NSFetchRequest *requestEventTemplate= [NSFetchRequest fetchRequestWithEntityName:@"MST_EventTemplate"];
-    [requestEventTemplate setReturnsObjectsAsFaults:NO];
+    //[requestEventTemplate setReturnsObjectsAsFaults:NO];
     NSError *error=nil;
     [requestEventTemplate setPredicate:[NSPredicate predicateWithFormat:@"eventID == %@", eventID]];
     
@@ -237,7 +254,7 @@ CGFloat constraintPer2Height=0.8f;
     
     //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
     
-    NSLog(@" resultsSortEventTemplate-1 %@",resultsSortEventTemplate);
+    //NSLog(@" resultsSortEventTemplate-1 %@",resultsSortEventTemplate);
     //EventTemplateMO *eventTemplateDataMO=(EventTemplateMO *)resultsSortEventTemplate[0];
     
     //NSLog(@"Return values from MO desc value %@",eventTemplateDataMO.component);
@@ -251,8 +268,27 @@ CGFloat constraintPer2Height=0.8f;
     
     resultsEventTemplate = [resultsSortEventTemplate sortedArrayUsingDescriptors:descriptors];
     
+
+    //------filtered for page number
+    NSPredicate *page1Predicate = [NSPredicate predicateWithFormat:@"pageNo == 'PAGE-1'"];
+    NSPredicate *page2Predicate = [NSPredicate predicateWithFormat:@"pageNo == 'PAGE-2'"];
+    NSPredicate *page3Predicate = [NSPredicate predicateWithFormat:@"pageNo == 'PAGE-3'"];
+
+    NSArray *resultsSortEventTemplatePage1 = [resultsSortEventTemplate filteredArrayUsingPredicate:page1Predicate];
+    NSArray *resultsSortEventTemplatePage2 = [resultsSortEventTemplate filteredArrayUsingPredicate:page2Predicate];
+    NSArray *resultsSortEventTemplatePage3 = [resultsSortEventTemplate filteredArrayUsingPredicate:page3Predicate];
+
+    //------sort order for each page
+    resultsEventTemplatePage1 = [resultsSortEventTemplatePage1 sortedArrayUsingDescriptors:descriptors];
+    resultsEventTemplatePage2 = [resultsSortEventTemplatePage2 sortedArrayUsingDescriptors:descriptors];
+    resultsEventTemplatePage3 = [resultsSortEventTemplatePage3 sortedArrayUsingDescriptors:descriptors];
     
-     NSLog(@" resultsEventTemplate-2 %@",resultsEventTemplate);
+    
+    
+//     NSLog(@" resultsEventTemplatePage1 %@",resultsEventTemplatePage1);
+//     NSLog(@" resultsEventTemplatePage2 %@",resultsEventTemplatePage2);
+//     NSLog(@" resultsEventTemplatePage3 %@",resultsEventTemplatePage3);
+
     
 //    if(NSString stringWithContents, eventTemplateDataMO.componet)
 //    {
@@ -320,11 +356,14 @@ CGFloat constraintPer2Height=0.8f;
 //    }
 //  
 //    
-    UIBarButtonItem* rightNavButton=[[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(doValidate)];
-    
-    
-    
-    self.navigationItem.rightBarButtonItem =rightNavButton ;
+
+
+
+    //submit button
+//    UIBarButtonItem* rightNavButton=[[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(doValidate)];
+//    self.navigationItem.rightBarButtonItem =rightNavButton ;
+
+
     
     // create a spacer
     //UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
@@ -371,111 +410,139 @@ CGFloat constraintPer2Height=0.8f;
     
     //[self fetchonBoardData];
     
+    [self displayEventHeader];
     
-    UIView *screenView = [[UIView alloc] init];
-    screenView.layer.borderWidth=1.0;
-    screenView.layer.borderColor=[UIColor whiteColor].CGColor;
-    screenView.layer.shadowRadius=10.0;
-    screenView.backgroundColor = [UIColor whiteColor];
-    screenView.layer.shadowOffset = CGSizeMake(0, 3);
-    screenView.layer.shadowRadius = 10.0;
-    screenView.layer.shadowColor = [UIColor blackColor].CGColor;
-    screenView.layer.shadowOpacity = 0.8;
-    screenView.layer.cornerRadius = 15.0;
-    screenView.translatesAutoresizingMaskIntoConstraints=NO;
-    [self.view addSubview:screenView];
+    NSArray *itemArray = [NSArray arrayWithObjects: [resultsEventTemplatePage1 count]>0?@"PAGE-1":nil, [resultsEventTemplatePage2 count]>0?@"PAGE-2":nil, [resultsEventTemplatePage3 count]>0?@"PAGE-3":nil,nil];
+    segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+    [segmentedControl addTarget:self action:@selector(segmentControlAction:) forControlEvents: UIControlEventValueChanged];
+    segmentedControl.selectedSegmentIndex = 0;
+    segmentedControl.backgroundColor=[UIColor whiteColor];
+    segmentedControl.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:segmentedControl];
+    
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:segmentedControl attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.38 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:segmentedControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:segmentedControl attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.04 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:segmentedControl attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
+
+    
+    
+    
+    //----------Screen View1------------
+    
+    screenView1 = [[UIView alloc] init];
+    screenView1.layer.borderWidth=1.0;
+    screenView1.layer.borderColor=[UIColor whiteColor].CGColor;
+    screenView1.layer.shadowRadius=10.0;
+    screenView1.backgroundColor = [UIColor whiteColor];
+    screenView1.layer.shadowOffset = CGSizeMake(0, 3);
+    screenView1.layer.shadowRadius = 10.0;
+    screenView1.layer.shadowColor = [UIColor blackColor].CGColor;
+    screenView1.layer.shadowOpacity = 0.8;
+    screenView1.layer.cornerRadius = 15.0;
+    screenView1.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:screenView1];
     
     //---Screen UIView
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.15 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView1 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.86 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.70 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
     
+    //----------Screen View2--------
+    screenView2 = [[UIView alloc] init];
+    screenView2.layer.borderWidth=1.0;
+    screenView2.layer.borderColor=[UIColor whiteColor].CGColor;
+    screenView2.layer.shadowRadius=10.0;
+    screenView2.backgroundColor = [UIColor whiteColor];
+    screenView2.layer.shadowOffset = CGSizeMake(0, 3);
+    screenView2.layer.shadowRadius = 10.0;
+    screenView2.layer.shadowColor = [UIColor blackColor].CGColor;
+    screenView2.layer.shadowOpacity = 0.8;
+    screenView2.layer.cornerRadius = 15.0;
+    screenView2.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:screenView2];
     
-    //UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
-    //tableView.autoresizingMask =UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    //tableView.frame = CGRectMake(30,200,270,300);
-    tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];////[UIColor lightGrayColor];
-    tableView.layer.borderWidth=1.0f;
-    tableView.layer.borderColor=[UIColor whiteColor].CGColor;
-    tableView.layer.cornerRadius=15.0f;
-    //tableView.allowsSelection = NO;
-    tableView.alwaysBounceVertical = NO;
-    tableView.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
+    //---Screen UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.15 constant:0]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView2 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    tableView.sectionHeaderHeight = 0.0;
-    tableView.sectionFooterHeight = 0.0;
-    tableView.rowHeight=UITableViewAutomaticDimension;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.70 constant:0]];
     
-    
-    //self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    //    CGRect titleRect = CGRectMake(0, 0, 100, 20);
-    //    UILabel *tableTitle = [[UILabel alloc] initWithFrame:titleRect];
-    //    tableTitle.textColor = [UIColor captionColor];
-    //    tableTitle.backgroundColor = [tableView backgroundColor];
-    //    tableTitle.opaque = YES;
-    //    tableTitle.font = [UIFont boldSystemFontOfSize:14];
-    //    tableTitle.textAlignment=NSTextAlignmentCenter;
-    //    tableTitle.text = @"onBoardData";
-    //    //tableTitle.translatesAutoresizingMaskIntoConstraints=NO;
-    //    tableView.tableHeaderView = tableTitle;
-    
-    //tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
-    //[tableView setSeparatorColor:[UIColor whiteColor]];
-    tableView.separatorInset=UIEdgeInsetsZero;
-    //tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
     
     
-    // add to canvas
-    tableView.translatesAutoresizingMaskIntoConstraints=NO;
-    [screenView addSubview:tableView];
+    //----------Screen View3--------
+    screenView3 = [[UIView alloc] init];
+    screenView3.layer.borderWidth=1.0;
+    screenView3.layer.borderColor=[UIColor whiteColor].CGColor;
+    screenView3.layer.shadowRadius=10.0;
+    screenView3.backgroundColor = [UIColor whiteColor];
+    screenView3.layer.shadowOffset = CGSizeMake(0, 3);
+    screenView3.layer.shadowRadius = 10.0;
+    screenView3.layer.shadowColor = [UIColor blackColor].CGColor;
+    screenView3.layer.shadowOpacity = 0.8;
+    screenView3.layer.cornerRadius = 15.0;
+    screenView3.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:screenView3];
+    
+    //---Screen UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView3 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.15 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView3 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView3 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.70 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView3 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
     
     
+    [self displayPage1];
+    [self displayPage2];
+    [self displayPage3];
+   
+    screenView1.hidden=NO;
+    screenView2.hidden=YES;
+    screenView3.hidden=YES;
     
-    //[self drawRect:titleRect];
-    //
+  
     
-    // important! without this line it does not work!
-    //[tableView setBackgroundView:[[UIView alloc] init]];
-    // set plain background color
-    //[tableView setBackgroundColor:[UIColor colorWithRed:0.69 green:0.81 blue:0.79 alpha:1.0]];
-    // remove seperator color
+      
+    btnSubmit = [[UIButton alloc ] init];//WithFrame:CGRectMake(120, 200, 60, 30) ];
+    [btnSubmit setTitle:@"Submit" forState:UIControlStateNormal];
+    //btnSubmit.titleLabel.text=@"Login";
+    //[btnSubmit setTitleColor:[UIColor grayColor] forState: UIControlStateNormal];
+    //btnSubmit.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    btnSubmit.layer.borderColor=[UIColor grayColor].CGColor;
+    btnSubmit.layer.borderWidth=0.5f;
+    [btnSubmit setBackgroundColor:[UIColor strongAzureColor]];
+    [btnSubmit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //btnSubmit.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    btnSubmit.titleLabel.font = [UIFont systemFontOfSize:24];
+    btnSubmit.layer.cornerRadius=5.0f;
+    //btnSubmit.layer.masksToBounds=YES;
+    //btnSubmit.clipsToBounds=YES;
+    [btnSubmit addTarget:self action:@selector(doValidate) forControlEvents:UIControlEventTouchUpInside];
+    btnSubmit.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:btnSubmit];
     
+    //-----submit button
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnSubmit attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnSubmit attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.91 constant:0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnSubmit attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
     
-    //tableView.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnSubmit attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.05 constant:0]];
     
-    //    CGRect frame = tableView.tableHeaderView.frame;
-    //    frame.size.height = 1;
-    //    UIView *headerView = [[UIView alloc] initWithFrame:frame];
-    //    [tableView setTableHeaderView:headerView];
-    
-    
-    
-    
-    //---Table UIView
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:screenView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:screenView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:screenView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:screenView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    
-    
-    
-    
-    
-    switchFlag=@"N";
+    //switchFlag=@"N";
     
     
     
@@ -575,6 +642,30 @@ CGFloat constraintPer2Height=0.8f;
     dateFields = [[NSMutableDictionary alloc]init];
     numericFields= [[NSMutableDictionary alloc]init];
     fieldNames= [[NSMutableDictionary alloc]init];
+    mandatoryFields= [[NSMutableDictionary alloc]init];
+    inActiveFields= [[NSMutableDictionary alloc]init];
+    maxLengthFields = [[NSMutableDictionary alloc]init];
+    surveyDataDictionary = [[NSMutableDictionary alloc]init];
+
+
+    //----assign keyvalue as SeqNo in the dictionary so that all SeqNo numbers will be captured initially
+    EventTemplateMO *eventTemplateDataMO;
+    for (int i=0; i<=resultsEventTemplate.count-1; i++)
+    {
+        eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplate[i];
+        
+        //Store Survey Data
+        [surveyDataDictionary setObject:@"" forKey:eventTemplateDataMO.seqNo];
+
+    }
+
+
+
+    //------to get page number format; string to number
+    //numberFormatter = [[NSNumberFormatter alloc] init];
+    //numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+
+
     //--when not new
 //    if([actionMode isEqualToString:@"UPDATE"] || [actionMode isEqualToString:@"ENQUIRY"])// && [viewMode isEqualToString:@"Y"])
 //    {
@@ -598,87 +689,365 @@ CGFloat constraintPer2Height=0.8f;
     
     //self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", accountName.count];
     
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"Exception in ViewDidLoad %@ reason %@ " , [exception name], [exception reason]);
+        
+        [CommonUtils showMessage:[exception reason] :self];
+    }
+    @finally {
+        
+        NSLog(@"finally in ViewDidLoad");
+    }
+    
+    
+}
+
+
+- (void) displayPage1{
+
+
+    //UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableViewPage1 = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
+    //tableViewPage1.autoresizingMask =UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    tableViewPage1.delegate = self;
+    tableViewPage1.dataSource = self;
+    //tableViewPage1.frame = CGRectMake(30,200,270,300);
+    tableViewPage1.backgroundColor = [UIColor groupTableViewBackgroundColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];////[UIColor lightGrayColor];
+    tableViewPage1.layer.borderWidth=1.0f;
+    tableViewPage1.layer.borderColor=[UIColor whiteColor].CGColor;
+    tableViewPage1.layer.cornerRadius=15.0f;
+    //tableViewPage1.allowsSelection = NO;
+    tableViewPage1.alwaysBounceVertical = NO;
+    tableViewPage1.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
+    
+    
+    tableViewPage1.sectionHeaderHeight = 0.0;
+    tableViewPage1.sectionFooterHeight = 0.0;
+    tableViewPage1.rowHeight=UITableViewAutomaticDimension;
+    
+    
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    //    CGRect titleRect = CGRectMake(0, 0, 100, 20);
+    //    UILabel *tableTitle = [[UILabel alloc] initWithFrame:titleRect];
+    //    tableTitle.textColor = [UIColor captionColor];
+    //    tableTitle.backgroundColor = [tableView backgroundColor];
+    //    tableTitle.opaque = YES;
+    //    tableTitle.font = [UIFont boldSystemFontOfSize:14];
+    //    tableTitle.textAlignment=NSTextAlignmentCenter;
+    //    tableTitle.text = @"onBoardData";
+    //    //tableTitle.translatesAutoresizingMaskIntoConstraints=NO;
+    //    tableView.tableHeaderView = tableTitle;
+    
+    //tableViewPage1.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    //[tableView setSeparatorColor:[UIColor whiteColor]];
+    tableViewPage1.separatorInset=UIEdgeInsetsZero;
+    //tableViewPage1.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    
+    // add to canvas
+    tableViewPage1.translatesAutoresizingMaskIntoConstraints=NO;
+    [screenView1 addSubview:tableViewPage1];
     
     
     
+    //[self drawRect:titleRect];
+    //
+    
+    // important! without this line it does not work!
+    //[tableView setBackgroundView:[[UIView alloc] init]];
+    // set plain background color
+    //[tableView setBackgroundColor:[UIColor colorWithRed:0.69 green:0.81 blue:0.79 alpha:1.0]];
+    // remove seperator color
+    
+    
+    
+    //tableView.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
+    
+    //    CGRect frame = tableView.tableHeaderView.frame;
+    //    frame.size.height = 1;
+    //    UIView *headerView = [[UIView alloc] initWithFrame:frame];
+    //    [tableView setTableHeaderView:headerView];
+    
+    
+    
+    
+    //---Table UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:screenView1 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage1 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:screenView1 attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:screenView1 attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:screenView1 attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+    
+  
+
+}
+
+- (void) displayPage2{
+
+
+    //UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableViewPage2 = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
+    //tableViewPage2.autoresizingMask =UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    tableViewPage2.delegate = self;
+    tableViewPage2.dataSource = self;
+    //tableViewPage2.frame = CGRectMake(30,200,270,300);
+    tableViewPage2.backgroundColor = [UIColor groupTableViewBackgroundColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];////[UIColor lightGrayColor];
+    tableViewPage2.layer.borderWidth=1.0f;
+    tableViewPage2.layer.borderColor=[UIColor whiteColor].CGColor;
+    tableViewPage2.layer.cornerRadius=15.0f;
+    //tableViewPage2.allowsSelection = NO;
+    tableViewPage2.alwaysBounceVertical = NO;
+    tableViewPage2.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
+    
+    
+    tableViewPage2.sectionHeaderHeight = 0.0;
+    tableViewPage2.sectionFooterHeight = 0.0;
+    tableViewPage2.rowHeight=UITableViewAutomaticDimension;
+    
+    
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    //    CGRect titleRect = CGRectMake(0, 0, 100, 20);
+    //    UILabel *tableTitle = [[UILabel alloc] initWithFrame:titleRect];
+    //    tableTitle.textColor = [UIColor captionColor];
+    //    tableTitle.backgroundColor = [tableView backgroundColor];
+    //    tableTitle.opaque = YES;
+    //    tableTitle.font = [UIFont boldSystemFontOfSize:14];
+    //    tableTitle.textAlignment=NSTextAlignmentCenter;
+    //    tableTitle.text = @"onBoardData";
+    //    //tableTitle.translatesAutoresizingMaskIntoConstraints=NO;
+    //    tableView.tableHeaderView = tableTitle;
+    
+    //tableViewPage2.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    //[tableView setSeparatorColor:[UIColor whiteColor]];
+    tableViewPage2.separatorInset=UIEdgeInsetsZero;
+    //tableViewPage2.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    
+    // add to canvas
+    tableViewPage2.translatesAutoresizingMaskIntoConstraints=NO;
+    [screenView2 addSubview:tableViewPage2];
+    
+    
+    
+    //[self drawRect:titleRect];
+    //
+    
+    // important! without this line it does not work!
+    //[tableView setBackgroundView:[[UIView alloc] init]];
+    // set plain background color
+    //[tableView setBackgroundColor:[UIColor colorWithRed:0.69 green:0.81 blue:0.79 alpha:1.0]];
+    // remove seperator color
+    
+    
+    
+    //tableView.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
+    
+    //    CGRect frame = tableView.tableHeaderView.frame;
+    //    frame.size.height = 1;
+    //    UIView *headerView = [[UIView alloc] initWithFrame:frame];
+    //    [tableView setTableHeaderView:headerView];
+    
+    
+    
+    
+    //---Table UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:screenView2 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage2 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:screenView2 attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:screenView2 attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:screenView2 attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+    
+  
+
+}
+
+- (void) displayPage3{
+
+
+    //UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableViewPage3 = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
+    //tableViewPage3.autoresizingMask =UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    tableViewPage3.delegate = self;
+    tableViewPage3.dataSource = self;
+    //tableViewPage3.frame = CGRectMake(30,200,270,300);
+    tableViewPage3.backgroundColor = [UIColor groupTableViewBackgroundColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];////[UIColor lightGrayColor];
+    tableViewPage3.layer.borderWidth=1.0f;
+    tableViewPage3.layer.borderColor=[UIColor whiteColor].CGColor;
+    tableViewPage3.layer.cornerRadius=15.0f;
+    //tableViewPage3.allowsSelection = NO;
+    tableViewPage3.alwaysBounceVertical = NO;
+    tableViewPage3.contentInset = UIEdgeInsetsMake(-30, 0, 0, 0);
+    
+    
+    tableViewPage3.sectionHeaderHeight = 0.0;
+    tableViewPage3.sectionFooterHeight = 0.0;
+    tableViewPage3.rowHeight=UITableViewAutomaticDimension;
+    
+    
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    //    CGRect titleRect = CGRectMake(0, 0, 100, 20);
+    //    UILabel *tableTitle = [[UILabel alloc] initWithFrame:titleRect];
+    //    tableTitle.textColor = [UIColor captionColor];
+    //    tableTitle.backgroundColor = [tableView backgroundColor];
+    //    tableTitle.opaque = YES;
+    //    tableTitle.font = [UIFont boldSystemFontOfSize:14];
+    //    tableTitle.textAlignment=NSTextAlignmentCenter;
+    //    tableTitle.text = @"onBoardData";
+    //    //tableTitle.translatesAutoresizingMaskIntoConstraints=NO;
+    //    tableView.tableHeaderView = tableTitle;
+    
+    //tableViewPage3.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    //[tableView setSeparatorColor:[UIColor whiteColor]];
+    tableViewPage3.separatorInset=UIEdgeInsetsZero;
+    //tableViewPage3.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    
+    // add to canvas
+    tableViewPage3.translatesAutoresizingMaskIntoConstraints=NO;
+    [screenView3 addSubview:tableViewPage3];
+    
+    
+    
+    //[self drawRect:titleRect];
+    //
+    
+    // important! without this line it does not work!
+    //[tableView setBackgroundView:[[UIView alloc] init]];
+    // set plain background color
+    //[tableView setBackgroundColor:[UIColor colorWithRed:0.69 green:0.81 blue:0.79 alpha:1.0]];
+    // remove seperator color
+    
+    
+    
+    //tableView.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
+    
+    //    CGRect frame = tableView.tableHeaderView.frame;
+    //    frame.size.height = 1;
+    //    UIView *headerView = [[UIView alloc] initWithFrame:frame];
+    //    [tableView setTableHeaderView:headerView];
+    
+    
+    
+    
+    //---Table UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage3 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:screenView3 attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage3 attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:screenView3 attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage3 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:screenView3 attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableViewPage3 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:screenView3 attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+    
+  
+
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    //    if (textField == self.txtCustomerName) {
-    //        [textField resignFirstResponder];
-    //        return NO;
-    //    }
-    //
-    //    if (textField == self.txtShortName) {
-    //        [textField resignFirstResponder];
-    //        return NO;
-    //    }
-    //    if (textField == self.txtJointOwn) {
-    //        [textField resignFirstResponder];
-    //        return NO;
-    //    }
-    //    if (textField == self.txtNationality) {
-    //        [textField resignFirstResponder];
-    //        return NO;
-    //    }
-    //    if (textField == self.txtDOB) {
-    //        [textField resignFirstResponder];
-    //        return NO;
-    //    }
+      NSInteger nextTag = textField.tag + 1;
+      // Try to find next responder
+      UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+      if (nextResponder) {
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+      } else {
+        // Not found, so remove keyboard.
+        [textField resignFirstResponder];
+      }
+      return NO; // We do not want UITextField to insert line-breaks.
     
-    [textField resignFirstResponder];
-    
-    //if(textField.tag==7)
-    //{
-        return YES;
-    //}
-    //else
-        
-        //return YES;
 }
 
-
+- (BOOL)textViewShouldReturn:(UITextField *)textView {
+    
+      NSInteger nextTag = textView.tag + 1;
+      // Try to find next responder
+      UIResponder* nextResponder = [textView.superview viewWithTag:nextTag];
+      if (nextResponder) {
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+      } else {
+        // Not found, so remove keyboard.
+        [textView resignFirstResponder];
+      }
+      return NO; // We do not want UITextField to insert line-breaks.
+    
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-     NSLog(@"numericFields-1 field Tag %ld", (long)textField.tag);
-    if([numericFields valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]] !=nil)
-    {
-         NSLog(@"numericFields-2 field Tag %ld", (long)textField.tag);
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-                //        return newLength <= 20;
-        
-        
-                NSCharacterSet *nonNumberSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
-        
-                // allow backspace
-                if (range.length > 0 && [string length] == 0) {
-                    return YES;
-                }
-        //        // do not allow . at the beggining
-        //        if (range.location == 0 && [string isEqualToString:@"."]) {
-        //            return NO;
-        //        }
-                // set the text field value manually
-                NSString *newValue = [[textField text] stringByReplacingCharactersInRange:range withString:string];
-                newValue = [[newValue componentsSeparatedByCharactersInSet:nonNumberSet] componentsJoinedByString:@""];
-        
-                if(newLength > 20)
-                {
-                    return NO;
-                }
-                textField.text = newValue;
-                // return NO because we're manually setting the value
-                return NO;
+
+        //Prevent crashing undo bug – see note below.
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
         }
-    // Prevent crashing undo bug – see note below.
-//    if(range.length + range.location > textField.text.length)
-//    {
-//        return NO;
-//    }
-//    
+
+
+        //----To get max length allowed to enter data
+        NSString *strMaxLength = [maxLengthFields valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]];
+        NSUInteger maxLength=0;
+        if(strMaxLength !=nil && ![strMaxLength isEqualToString:@""])
+        {
+                maxLength=[strMaxLength intValue];
+        }
+        else
+        {
+                //this is hardcoded here based on the backend value of 500 max length
+                maxLength=400;
+        }
+
+  
+         //NSLog(@"numericFields-1 field Tag %ld", (long)textField.tag);
+        if([numericFields valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]] !=nil)
+        {
+                     //NSLog(@"numericFields-2 field Tag %ld", (long)textField.tag);
+                    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            
+            
+                    NSCharacterSet *nonNumberSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+            
+                    // allow backspace
+                    if (range.length > 0 && [string length] == 0) {
+                        return YES;
+                    }
+            //        // do not allow . at the beggining
+            //        if (range.location == 0 && [string isEqualToString:@"."]) {
+            //            return NO;
+            //        }
+                    // set the text field value manually
+                    NSString *newValue = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+                    newValue = [[newValue componentsSeparatedByCharactersInSet:nonNumberSet] componentsJoinedByString:@""];
+            
+                    if(newLength > maxLength)
+                    {
+                        return NO;
+                    }
+                    textField.text = newValue;
+                    // return NO because we're manually setting the value
+                    return NO;
+        }
+        else
+        {
+                    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+                    return newLength <= maxLength;
+            
+        }
+
+//
 //    if (textField.tag == 0) {
 //        
 //        
@@ -781,27 +1150,51 @@ CGFloat constraintPer2Height=0.8f;
     
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
+{
+
+        //Prevent crashing undo bug – see note below.
+        if(range.length + range.location > textView.text.length)
+        {
+            return NO;
+        }
+
+
+        //----To get max length allowed to enter data
+        NSString *strMaxLength = [maxLengthFields valueForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
+        NSUInteger maxLength=0;
+        if(strMaxLength !=nil && ![strMaxLength isEqualToString:@""])
+        {
+                maxLength=[strMaxLength intValue];
+        }
+        else
+        {
+                //this is hardcoded here based on the backend value of 500 max length
+                maxLength=1500;
+        }
+
+  
+        NSUInteger newLength = [textView.text length] + [string length] - range.length;
+        return newLength <= maxLength;
+    
+}
+
 
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
-//    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"APPROVER"] || [actionMode isEqualToString:@"ENQUIRY"])
-//    {
-//        return NO;
-//    }
-    
-    NSLog(@"field Tag %ld", (long)textField.tag);
     
     if([dateFields valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]] !=nil)
     {
-        [self popoverDate:textField :@"LT":NULL];
-        return NO;
+        [self popoverDate:textField :@"":NULL];
+        popoverTag=textField.tag;
+        return YES;
     }
     
     
     if([listTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]] !=nil)
     {
         
-         NSLog(@"List table name %@", [listTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]);
+         //NSLog(@"List table name %@", [listTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]);
         
         [self popoverData:textField:[listTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]:@"N"];
         return NO;
@@ -809,26 +1202,11 @@ CGFloat constraintPer2Height=0.8f;
     if([multiListTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]] !=nil)
     {
         
-        NSLog(@"Multi List table name %@", [multiListTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]);
+        //NSLog(@"Multi List table name %@", [multiListTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]);
         
         [self popoverData:textField:[multiListTableName valueForKey:[NSString stringWithFormat:@"%ld",(long)textField.tag]]:@"Y"];
         return NO;
     }
-    
-    
-    
-    //        if ([textField isEqual: txtDOB])
-    //        {
-    //            [self setDate:txtDOB];
-    //            return NO;
-    //
-    //        }
-    //        else if([textField isEqual:txtNationality])
-    //        {
-    //            [self popoverData:txtNationality:@"NATIONALITY"];
-    //            return NO; //to disable keyboard
-    //        }
-
 
     else
         return YES;
@@ -838,12 +1216,25 @@ CGFloat constraintPer2Height=0.8f;
 
 
 
-
-
-
 -(void) popoverDate: (UITextField *)sender :(NSString *)dateRange :(NSString *)dateFormat
 {
-    [self popoverData:sender :NULL:@"Y":dateRange:dateFormat:@"N"];
+//    [self popoverData:sender :NULL:@"Y":dateRange:dateFormat:@"N"];
+    
+    datePicker = [[UIDatePicker alloc]init];
+    [datePicker setDate:[NSDate date]];
+    [datePicker addTarget:self action:@selector(updateTextField) forControlEvents:UIControlEventValueChanged];
+    [sender setInputView:datePicker];
+    
+    datePicker.datePickerMode=UIDatePickerModeDate;
+    
+    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [toolBar setTintColor:[UIColor lightBlueColor]];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(ShowSelectedDate)];
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    [sender setInputAccessoryView:toolBar];
+    
+    NSLog(@"dateField datepicker");
 }
 
 -(void) popoverData: (UITextField *)sender :(NSString *)tableName :(NSString *) multiSelect
@@ -878,9 +1269,9 @@ CGFloat constraintPer2Height=0.8f;
         // Get the popover presentation controller and configure it.
         UIPopoverPresentationController *presentationController =[popoverViewController popoverPresentationController];
         presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        presentationController.sourceView = self.view;
-        NSLog(@"x %f and y %f %@",sender.frame.origin.x,sender.frame.origin.y,sender.class);
-        presentationController.sourceRect =  CGRectMake(0, sender.frame.origin.y, 1, 1);
+        presentationController.sourceView = sender;
+        //NSLog(@"x %f and y %f %@",sender.frame.origin.x,sender.frame.origin.y,sender.class);
+        presentationController.sourceRect = sender.bounds; //CGRectMake(0, sender.frame.origin.y, 1, 1);
        
 
         
@@ -913,47 +1304,93 @@ CGFloat constraintPer2Height=0.8f;
     
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+
+-(void)updateTextField
 {
+
+  UITextField *textField = (UITextField *)[self.view viewWithTag:popoverTag];
+  //UIDatePicker *picker = (UIDatePicker*) textField.inputView;
+  NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+  [formatter setDateFormat:@"dd/MM/YYYY"];
+  textField.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+
   
-    [self animateTextField: textField up: YES];
-    
- 
-    
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
 
-   
-    
-    [self animateTextField: textField up: NO];
-    
-    
-   
-    
+-(void)ShowSelectedDate
+{
+    UITextField *textField = (UITextField *)[self.view viewWithTag:popoverTag];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"dd/MM/YYYY"];
+    textField.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    [textField resignFirstResponder];
 }
 
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up
+//- (void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//  
+//    [self animateTextField: textField up: YES];
+//    
+// 
+//    
+//}
+//
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//
+//    [self animateTextField: textField up: NO];
+//
+//    //Store Survey Data
+//    
+//    [surveyDataDictionary setObject:removeSpecialCharacters(textField.text) forKey:[NSString stringWithFormat:@"%ld", (long)textField.tag]];
+//    
+//}
+//
+//- (void) animateTextField: (UITextField*) textField up: (BOOL) up
+//{
+//    const int movementDistance = textField.frame.origin.y / 2;//80; // tweak as needed
+//    const float movementDuration = 0.3f; // tweak as needed
+//    
+//    int movement = (up ? -movementDistance : movementDistance);
+//    
+//    [UIView beginAnimations: @"anim" context: nil];
+//    [UIView setAnimationBeginsFromCurrentState: YES];
+//    [UIView setAnimationDuration: movementDuration];
+//    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+//    [UIView commitAnimations];
+//}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
-    const int movementDistance = textField.frame.origin.y / 2;//80; // tweak as needed
-    const float movementDuration = 0.3f; // tweak as needed
+
+    //Store Survey Data
+    [surveyDataDictionary setObject:removeSpecialCharacters(textView.text) forKey:[NSString stringWithFormat:@"%ld", (long)textView.tag]];
     
-    int movement = (up ? -movementDistance : movementDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
 }
 
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
+     if(tableView==tableViewPage1)
+     {
+        return [resultsEventTemplatePage1 count];
+     
+     }
+     else if(tableView==tableViewPage2)
+     {
+        return [resultsEventTemplatePage2 count];
+     
+     }
+     else if(tableView==tableViewPage3)
+     {
+        return [resultsEventTemplatePage3 count];
+     
+     }
+     else return 0;
     
-    return [resultsEventTemplate count];
+    
 }
 
 
@@ -966,7 +1403,35 @@ CGFloat constraintPer2Height=0.8f;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    return 100;
+         EventTemplateMO *eventTemplateDataMO;
+        
+         if(tableView==tableViewPage1)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage1[indexPath.section];
+
+         }
+         else if(tableView==tableViewPage2)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage2[indexPath.section];
+            
+
+         }
+         else if(tableView==tableViewPage3)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage3[indexPath.section];
+            
+         
+         }
+     
+        if([eventTemplateDataMO.component isEqualToString:@"MTEXT"])
+        {
+
+            return 100;
+        }
+        else{
+            return 100;
+        }
+        
 
 }
 
@@ -974,12 +1439,12 @@ CGFloat constraintPer2Height=0.8f;
     
     
     
-    if(section == 0)
-    {
+    //if(section == 0)
+    //{
         
-        return [NSString stringWithFormat:@"EventID:%@\nEvent Name:%@\nInstituteID:%@\nInstitute Name:%@",eventID,eventName,instituteID,instituteName];
+//        return [NSString stringWithFormat:@"     EventID:%@\n     Event Name:%@\n     InstituteID:%@\n     Institute Name:%@",eventID,eventName,instituteID,instituteName ];
         
-    }
+    //}
 //    else if(section == 3)
 //    {
 //        
@@ -1004,7 +1469,7 @@ CGFloat constraintPer2Height=0.8f;
 //        return @" Bank Use Only";
 //        
 //    }
-    else
+    //else
         
         return nil;
 }
@@ -1054,7 +1519,7 @@ CGFloat constraintPer2Height=0.8f;
     cell.backgroundColor=[UIColor whiteColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];//[UIColor lightGrayColor];
     //cell.layer.borderWidth=0.5f;
     //cell.layer.cornerRadius=15.0f;
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //cell.layer.borderColor=[UIColor borderColor].CGColor;
     //cell.layer.shadowRadius=3.0f;
     //cell.layer.shadowOffset = CGSizeMake(0, 3);
@@ -1064,10 +1529,10 @@ CGFloat constraintPer2Height=0.8f;
     
     //NSString *selectedFriend =[NSString initWithFormat @"%@", [[friends objectAtIndex: storyIndex] objectForKey: @"firstname"]];
     
-    UIFont *myFont = [UIFont boldSystemFontOfSize:14.0f];//[ UIFont fontWithName: @"Arial-BoldMT" size: 14.0 ];
+    UIFont *myFont = [UIFont boldSystemFontOfSize:18.0f];//[ UIFont fontWithName: @"Arial-BoldMT" size: 14.0 ];
     cell.textLabel.font  = myFont;
     //cell.textLabel.textColor=[UIColor blueColor];
-    UIFont *mySecondFont = [UIFont boldSystemFontOfSize:10.0f]; //[ UIFont fontWithName: @"Arial-BoldMT" size: 12.0 ];
+    UIFont *mySecondFont = [UIFont boldSystemFontOfSize:18.0f]; //[ UIFont fontWithName: @"Arial-BoldMT" size: 12.0 ];
     cell.detailTextLabel.font  = mySecondFont;
     //cell.detailTextLabel.textColor=[UIColor blueColor];
     
@@ -1120,1329 +1585,282 @@ CGFloat constraintPer2Height=0.8f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView1 cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"MyReuseIdentifier";
-    UITableViewCell *cell = [tableView1 dequeueReusableCellWithIdentifier:MyIdentifier];
+
+    @try
+    {
+
+        static NSString *MyIdentifier = @"MyReuseIdentifier";
+        UITableViewCell *cell = [tableView1 dequeueReusableCellWithIdentifier:MyIdentifier];
+
+        EventTemplateMO *eventTemplateDataMO;
+        
+         if(tableView1==tableViewPage1)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage1[indexPath.section];
+         
+         }
+         if(tableView1==tableViewPage2)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage2[indexPath.section];
+         
+         }
+         if(tableView1==tableViewPage3)
+         {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplatePage3[indexPath.section];
+         
+         }
+        
+        CommonLabel *lblLableName;
+        UIFont *lblFont;
+        UITextView *textView;
+        UIFont *compFont;
+
+
+        //------Capture FieldNames----
+        [fieldNames setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:eventTemplateDataMO.seqNo];
+
+
+        //-------Max Length of Fields
+        [maxLengthFields setObject:emptyStringIfNil(eventTemplateDataMO.maxLength) forKey:eventTemplateDataMO.seqNo];
+        
+        
+        //-----Capture inactive fields---
+        if(![eventTemplateDataMO.status isEqualToString:@"ACTIVE"])
+        {
+            [inActiveFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:eventTemplateDataMO.seqNo];
+        }
+
+
+        if (cell == nil) {
+                cell = [[UITableViewCell alloc] init] ;//]WithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+                //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                //cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            
+                NSLog(@"CellNil %ld %@ %@ %@", (long)indexPath.section, eventTemplateDataMO.seqNo, eventTemplateDataMO.labelName, eventTemplateDataMO.mandatory);
+        
+                lblLableName=[[CommonLabel alloc]initWithFrame:CGRectZero];
+                lblFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+                lblLableName.font=lblFont;
+                lblLableName.numberOfLines=20;
+                lblLableName.lineBreakMode=NSLineBreakByWordWrapping;
+                lblLableName.translatesAutoresizingMaskIntoConstraints=NO;
+                [cell.contentView addSubview:lblLableName];
+                
+                [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
+                
+                [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
+                
+                [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
+                
+                [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
+                
+                if([eventTemplateDataMO.component isEqualToString:@"TEXT"] || [eventTemplateDataMO.component isEqualToString:@"DATE"] || [eventTemplateDataMO.component isEqualToString:@"LIST"] || [eventTemplateDataMO.component isEqualToString:@"MLIST"] || [eventTemplateDataMO.component isEqualToString:@"NTEXT"])
+                {
+                    
+                    txtComponent = [[CommonTextField alloc] init];
+                    txtComponent.tag=[eventTemplateDataMO.seqNo integerValue];
+                    txtComponent.delegate=self;
+                    txtComponent.placeholder=eventTemplateDataMO.labelName;
+                    compFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+                    txtComponent.font=compFont;
+                    txtComponent.translatesAutoresizingMaskIntoConstraints=NO;
+                    [cell.contentView addSubview:txtComponent];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
+                    
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
+                    
+
+                    //Disable the field
+                    if(![eventTemplateDataMO.status isEqualToString:@"ACTIVE"])
+                    {
+                        txtComponent.enabled=NO;
+                    }
+                    
+                    txtComponent.text=[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo];
+                    
+                }
+
+                if([eventTemplateDataMO.component isEqualToString:@"CHECKBOX"])
+                {
+                    swtComponent = [[UISwitch alloc] init];
+                    swtComponent.tag=[eventTemplateDataMO.seqNo integerValue];
+                    [swtComponent addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+                    swtComponent.translatesAutoresizingMaskIntoConstraints=NO;
+                    [cell.contentView addSubview:swtComponent];
+
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
+
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
+
+
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
+
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
+                    
+
+                    //Disable the field
+                    if(![eventTemplateDataMO.status isEqualToString:@"ACTIVE"])
+                    {
+                        swtComponent.enabled=NO;
+                    }
+
+                    [self operateSwitch:swtComponent :[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo]];
+
+                }
+                
+                if([eventTemplateDataMO.component isEqualToString:@"MTEXT"])
+                {
+                    //NSLog(@"MTEXT component %@",eventTemplateDataMO.component);
+                    
+                    textView = [[UITextView alloc] init];
+                    textView.layer.borderWidth=0.1;
+                    //self.txtCustomerName.layer.borderColor=[UIColor blackColor].CGColor;
+                    textView.layer.cornerRadius=5.0;
+                    [textView setFont:[UIFont systemFontOfSize:14]];
+                    //[self setPlaceholder: @"Customer Name"];
+                    [textView setTextColor:[UIColor blackColor]];
+                    [textView setTextAlignment:NSTextAlignmentLeft];
+                    [textView setAutocorrectionType:UITextAutocorrectionTypeDefault];
+                    [textView setKeyboardType:UIKeyboardTypeDefault];
+                    [textView setReturnKeyType:UIReturnKeyDone];
+                    textView.tag=[eventTemplateDataMO.seqNo integerValue];
+                    textView.delegate=self;
+                    //textView.placeholder=eventTemplateDataMO.labelName;
+
+                    compFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+                    textView.font=compFont;
+                    
+                    textView.translatesAutoresizingMaskIntoConstraints=NO;
+                    [cell.contentView addSubview:textView];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:textView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:textView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
+                    
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:textView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
+                    
+                    [cell addConstraint:[NSLayoutConstraint constraintWithItem:textView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
+                
+
+                    //Disable the field
+                    if(![eventTemplateDataMO.status isEqualToString:@"ACTIVE"])
+                    {
+                        textView.editable=NO;
+                    }
+                    
+                    textView.text=[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo];
+
+                }
+
+                if([eventTemplateDataMO.mandatory isEqualToString:@"Y"])
+                {
+                    lblLableName.text=[NSString stringWithFormat:@"*%@. %@",eventTemplateDataMO.viewOrder, eventTemplateDataMO.labelName];
+                    [mandatoryFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:eventTemplateDataMO.seqNo];
+                    
+                    if([lblLableName.text length]>0)
+                    {
+                        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithAttributedString: lblLableName.attributedText];
+                        [text addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor redColor] 
+                             range:NSMakeRange(0, 1)];
+                        [lblLableName setAttributedText: text];
+                    }
+
+                }
+                else
+                {
+                    lblLableName.text=[NSString stringWithFormat:@"%@. %@",eventTemplateDataMO.viewOrder, eventTemplateDataMO.labelName];
+                
+                }
+                if([eventTemplateDataMO.component isEqualToString:@"NTEXT"])
+                {
+                    
+                    [numericFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
+                    
+                    
+                }
+                if([eventTemplateDataMO.component isEqualToString:@"DATE"])
+                {
+                    
+                     [dateFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
+                    
+                    
+                }
+                if([eventTemplateDataMO.component isEqualToString:@"LIST"])
+                {
+                    
+                    
+                    
+                    [listTableName setObject:emptyStringIfNil(eventTemplateDataMO.listTableName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
+                    
+                }
+                if([eventTemplateDataMO.component isEqualToString:@"MLIST"])
+                {
+                    
+                    
+                    
+                     [multiListTableName setObject:emptyStringIfNil(eventTemplateDataMO.listTableName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
+                    
+                    
+                }
+            
+            
+                //NSLog(@"CellForRow Compoent %@ %@ %@",eventTemplateDataMO.seqNo,  eventTemplateDataMO.component, eventTemplateDataMO.labelName);
+
+
+            
+        }
+//        else{
+//            
+//
+//                NSLog(@"CellNotNil %ld %@ %@ %@", indexPath.section, eventTemplateDataMO.seqNo, eventTemplateDataMO.labelName, eventTemplateDataMO.fieldName);
+//            
+//                if([eventTemplateDataMO.component isEqualToString:@"TEXT"] || [eventTemplateDataMO.component isEqualToString:@"DATE"] || [eventTemplateDataMO.component isEqualToString:@"LIST"] || [eventTemplateDataMO.component isEqualToString:@"MLIST"] || [eventTemplateDataMO.component isEqualToString:@"NTEXT"])
+//                {
+//                    NSLog(@"CellNotNil %@",eventTemplateDataMO.fieldName);
+//                    txtComponent.text=(CommonTextField *)[cell.contentView viewWithTag:(long)[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo]];
+//                    
+//                    
+//                }
+//                if([eventTemplateDataMO.component isEqualToString:@"CHECKBOX"])
+//                {
+//                
+//                    swtComponent=(UISwitch *)[cell.contentView viewWithTag:(long)[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo]];
+//                }
+//                if([eventTemplateDataMO.component isEqualToString:@"MTEXT"])
+//                {
+//
+//                    textView.text=(UITextView *)[cell.contentView viewWithTag:(long)[surveyDataDictionary valueForKey:eventTemplateDataMO.seqNo]];
+//                
+//                }
+//            
+//        }
+
     
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        //cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        
-        EventTemplateMO *eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplate[indexPath.section];
-        
-        
-        [fieldNames setObject:eventTemplateDataMO.fieldName forKey:eventTemplateDataMO.seqNo];
-        
-        CommonLabel *lblLableName=[[CommonLabel alloc]initWithFrame:CGRectZero];
-        lblLableName.text=[NSString stringWithFormat:@"%@. %@",eventTemplateDataMO.viewOrder, eventTemplateDataMO.labelName];
-        lblLableName.translatesAutoresizingMaskIntoConstraints=NO;
-        [cell.contentView addSubview:lblLableName];
-        
-        [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-        
-        [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-        
-        [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-        
-        [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblLableName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-        
-        if([eventTemplateDataMO.component isEqualToString:@"TEXT"] || [eventTemplateDataMO.component isEqualToString:@"DATE"] || [eventTemplateDataMO.component isEqualToString:@"LIST"] || [eventTemplateDataMO.component isEqualToString:@"MLIST"] || [eventTemplateDataMO.component isEqualToString:@"NTEXT"])
-        {
-            
-            txtComponent = [[CommonTextField alloc] init];
-            txtComponent.tag=[eventTemplateDataMO.seqNo integerValue];
-            txtComponent.delegate=self;
-            txtComponent.placeholder=eventTemplateDataMO.labelName;
-            
-            txtComponent.translatesAutoresizingMaskIntoConstraints=NO;
-            [cell.contentView addSubview:txtComponent];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-            
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtComponent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-            
-            
-//            if([surveyDataDictionary valueForKey:[NSString stringWithFormat:@"%ld",(long)txtComponent.tag]] !=nil)
-//            {
-//                txtComponent.text=[surveyDataDictionary valueForKey:[NSString stringWithFormat:@"%ld",(long)txtComponent.tag]] ;
-//            }
-//            else
-//            {
-//            
-//                 [surveyDataDictionary setObject:emptyStringIfNil(txtComponent.text) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
-//
-//            }
-            
-        }
-        if([eventTemplateDataMO.component isEqualToString:@"NTEXT"])
-        {
-            
-            
-            
-            [numericFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
-            
-            
-        }
-        if([eventTemplateDataMO.component isEqualToString:@"DATE"])
-        {
-            
-            
-            
-             [dateFields setObject:emptyStringIfNil(eventTemplateDataMO.fieldName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
-            
-            
-        }
-        if([eventTemplateDataMO.component isEqualToString:@"LIST"])
-        {
-            
-            
-            
-            [listTableName setObject:emptyStringIfNil(eventTemplateDataMO.listTableName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
-            
-        }
-        if([eventTemplateDataMO.component isEqualToString:@"MLIST"])
-        {
-            
-            
-            
-             [multiListTableName setObject:emptyStringIfNil(eventTemplateDataMO.listTableName) forKey:[NSString stringWithFormat:@"%ld", (long)self.txtComponent.tag]];
-            
-            
-        }
+    
+        return cell;
+    
 
-        if([eventTemplateDataMO.component isEqualToString:@"CHECKBOX"])
-        {
-            swtComponent = [[UISwitch alloc] init];
-            swtComponent.tag=[eventTemplateDataMO.seqNo integerValue];
-            [swtComponent addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
-            swtComponent.translatesAutoresizingMaskIntoConstraints=NO;
-            [cell.contentView addSubview:swtComponent];
-
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-
-
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:swtComponent attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-            
-        }
-        
-        if([eventTemplateDataMO.component isEqualToString:@"MTEXT"])
-        {
-            //NSLog(@"MTEXT component %@",eventTemplateDataMO.component);
-            
-            UITextView *uiTextView = [[UITextView alloc] init];
-            uiTextView.layer.borderWidth=0.1;
-            //self.txtCustomerName.layer.borderColor=[UIColor blackColor].CGColor;
-            uiTextView.layer.cornerRadius=5.0;
-            [uiTextView setFont:[UIFont systemFontOfSize:14]];
-            //[self setPlaceholder: @"Customer Name"];
-            [uiTextView setTextColor:[UIColor blackColor]];
-            [uiTextView setTextAlignment:NSTextAlignmentLeft];
-            [uiTextView setAutocorrectionType:UITextAutocorrectionTypeDefault];
-            [uiTextView setKeyboardType:UIKeyboardTypeDefault];
-            [uiTextView setReturnKeyType:UIReturnKeyDone];
-            uiTextView.tag=[eventTemplateDataMO.seqNo integerValue];
-            uiTextView.delegate=self;
-            //uiTextView.placeholder=eventTemplateDataMO.labelName;
-            
-            uiTextView.translatesAutoresizingMaskIntoConstraints=NO;
-            [cell.contentView addSubview:uiTextView];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:uiTextView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:uiTextView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-            
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:uiTextView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-            
-            [cell addConstraint:[NSLayoutConstraint constraintWithItem:uiTextView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-        
-        }
-        
-        
-        
-        NSLog(@"Return values from MO desc value %@",eventTemplateDataMO.component);
-
-        
-//        if(indexPath.section==0)
-//        {
-//            
-//            CommonLabel *lblExtCustomerFlag=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblExtCustomerFlag.text=@"Existing Customer";
-//            lblExtCustomerFlag.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblExtCustomerFlag];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtCustomerFlag attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtCustomerFlag attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtCustomerFlag attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtCustomerFlag attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-
-//            
-//            
-//            
-//            
-//        }
-//        else if(indexPath.section==1)
-//        {
-//            
-//            CommonLabel *lblExtRelation=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblExtRelation.text=@"Existing Relationship";
-//            lblExtRelation.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblExtRelation];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtExtRelation = [[CommonTextField alloc] init];
-//            txtExtRelation.tag=2;
-//            txtExtRelation.delegate=self;
-//            txtExtRelation.placeholder=@"Select Existing Relationship";
-//            txtExtRelation.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtExtRelation];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblExtRelationNo=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblExtRelationNo.text=@"Relationship No";
-//            lblExtRelationNo.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblExtRelationNo];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelationNo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelationNo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelationNo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblExtRelationNo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtExtRelationNo = [[CommonTextField alloc] init];
-//            txtExtRelationNo.tag=3;
-//            txtExtRelationNo.delegate=self;
-//            txtExtRelationNo.placeholder=@"Relationship No";
-//            txtExtRelationNo.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtExtRelationNo];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelationNo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:1.6 constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelationNo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelationNo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:0.2 constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtExtRelationNo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//            
-//            
-//            btnExtRelationshipNo =  [[UIButton alloc] init];
-//            //[btnExtRelationshipNo setTitle:@"Relation" forState:UIControlStateNormal];
-//            [btnExtRelationshipNo setImage:[[UIImage imageNamed:@"backpack.png" ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-//            [btnExtRelationshipNo setTintColor:[UIColor redColor]];
-//            //btnExtRelationshipNo.tintColor=[UIColor blueColor];
-//            //[btnExtRelationshipNo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            
-//            //btnExtRelationshipNo.titleLabel.font = [UIFont systemFontOfSize:10];
-//            btnExtRelationshipNo.layer.borderWidth=1.0;
-//            
-//            btnExtRelationshipNo.layer.borderColor=[UIColor lightBlueColor].CGColor;
-//            //btnExtRelationshipNo.layer.shadowRadius=10.0;
-//            btnExtRelationshipNo.backgroundColor = [UIColor whiteColor];
-//            
-//           
-//            //btnExtRelationshipNo.layer.shadowOffset = CGSizeMake(0, 3);
-//            //btnExtRelationshipNo.layer.shadowRadius = 10.0;
-//            //btnExtRelationshipNo.layer.shadowColor = [UIColor blackColor].CGColor;
-//            //btnExtRelationshipNo.layer.shadowOpacity = 0.8;
-//            btnExtRelationshipNo.layer.cornerRadius = 15.0;
-//            
-//            //[btnExtRelationshipNo addTarget:self action:@selector(doValidateExistingCustomer) forControlEvents:UIControlEventTouchUpInside];
-//            btnExtRelationshipNo.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell addSubview:btnExtRelationshipNo];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:btnExtRelationshipNo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:1.9 constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:btnExtRelationshipNo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:btnExtRelationshipNo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:0.05 constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:btnExtRelationshipNo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//   
-//            
-//        }
-//        else if(indexPath.section==2)
-//        {
-//            
-//            CommonLabel *lblCustomerName=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblCustomerName.text=@"Customer Name";
-//            lblCustomerName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblCustomerName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCustomerName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCustomerName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCustomerName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCustomerName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtCustomerName = [[CommonTextField alloc] init];
-//            txtCustomerName.tag=4;
-//            txtCustomerName.delegate=self;
-//            txtCustomerName.placeholder=@"Customer Name";
-//            txtCustomerName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtCustomerName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCustomerName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCustomerName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPerY constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCustomerName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCustomerName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPerHeight constant:0]];
-//            
-//            
-//            
-//        }
-//        else if(indexPath.section==2)
-//        {
-//            
-//            CommonLabel *lblFirstName=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblFirstName.text=@"First Name";
-//            lblFirstName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblFirstName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFirstName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFirstName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFirstName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFirstName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtFirstName = [[CommonTextField alloc] init];
-//            txtFirstName.tag=52;
-//            txtFirstName.delegate=self;
-//            txtFirstName.placeholder=@"First Name";
-//            txtFirstName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtFirstName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFirstName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFirstName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFirstName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFirstName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            
-//            CommonLabel *lblMiddleName=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblMiddleName.text=@"Middle Name";
-//            lblMiddleName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblMiddleName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMiddleName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMiddleName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMiddleName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMiddleName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtMiddleName = [[CommonTextField alloc] init];
-//            txtMiddleName.tag=51;
-//            txtMiddleName.delegate=self;
-//            txtMiddleName.placeholder=@"Middle Name";
-//            txtMiddleName.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtMiddleName];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMiddleName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMiddleName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMiddleName attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMiddleName attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        else if(indexPath.section==3)
-//        {
-//            
-//            CommonLabel *lblTitle=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblTitle.text=@"Title";
-//            lblTitle.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblTitle];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtTitle= [[CommonTextField alloc] init];
-//            txtTitle.tag=5;
-//            txtTitle.delegate=self;
-//            txtTitle.placeholder=@"Title";
-//            txtTitle.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtTitle];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtTitle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtTitle attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtTitle attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblCategoryType=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblCategoryType.text=@"Category Type";
-//            lblCategoryType.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblCategoryType];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCategoryType attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCategoryType attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCategoryType attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCategoryType attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtCategoryType = [[CommonTextField alloc] init];
-//            txtCategoryType.tag=6;
-//            txtCategoryType.delegate=self;
-//            txtCategoryType.placeholder=@"Category Type";
-//            txtCategoryType.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtCategoryType];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCategoryType attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCategoryType attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCategoryType attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCategoryType attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        else if(indexPath.section==4)
-//        {
-//            
-//            CommonLabel *lblBranch=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblBranch.text=@"Branch";
-//            lblBranch.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblBranch];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblBranch attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblBranch attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblBranch attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblBranch attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtBranch= [[CommonTextField alloc] init];
-//            txtBranch.tag=7;
-//            txtBranch.delegate=self;
-//            txtBranch.placeholder=@"Branch";
-//            txtBranch.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtBranch];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtBranch attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtBranch attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtBranch attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtBranch attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblJointOwn=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblJointOwn.text=@"Joint Own";
-//            lblJointOwn.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblJointOwn];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblJointOwn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblJointOwn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblJointOwn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblJointOwn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtJointOwn = [[CommonTextField alloc] init];
-//            txtJointOwn.tag=8;
-//            txtJointOwn.delegate=self;
-//            txtJointOwn.placeholder=@"Joint Own";
-//            txtJointOwn.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtJointOwn];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtJointOwn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtJointOwn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtJointOwn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtJointOwn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        
-        
-//        else if(indexPath.section==5)
-//        {
-//            
-//            CommonLabel *lblGender=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblGender.text=@"Gender";
-//            lblGender.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblGender];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtGender= [[CommonTextField alloc] init];
-//            txtGender.tag=9;
-//            txtGender.delegate=self;
-//            txtGender.placeholder=@"Gender";
-//            txtGender.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtGender];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-////            CommonLabel *lblNatureofRelation=[[CommonLabel alloc]initWithFrame:CGRectZero];
-////            lblNatureofRelation.text=@"Nature of Relation";
-////            lblNatureofRelation.translatesAutoresizingMaskIntoConstraints=NO;
-////            [cell.contentView addSubview:lblNatureofRelation];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNatureofRelation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNatureofRelation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNatureofRelation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNatureofRelation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-////            
-////            
-////            txtNatureOfRelation= [[CommonTextField alloc] init];
-////            txtNatureOfRelation.tag=9;
-////            txtNatureOfRelation.delegate=self;
-////            txtNatureOfRelation.placeholder=@"Nature of Relation";
-////            txtNatureOfRelation.translatesAutoresizingMaskIntoConstraints=NO;
-////            [cell.contentView addSubview:txtNatureOfRelation];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNatureOfRelation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNatureOfRelation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-////            
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNatureOfRelation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-////            
-////            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNatureOfRelation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblResidenceStatus=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblResidenceStatus.text=@"Residence Status";
-//            lblResidenceStatus.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblResidenceStatus];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblResidenceStatus attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblResidenceStatus attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblResidenceStatus attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblResidenceStatus attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtResidenceStatus = [[CommonTextField alloc] init];
-//            txtResidenceStatus.tag=10;
-//            txtResidenceStatus.delegate=self;
-//            txtResidenceStatus.placeholder=@"Residence Status";
-//            txtResidenceStatus.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtResidenceStatus];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtResidenceStatus attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtResidenceStatus attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtResidenceStatus attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtResidenceStatus attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-        
-        
-        
-        
-//        
-//        else if(indexPath.section==6)
-//        {
-//            
-//            CommonLabel *lblNationality=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblNationality.text=@"Nationality";
-//            lblNationality.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblNationality];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNationality attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNationality attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNationality attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblNationality attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtNationality= [[CommonTextField alloc] init];
-//            txtNationality.tag=11;
-//            txtNationality.delegate=self;
-//            txtNationality.placeholder=@"Nationality";
-//            txtNationality.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtNationality];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNationality attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNationality attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNationality attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtNationality attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblDateofbirth=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblDateofbirth.text=@"Date Of Birth";
-//            lblDateofbirth.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblDateofbirth];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblDateofbirth attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblDateofbirth attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblDateofbirth attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblDateofbirth attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtDateOfBirth = [[CommonTextField alloc] init];
-//            txtDateOfBirth.tag=12;
-//            txtDateOfBirth.delegate=self;
-//            txtDateOfBirth.placeholder=@"Date Of Birth";
-//            txtDateOfBirth.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtDateOfBirth];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtDateOfBirth attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtDateOfBirth attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtDateOfBirth attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtDateOfBirth attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        
-//        
-//        
-//        
-//        else if(indexPath.section==7)
-//        {
-//            
-//            CommonLabel *lblEducation=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblEducation.text=@"Education";
-//            lblEducation.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblEducation];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEducation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEducation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEducation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEducation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtEducation= [[CommonTextField alloc] init];
-//            txtEducation.tag=13;
-//            txtEducation.delegate=self;
-//            txtEducation.placeholder=@"Education";
-//            txtEducation.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtEducation];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEducation attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEducation attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEducation attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEducation attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblMaritalStatus=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblMaritalStatus.text=@"Marital Status";
-//            lblMaritalStatus.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblMaritalStatus];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMaritalStatus attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMaritalStatus attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMaritalStatus attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMaritalStatus attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtMaritalStatus = [[CommonTextField alloc] init];
-//            txtMaritalStatus.tag=14;
-//            txtMaritalStatus.delegate=self;
-//            txtMaritalStatus.placeholder=@"Marital Status";
-//            txtMaritalStatus.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtMaritalStatus];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMaritalStatus attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMaritalStatus attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMaritalStatus attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMaritalStatus attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        
-//
-//        if(indexPath.section==8)
-//        {
-//            
-//            CommonLabel *lblPassportNo=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPassportNo.text=@"Passport No";
-//            lblPassportNo.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPassportNo];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportNo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportNo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportNo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportNo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtPassportNo=[[CommonTextField alloc] initWithFrame:CGRectZero];
-//            txtPassportNo.tag=15;
-//            txtPassportNo.delegate=self;
-//            txtPassportNo.placeholder=@"Passport No";
-//            txtPassportNo.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPassportNo];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportNo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportNo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportNo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportNo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblPassportIssuePlace=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPassportIssuePlace.text=@"Passport Issue Place";
-//            lblPassportIssuePlace.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPassportIssuePlace];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssuePlace attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssuePlace attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssuePlace attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssuePlace attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtPassportIssuePlace = [[CommonTextField alloc] init];
-//            txtPassportIssuePlace.tag=16;
-//            txtPassportIssuePlace.delegate=self;
-//            txtPassportIssuePlace.placeholder=@"Passport Issue Place";
-//            txtPassportIssuePlace.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPassportIssuePlace];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssuePlace attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssuePlace attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssuePlace attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssuePlace attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//            
-//            
-//        }
-//        else if(indexPath.section==9)
-//        {
-//            
-//            CommonLabel *lblPassportIssueDate=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPassportIssueDate.text=@"Passport Issue Date";
-//            lblPassportIssueDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPassportIssueDate];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtPassportIssueDate = [[CommonTextField alloc] init];
-//            txtPassportIssueDate.tag=17;
-//            txtPassportIssueDate.delegate=self;
-//            txtPassportIssueDate.placeholder=@"Passport Issue Date";
-//            txtPassportIssueDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPassportIssueDate];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblPassportExpDate=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPassportExpDate.text=@"Passport Expiry Date";
-//            lblPassportExpDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPassportExpDate];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportExpDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportExpDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportExpDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportExpDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtPassportExpDate = [[CommonTextField alloc] init];
-//            txtPassportExpDate.tag=18;
-//            txtPassportExpDate.delegate=self;
-//            txtPassportExpDate.placeholder=@"Passport Expiry Date";
-//            txtPassportExpDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPassportExpDate];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportExpDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportExpDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportExpDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportExpDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        else if(indexPath.section==10){
-//            
-//            CommonLabel *lblPassportIssueCountry=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPassportIssueCountry.text=@"Passport Issue Cntry";
-//            lblPassportIssueCountry.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPassportIssueCountry];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueCountry attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueCountry attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueCountry attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPassportIssueCountry attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtPassportIssueCountry=[[CommonTextField alloc] initWithFrame:CGRectZero];
-//            txtPassportIssueCountry.tag=19;
-//            txtPassportIssueCountry.delegate=self;
-//            txtPassportIssueCountry.placeholder=@"Passport Issue Country";
-//            txtPassportIssueCountry.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPassportIssueCountry];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueCountry attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueCountry attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueCountry attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPassportIssueCountry attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            
-//            CommonLabel *lblEmiratesId=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblEmiratesId.text=@"Emirates Id";
-//            lblEmiratesId.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblEmiratesId];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesId attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesId attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesId attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesId attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            
-//            txtEmiratesId=[[CommonTextField alloc] initWithFrame:CGRectZero];
-//            txtEmiratesId.tag=20;
-//            txtEmiratesId.delegate=self;
-//            txtEmiratesId.placeholder=@"Emirates Id";
-//            txtEmiratesId.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtEmiratesId];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesId attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesId attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesId attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesId attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//            
-//            
-//        }
-//        
-//        else if(indexPath.section==11){
-//            
-//
-//            
-//            
-//            
-//            
-//            CommonLabel *lblEmiratesExpDate=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblEmiratesExpDate.text=@"Emirates Id Exp Dt";
-//            lblEmiratesExpDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblEmiratesExpDate];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesExpDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesExpDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesExpDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblEmiratesExpDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//          
-//            
-//            txtEmiratesIdExpDate = [[CommonTextField alloc] init];
-//            txtEmiratesIdExpDate.tag=21;
-//            txtEmiratesIdExpDate.delegate=self;
-//            txtEmiratesIdExpDate.placeholder=@"Emirtaes id Exp Date";
-//            txtEmiratesIdExpDate.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtEmiratesIdExpDate];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesIdExpDate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesIdExpDate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesIdExpDate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtEmiratesIdExpDate attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//
-//            
-//            
-//            
-//            
-//            
-//        }
-//        
-        
-
-//        else if(indexPath.section==8)
-//        {
-//
-//            CommonLabel *lblGender=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblGender.text=@"Gender";
-//            lblGender.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblGender];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblGender attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//
-//
-//            txtGender= [[CommonTextField alloc] init];
-//            txtGender.tag=15;
-//            txtGender.delegate=self;
-//            txtGender.placeholder=@"Gender";
-//            txtGender.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtGender];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtGender attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-
-
-//            CommonLabel *lblPreferredLangauge=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblPreferredLangauge.text=@"Preferred Langauge";
-//            lblPreferredLangauge.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblPreferredLangauge];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPreferredLangauge attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPreferredLangauge attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPreferredLangauge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblPreferredLangauge attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//
-//
-//            txtPreferredLang = [[CommonTextField alloc] init];
-//            txtPreferredLang.tag=16;
-//            txtPreferredLang.delegate=self;
-//            txtPreferredLang.placeholder=@"Preferred Langauge";
-//            txtPreferredLang.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtPreferredLang];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPreferredLang attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPreferredLang attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//
-//
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPreferredLang attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtPreferredLang attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-
-
-//       }
-        
-//        else if(indexPath.section==9)
-//        {
-//            
-//            CommonLabel *lblFamilyinUae=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblFamilyinUae.text=@"Family In UAE";
-//            lblFamilyinUae.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblFamilyinUae];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilyinUae attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilyinUae attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilyinUae attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilyinUae attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtFamilyUAE= [[CommonTextField alloc] init];
-//            txtFamilyUAE.tag=17;
-//            txtFamilyUAE.delegate=self;
-//            txtFamilyUAE.placeholder=@"Family In UAE";
-//            txtFamilyUAE.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtFamilyUAE];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilyUAE attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilyUAE attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilyUAE attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilyUAE attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblFamilySize=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblFamilySize.text=@"Family Size";
-//            lblFamilySize.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblFamilySize];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilySize attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilySize attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilySize attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFamilySize attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtFamilySize = [[CommonTextField alloc] init];
-//            txtFamilySize.tag=18;
-//            txtFamilySize.delegate=self;
-//            txtFamilySize.placeholder=@"Family Size";
-//            txtFamilySize.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtFamilySize];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilySize attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilySize attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilySize attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFamilySize attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        
-//        
-//        else if(indexPath.section==10)
-//        {
-//            
-//            CommonLabel *lblCarOwnership=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblCarOwnership.text=@"Car Ownership";
-//            lblCarOwnership.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblCarOwnership];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarOwnership attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarOwnership attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarOwnership attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarOwnership attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtCarOwnership= [[CommonTextField alloc] init];
-//            txtCarOwnership.tag=19;
-//            txtCarOwnership.delegate=self;
-//            txtCarOwnership.placeholder=@"Car Ownership";
-//            txtCarOwnership.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtCarOwnership];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarOwnership attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarOwnership attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarOwnership attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarOwnership attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblCarYear=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblCarYear.text=@"Car Year";
-//            lblCarYear.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblCarYear];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarYear attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarYear attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarYear attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblCarYear attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtCarYear = [[CommonTextField alloc] init];
-//            txtCarYear.tag=20;
-//            txtCarYear.delegate=self;
-//            txtCarYear.placeholder=@"Car Year";
-//            txtCarYear.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtCarYear];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarYear attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarYear attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarYear attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtCarYear attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-//        
-//        
-//        else if(indexPath.section==11)
-//        {
-//            
-//            CommonLabel *lblMedia=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblMedia.text=@"Media";
-//            lblMedia.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblMedia];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMedia attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPerX constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMedia attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPerY constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMedia attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPerWidth constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblMedia attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPerHeight constant:0]];
-//            
-//            
-//            txtMedia= [[CommonTextField alloc] init];
-//            txtMedia.tag=21;
-//            txtMedia.delegate=self;
-//            txtMedia.placeholder=@"Media";
-//            txtMedia.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtMedia];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMedia attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer1X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMedia attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer1Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMedia attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer1Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtMedia attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer1Height constant:0]];
-//            
-//            
-//            CommonLabel *lblFavouriteCity=[[CommonLabel alloc]initWithFrame:CGRectZero];
-//            lblFavouriteCity.text=@"Favourite City";
-//            lblFavouriteCity.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:lblFavouriteCity];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFavouriteCity attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:lblConstraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFavouriteCity attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:lblConstraintPer2Y constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFavouriteCity attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:lblConstraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:lblFavouriteCity attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:lblConstraintPer2Height constant:0]];
-//            
-//            
-//            txtFavCity = [[CommonTextField alloc] init];
-//            txtFavCity.tag=22;
-//            txtFavCity.delegate=self;
-//            txtFavCity.placeholder=@"Favourite City";
-//            txtFavCity.translatesAutoresizingMaskIntoConstraints=NO;
-//            [cell.contentView addSubview:txtFavCity];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFavCity attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterX multiplier:constraintPer2X constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFavCity attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:constraintPer2Y constant:0]];
-//            
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFavCity attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeWidth multiplier:constraintPer2Width constant:0]];
-//            
-//            [cell addConstraint:[NSLayoutConstraint constraintWithItem:txtFavCity attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeHeight multiplier:constraintPer2Height constant:0]];
-//            
-//            
-//        }
-        
-        
     }
-    else{
+    @catch (NSException *exception) {
         
+        NSLog(@"Exception in cellForRowAtIndexPath %@ reason %@ " , [exception name], [exception reason]);
         
- 
-        
-        [cell.contentView viewWithTag:100+indexPath.section];
-        [cell.contentView viewWithTag:indexPath.section];
-        
-        [cell.contentView viewWithTag:500+indexPath.section];
-        [cell.contentView viewWithTag:600+indexPath.section];
-        
+        [CommonUtils showMessage:[exception reason] :self];
     }
-    
-    
-    //cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    
-//    if(([actionMode isEqualToString:@"UPDATE"] || [actionMode isEqualToString:@"ENQUIRY"])   && [personalArray count]>0)
-//    {
-//        
-//        // [self loadData];
-//        
-//    }
-    
-
-//    if([self.actionMode isEqualToString:@"ENQUIRY"] || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"APPROVER"])
-//    {
-//        [swtExistingCustomer setEnabled:NO];
-//        
-//        
-//    }
-    
-    
-    
-    
-    return cell;
+    @finally {
+        
+        NSLog(@"finally in cellForRowAtIndexPath");
+    }
 }
 
 
@@ -2806,7 +2224,12 @@ CGFloat constraintPer2Height=0.8f;
     
     //[self buildJSON];
     
-    [self buildMO];
+    
+      [self buildMO];
+
+                                               
+                                               
+    
     
     [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
     
@@ -4126,20 +3549,20 @@ CGFloat constraintPer2Height=0.8f;
 //
 //    //    //labelFrame.origin.y += labelFrame.size.height + 1.0f;
 //    //    labelFrame.origin.y +=  20.0f;
-//    //    UILabel *lblavalBalance  = [[UILabel alloc] initWithFrame:labelFrame];
-//    //    lblavalBalance.textColor = [UIColor blackColor];
-//    //    lblavalBalance.text = [NSString stringWithFormat:@"Available Balance    %@",availableBalance];
+//    //    UILabel *lblEventName  = [[UILabel alloc] initWithFrame:labelFrame];
+//    //    lblEventName.textColor = [UIColor blackColor];
+//    //    lblEventName.text = [NSString stringWithFormat:@"Available Balance    %@",availableBalance];
 //    //    //set the number of lines to 0, meaning use as many lines as needed
-//    //    lblavalBalance.numberOfLines = 0;
-//    //    //lblavalBalance.font = [UIFont fontWithName:@"Arial-Bold" size:12.0f];
-//    //    lblavalBalance.font = [UIFont boldSystemFontOfSize:12.0f];
-//    //    lblavalBalance.textAlignment =  NSTextAlignmentLeft;
-//    //    //lblavalBalance.layer.borderColor = [UIColor blackColor].CGColor;
-//    //    //lblavalBalance.layer.borderWidth = 1.0;
+//    //    lblEventName.numberOfLines = 0;
+//    //    //lblEventName.font = [UIFont fontWithName:@"Arial-Bold" size:12.0f];
+//    //    lblEventName.font = [UIFont boldSystemFontOfSize:12.0f];
+//    //    lblEventName.textAlignment =  NSTextAlignmentLeft;
+//    //    //lblEventName.layer.borderColor = [UIColor blackColor].CGColor;
+//    //    //lblEventName.layer.borderWidth = 1.0;
 //    //    //Resizes and moves the receiver view so it just encloses its subviews.
 //    //    //watch the border of the frame in this example
-//    //    //[lblavalBalance sizeToFit];
-//    //    [self.view addSubview:lblavalBalance];
+//    //    //[lblEventName sizeToFit];
+//    //    [self.view addSubview:lblEventName];
 //
 //}
 //
@@ -4149,9 +3572,9 @@ CGFloat constraintPer2Height=0.8f;
 
 - (void)addItemViewController:(PopoverViewController *)controller didFinishEnteringItem:(NSString *)item  didFinishEnteringItem1:(NSString *)code didFinishEnteringItem2:(int)fieldTag
 {
-    NSLog(@"This was returned from PopoverViewController %ld", (long)fieldTag);
+    //NSLog(@"This was returned from PopoverViewController %ld", (long)fieldTag);
     // NSArray *components = [item componentsSeparatedByString:@"\n"];
-    NSLog(@" popvalues %@ %@", item, code);
+    //NSLog(@" popvalues %@ %@", item, code);
     
     
     id viewObj = [self.view viewWithTag:(long)fieldTag];
@@ -4159,9 +3582,12 @@ CGFloat constraintPer2Height=0.8f;
     if([viewObj isKindOfClass:[UITextField class]])
     {
         UITextField *textField =(UITextField *)viewObj;
-        textField.text=item;
-        [popoverCodeValue setObject:code forKey:[NSString stringWithFormat:@"%d", fieldTag]];
-        
+        textField.text=removeSpecialCharacters(item);
+        [popoverCodeValue setObject:emptyStringIfNil(code) forKey:[NSString stringWithFormat:@"%d", fieldTag]];
+ 
+        //Store Survey Data
+        [surveyDataDictionary setObject:removeSpecialCharacters(item) forKey:[NSString stringWithFormat:@"%d", fieldTag]];
+
         //[dataArray insertObject:code atIndex:fieldTag];
     }
     
@@ -4171,33 +3597,53 @@ CGFloat constraintPer2Height=0.8f;
 
 - (NSString *)changeSwitch:(id)sender{
     
+    UISwitch *switchComponent = (UISwitch *)sender;
     
     if([sender isOn]){
-        NSLog(@"Switch is ON");
+        //NSLog(@"Switch is ON");
+        
+        //Store Survey Data
+        [surveyDataDictionary setObject:@"Y" forKey:[NSString stringWithFormat:@"%ld", (long)switchComponent.tag]];
         return @"Y";
-        
-        
-      
-       
         
     } else{
         
-        NSLog(@"Switch is OFF");
+        //NSLog(@"Switch is OFF");
         
+        //Store Survey Data
+        [surveyDataDictionary setObject:@"N" forKey:[NSString stringWithFormat:@"%ld", (long)switchComponent.tag]];
         return @"N";
-    
-        
      
     }
 }
 
-- (void)operateSwitch:(NSString*)sender{
-    if([sender isEqualToString:@"Y"]){
-        [swtExistingCustomer setOn:YES animated:YES];
-        NSLog(@"Switch is ON");
+- (void)operateSwitch:(UISwitch *)sender : (NSString*)flag{
+
+    if([flag isEqualToString:@"Y"]){
+        [sender setOn:YES animated:YES];
+        //NSLog(@"Switch is ON");
     } else{
-        [swtExistingCustomer setOn:NO animated:YES];
-        NSLog(@"Switch is OFF");
+        [sender setOn:NO animated:YES];
+        //NSLog(@"Switch is OFF");
+    }
+}
+
+- (void)operateSwitch:(UISwitch*)sender{
+
+    if([sender isOn]){
+        [sender setOn:NO animated:YES];
+        //NSLog(@"Switch is OFF");
+    } else{
+        [sender setOn:YES animated:YES];
+        //NSLog(@"Switch is ON");
+    }
+}
+
+- (void)operateSwitchOFF:(UISwitch*)sender{
+
+    if([sender isOn]){
+        [sender setOn:NO animated:YES];
+        //NSLog(@"Switch is OFF");
     }
 }
 
@@ -4224,107 +3670,107 @@ CGFloat constraintPer2Height=0.8f;
 //    }
 //}
 
--(void)displayGraph
-{
-    
-    webView = [[UIWebView alloc] init];//]WithFrame:CGRectMake(0,0,self.view.frame.size.width, self.view.frame.size.height)];
-    webView.tag=55;
-    webView.delegate = self;
-    webView.layer.borderWidth=1.0;
-    webView.layer.borderColor=[UIColor whiteColor].CGColor;
-    webView.layer.shadowRadius=10.0;
-    webView.backgroundColor = [UIColor whiteColor];
-    webView.layer.shadowOffset = CGSizeMake(0, 3);
-    webView.layer.shadowRadius = 10.0;
-    webView.layer.shadowColor = [UIColor blackColor].CGColor;
-    webView.layer.shadowOpacity = 0.8;
-    webView.layer.cornerRadius = 15.0;
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"pathstatus" ofType:@"html" inDirectory:@"www"]];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
-    webView.translatesAutoresizingMaskIntoConstraints=NO;
-    [self.view addSubview:webView];
-    
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.78 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.70 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.58 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.23 constant:0]];
-    
-    
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    
-    NSString* json;
-    
-    @try
-    {
-        
-        
-        
-        NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc]init];
-        
-        
-        for (int i=0; i<=pathArray.count-1; i++)
-        {
-            
-            pathData = [pathArray objectAtIndex:i];
-            
-            
-            NSLog(@"path screen %@",pathData.screen);
-            
-            
-            if(pathData.screen==NULL)
-            {
-                [jsonDictionary setObject:pathStringIfNil(pathData.status) forKey:@"PERSONAL"];
-            }
-            else{
-                [jsonDictionary setObject:pathStringIfNil(pathData.status) forKey:pathData.screen];
-            }
-            
-            
-        }
-        
-        
-        NSError *errorOut;
-        NSString *jsonString;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
-                                                           options:NSJSONWritingPrettyPrinted
-                                                             error:&errorOut];
-        
-        if (! jsonData) {
-            NSLog(@"Got an error in json creation chart: %@", errorOut);
-        } else {
-            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        }
-        
-        NSLog(@"jsondata %@",jsonString);
-        
-        
-        json = [NSString stringWithFormat:@ "loadDashboardChart(%@);",jsonString];
-        
-        NSLog(@"function json %@",json);
-        [self.webView stringByEvaluatingJavaScriptFromString: json];
-        
-        
-    }
-    @catch (NSException *exception) {
-        
-        NSLog(@"Exception in webViewDidFinishLoad code %@ reason %@ " , [exception name], [exception reason]);
-        
-        
-        [CommonUtils showMessage:[exception reason] :self];
-    }
-    @finally {
-        
-        NSLog(@"finally in webViewDidFinishLoad  Code");
-    }
-    
-}
+//-(void)displayGraph
+//{
+//    
+//    webView = [[UIWebView alloc] init];//]WithFrame:CGRectMake(0,0,self.view.frame.size.width, self.view.frame.size.height)];
+//    webView.tag=55;
+//    webView.delegate = self;
+//    webView.layer.borderWidth=1.0;
+//    webView.layer.borderColor=[UIColor whiteColor].CGColor;
+//    webView.layer.shadowRadius=10.0;
+//    webView.backgroundColor = [UIColor whiteColor];
+//    webView.layer.shadowOffset = CGSizeMake(0, 3);
+//    webView.layer.shadowRadius = 10.0;
+//    webView.layer.shadowColor = [UIColor blackColor].CGColor;
+//    webView.layer.shadowOpacity = 0.8;
+//    webView.layer.cornerRadius = 15.0;
+//    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"pathstatus" ofType:@"html" inDirectory:@"www"]];
+//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+//    webView.translatesAutoresizingMaskIntoConstraints=NO;
+//    [self.view addSubview:webView];
+//    
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.78 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.70 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.58 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.23 constant:0]];
+//    
+//    
+//}
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    
+//    NSString* json;
+//    
+//    @try
+//    {
+//        
+//        
+//        
+//        NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc]init];
+//        
+//        
+//        for (int i=0; i<=pathArray.count-1; i++)
+//        {
+//            
+//            pathData = [pathArray objectAtIndex:i];
+//            
+//            
+//            NSLog(@"path screen %@",pathData.screen);
+//            
+//            
+//            if(pathData.screen==NULL)
+//            {
+//                [jsonDictionary setObject:pathStringIfNil(pathData.status) forKey:@"PERSONAL"];
+//            }
+//            else{
+//                [jsonDictionary setObject:pathStringIfNil(pathData.status) forKey:pathData.screen];
+//            }
+//            
+//            
+//        }
+//        
+//        
+//        NSError *errorOut;
+//        NSString *jsonString;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
+//                                                           options:NSJSONWritingPrettyPrinted
+//                                                             error:&errorOut];
+//        
+//        if (! jsonData) {
+//            NSLog(@"Got an error in json creation chart: %@", errorOut);
+//        } else {
+//            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        }
+//        
+//        NSLog(@"jsondata %@",jsonString);
+//        
+//        
+//        json = [NSString stringWithFormat:@ "loadDashboardChart(%@);",jsonString];
+//        
+//        NSLog(@"function json %@",json);
+//        [self.webView stringByEvaluatingJavaScriptFromString: json];
+//        
+//        
+//    }
+//    @catch (NSException *exception) {
+//        
+//        NSLog(@"Exception in webViewDidFinishLoad code %@ reason %@ " , [exception name], [exception reason]);
+//        
+//        
+//        [CommonUtils showMessage:[exception reason] :self];
+//    }
+//    @finally {
+//        
+//        NSLog(@"finally in webViewDidFinishLoad  Code");
+//    }
+//    
+//}
 
 
 -(void)didReceiveMemoryWarning
@@ -4350,90 +3796,90 @@ CGFloat constraintPer2Height=0.8f;
 
 
 
--(void)doDedup :(UIButton *)sender
-{
-    @try
-    {
-        
-          NSLog(@"button click doDedup ");
-        
-        if([CommonUtils checkEmptyString:txtCustomerName.text]==YES && [CommonUtils checkEmptyString:txtDateOfBirth.text]==YES)
-        {
-            
-            [CommonUtils showMessage:@"Enter Data Before Duplicate Check":self];
-            [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
-            
-            return;
-            
-        }
-    
-
-//        [NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
+//-(void)doDedup :(UIButton *)sender
+//{
+//    @try
+//    {
 //        
-//        DedupViewController *dedupViewController = [[DedupViewController alloc]initWithNibName:nil bundle:nil];
+//          NSLog(@"button click doDedup ");
 //        
-//
-//        //--
-////        dedupViewController.cifNumber=self.txtExtRelationNo.text;
-////        dedupViewController.accountNumber=self.txtExtRelationNo.text;
-////        dedupViewController.creditCardNumber=self.txtExtRelationNo.text;
-//        dedupViewController.customerName=self.txtCustomerName.text;
-//        //dedupViewController.firstName=self.txtFirstName.text;
-//        dedupViewController.dob=self.txtDateOfBirth.text;
-//        //dedupViewController.refNo=self.refNo;
-//
-//        
-//        
-//        // Present the view controller using the popover style.
-//        dedupViewController.modalPresentationStyle = UIModalPresentationPopover;
-//        [self presentViewController:dedupViewController animated: YES completion: nil];
-//        
-//        // Get the popover presentation controller and configure it.
-//        UIPopoverPresentationController *presentationController =[dedupViewController popoverPresentationController];
-//        presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-//        presentationController.sourceView = self.view;
-//        NSLog(@"x %f and y %f %@",sender.frame.origin.x,sender.frame.origin.y,sender.class);
-//        presentationController.sourceRect =  CGRectMake(80, sender.frame.origin.y/4, 1, 1);
-
-        
-        //dedupViewController.passportNumber=self.txtExtRelationNo.text;
-        //dedupViewController.emiratesId=self.txtExtRelationNo.text;
-        //dedupViewController.fieldTag=(int)sender.tag;
-        //dedupViewController.delegate=self;
-        
-//        UIPopoverController *dedupController =[[UIPopoverController alloc] initWithContentViewController:dedupViewController];
-//        [dedupController setPopoverContentSize:CGSizeMake(dedupViewController.view.frame.size.width/2, dedupViewController.view.frame.size.height/2)];
-        
-        
-//        if(dedupController.popoverVisible==NO){
+//        if([CommonUtils checkEmptyString:txtCustomerName.text]==YES && [CommonUtils checkEmptyString:txtDateOfBirth.text]==YES)
+//        {
 //            
-//            //NSLog(@" dedup popover x %lf",sender.frame.origin.x);
-//            //NSLog(@" dedup popover y %lf",sender.frame.origin.y);
-//            //CGRectMake(0, sender.frame.origin.y, 1, 1)
+//            [CommonUtils showMessage:@"Enter Data Before Duplicate Check":self];
+//            [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
 //            
-//            [dedupController presentPopoverFromRect:CGRectMake(80, sender.frame.origin.y/4, 1, 1) inView:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+//            return;
+//            
 //        }
-//        else{
-//            [dedupController dismissPopoverAnimated:YES];
-//        }
-        
-        
-        
-    }
-    @catch (NSException *exception) {
-        
-        NSLog(@"Exception in do dedup code %@ reason %@ " , [exception name], [exception reason]);
-        
-        [CommonUtils showMessage:[exception reason] :self];
-    }
-    @finally {
-        
-        NSLog(@"finally in do dedup Code");
-        [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
-    }
-    
-    
-}
+//    
+//
+////        [NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
+////        
+////        DedupViewController *dedupViewController = [[DedupViewController alloc]initWithNibName:nil bundle:nil];
+////        
+////
+////        //--
+//////        dedupViewController.cifNumber=self.txtExtRelationNo.text;
+//////        dedupViewController.accountNumber=self.txtExtRelationNo.text;
+//////        dedupViewController.creditCardNumber=self.txtExtRelationNo.text;
+////        dedupViewController.customerName=self.txtCustomerName.text;
+////        //dedupViewController.firstName=self.txtFirstName.text;
+////        dedupViewController.dob=self.txtDateOfBirth.text;
+////        //dedupViewController.refNo=self.refNo;
+////
+////        
+////        
+////        // Present the view controller using the popover style.
+////        dedupViewController.modalPresentationStyle = UIModalPresentationPopover;
+////        [self presentViewController:dedupViewController animated: YES completion: nil];
+////        
+////        // Get the popover presentation controller and configure it.
+////        UIPopoverPresentationController *presentationController =[dedupViewController popoverPresentationController];
+////        presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+////        presentationController.sourceView = self.view;
+////        NSLog(@"x %f and y %f %@",sender.frame.origin.x,sender.frame.origin.y,sender.class);
+////        presentationController.sourceRect =  CGRectMake(80, sender.frame.origin.y/4, 1, 1);
+//
+//        
+//        //dedupViewController.passportNumber=self.txtExtRelationNo.text;
+//        //dedupViewController.emiratesId=self.txtExtRelationNo.text;
+//        //dedupViewController.fieldTag=(int)sender.tag;
+//        //dedupViewController.delegate=self;
+//        
+////        UIPopoverController *dedupController =[[UIPopoverController alloc] initWithContentViewController:dedupViewController];
+////        [dedupController setPopoverContentSize:CGSizeMake(dedupViewController.view.frame.size.width/2, dedupViewController.view.frame.size.height/2)];
+//        
+//        
+////        if(dedupController.popoverVisible==NO){
+////            
+////            //NSLog(@" dedup popover x %lf",sender.frame.origin.x);
+////            //NSLog(@" dedup popover y %lf",sender.frame.origin.y);
+////            //CGRectMake(0, sender.frame.origin.y, 1, 1)
+////            
+////            [dedupController presentPopoverFromRect:CGRectMake(80, sender.frame.origin.y/4, 1, 1) inView:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+////        }
+////        else{
+////            [dedupController dismissPopoverAnimated:YES];
+////        }
+//        
+//        
+//        
+//    }
+//    @catch (NSException *exception) {
+//        
+//        NSLog(@"Exception in do dedup code %@ reason %@ " , [exception name], [exception reason]);
+//        
+//        [CommonUtils showMessage:[exception reason] :self];
+//    }
+//    @finally {
+//        
+//        NSLog(@"finally in do dedup Code");
+//        [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
+//    }
+//    
+//    
+//}
 
 - (void) buildMO {
     
@@ -4441,143 +3887,199 @@ CGFloat constraintPer2Height=0.8f;
         
          NSLog(@"BuildMO Starts");
         
-        UITextField *textField;
-        UITextView *textView;
-        
-        UISwitch *switchComponent;
-        NSString *dataValue;
-        //UITableViewCell *cell;
-        
-        NSLog(@"alert-1 %ld",[tableView numberOfSections]);
-        
-        NSMutableArray *cells = [[NSMutableArray alloc] init];
-        for (NSInteger j = 0; j < [tableView numberOfSections]; ++j)
-        {
-            
-            
-            
-            for (NSInteger i = 0; i < [tableView numberOfRowsInSection:j]; ++i)
-            {
-                [cells addObject:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
-            }
+//        UITextField *textField;
+//        UITextView *textView;
+//        UISwitch *switchComponent;
+//        NSString *dataValue;
+        NSString *mandatoryFieldEmpty=@"N";
 
-            
-            NSLog(@"alert-2 %ld",[tableView numberOfSections]);
+//        NSMutableArray *cells = [[NSMutableArray alloc] init];
 
-        }
-        
 
-        surveyDataDictionary=[[NSMutableDictionary alloc]init];
-    
-        for (UITableViewCell *cell in cells)
-        {
-            for(UIView *view in cell.contentView.subviews)
-            {
-                if ([view isKindOfClass:[UITextField class]]) {
-                    
-                    textField = (UITextField *)view;
-                    dataValue=emptyStringIfNil(textField.text);
-                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"|" withString:@""];
-                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"#" withString:@""];
-                    
-                    [surveyDataDictionary setObject:dataValue forKey:[NSString stringWithFormat:@"%ld", (long)textField.tag]];
-                    
-                    NSLog(@"textField-  %@",textField.text );
-                    
-                }
-                if ([view isKindOfClass:[UITextView class]]) {
-                    
-                    textView = (UITextView *)view;
-                    dataValue=emptyStringIfNil(textView.text);
-                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"|" withString:@""];
-                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"#" withString:@""];
-                    [surveyDataDictionary setObject:dataValue forKey:[NSString stringWithFormat:@"%ld", (long)textView.tag]];
-                    
-                    NSLog(@"textView-  %@",textView.text );
-                    
-                }
-                if([view isKindOfClass:[UISwitch class]]){
-                    
-                    switchComponent=(UISwitch *)view;
-                     [surveyDataDictionary setObject:[self changeSwitch:switchComponent] forKey:[NSString stringWithFormat:@"%ld", (long)switchComponent.tag]];
-                }
-                
-                
-            }
-        }
+        //NSLog(@"numberofsections %ld",[tableViewPage1 numberOfSections]);
+
+
+
+       
+//        //--------tableViewPage1 Loop to read data------
+//        for (NSInteger j = 0; j < [tableViewPage1 numberOfSections]; ++j)
+//        {
+//            
+//            for (NSInteger i = 0; i < [tableViewPage1 numberOfRowsInSection:j]; ++i)
+//            {
+//                [cells addObject:[tableViewPage1 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+//
+//            }
+//
+//        }
+//         //--------tableViewPage2 Loop to read data------
+//        for (NSInteger j = 0; j < [tableViewPage2 numberOfSections]; ++j)
+//        {
+//            
+//            for (NSInteger i = 0; i < [tableViewPage2 numberOfRowsInSection:j]; ++i)
+//            {
+//                [cells addObject:[tableViewPage2 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+//            }
+//
+//        }
+//         //--------tableViewPage3 Loop to read data------
+//        for (NSInteger j = 0; j < [tableViewPage3 numberOfSections]; ++j)
+//        {
+//            
+//            for (NSInteger i = 0; i < [tableViewPage3 numberOfRowsInSection:j]; ++i)
+//            {
+//                [cells addObject:[tableViewPage3 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+//            }
+//
+//        }
+//        
+//        NSLog(@"Cell inserted in Array");
+//
+//        surveyDataDictionary=[[NSMutableDictionary alloc]init];
+//    
+//        for (UITableViewCell *cell in cells)
+//        {
+//            for(UIView *view in cell.contentView.subviews)
+//            {
+//                if ([view isKindOfClass:[UITextField class]]) {
+//                    
+//                    textField = (UITextField *)view;
+//                    dataValue=emptyStringIfNil(textField.text);
+//                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"|" withString:@""];
+//                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"#" withString:@""];
+//            
+//                    [surveyDataDictionary setObject:dataValue forKey:[NSString stringWithFormat:@"%ld", (long)textField.tag]];
+//                    
+//                    NSLog(@"textField-  %@",textField.text );
+//                    
+//                    
+//                }
+//                if ([view isKindOfClass:[UITextView class]]) {
+//                    
+//                    textView = (UITextView *)view;
+//                    dataValue=emptyStringIfNil(textView.text);
+//                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"|" withString:@""];
+//                    dataValue=[dataValue stringByReplacingOccurrencesOfString:@"#" withString:@""];
+//                    [surveyDataDictionary setObject:dataValue forKey:[NSString stringWithFormat:@"%ld", (long)textView.tag]];
+//                    
+//                    NSLog(@"textView-  %@",textView.text );
+//                    
+//                }
+//                if([view isKindOfClass:[UISwitch class]]){
+//                    
+//                    switchComponent=(UISwitch *)view;
+//                     [surveyDataDictionary setObject:[self changeSwitch:switchComponent] forKey:[NSString stringWithFormat:@"%ld", (long)switchComponent.tag]];
+//                }
+//                
+//                
+//            }
+//        }
+
 
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
         NSString *currentDateTime = [formatter stringFromDate:[NSDate date]];
         
+        NSLog(@"Survey data currentDateTime %@",currentDateTime);
+        
         NSArray *sortedKeys = [[surveyDataDictionary allKeys] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
-        
-        //NSSortDescriptor *seqNoDescriptor =
-        //[[NSSortDescriptor alloc] initWithKey:@"seqNo"
-        //                            ascending:YES
-        //                             selector:@selector(localizedStandardCompare:)];
-        //NSArray *descriptors = [NSArray arrayWithObjects:seqNoDescriptor, nil];
-        
-        //NSArray *sortedKeys = [[surveyDataDictionary allKeys] keysSortedByValueUsingSelector:descriptors];
-        
-        
-         NSLog(@"Survey data sortedKeys %@",sortedKeys);
+        //NSLog(@"Survey data sortedKeys %@",sortedKeys);
+ 
         
         NSString *surveyDataConcat=@"";
-
-        //for(NSString *key in [surveyDataDictionary allKeys]) {
-            
         for(NSString *key in sortedKeys) {
             
+             //NSLog(@"Surveydatain for loop start %@, %@", key, [surveyDataDictionary valueForKey:key]);
             
-    
-             NSLog(@"Surveydatain for loop start %@, %@", key, [surveyDataDictionary valueForKey:key]);
-            
-            //surveyMO.eventID.code=eventData.code;
             surveyDataConcat=[NSString stringWithFormat:@"%@%@|%@#",surveyDataConcat,[fieldNames valueForKey:key],emptyStringIfNil([surveyDataDictionary valueForKey:key])];
-            
              NSLog(@"Survey data in for loop %@",surveyDataConcat);
+            
+            //------Not in the Inactive fields && Available in the Mandatory fields &&  Data is empty then show the message
+            if(![inActiveFields valueForKey:key] && [mandatoryFields valueForKey:key] && [emptyStringIfNil([surveyDataDictionary valueForKey:key]) isEqualToString:@""])
+            {
+                mandatoryFieldEmpty=@"Y";
+            }
+            
         }
-        
-        //surveyDataConcat=[NSString stringWithFormat:@"%@|%@|%@",surveyDataConcat,emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]),currentDateTime];
-        
-        
-        SurveyMO *surveyMO = (SurveyMO *)[NSEntityDescription insertNewObjectForEntityForName:@"Survey" inManagedObjectContext:managedObjectContext];
-        
-        surveyMO.eventID=eventID;
-        surveyMO.instituteID=instituteID;
-        surveyMO.surveyData=surveyDataConcat;
-        surveyMO.sync=@"N";
-        surveyMO.surveyorID=[[NSUserDefaults standardUserDefaults] stringForKey:@"userid"];
-        surveyMO.surveyDateTime=currentDateTime;
-        surveyMO.eventName=eventName;
-        surveyMO.surveyorName=[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
-        surveyMO.instituteName=instituteName;
-        
-        
-        NSError *error = nil;
-        if ([managedObjectContext save:&error] == NO) {
-            NSAssert(NO, @"Error saving context parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        
-        NSLog(@"Before Fetch Survey Data");
-        //---To Fetch----
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Survey"];
-        [request setReturnsObjectsAsFaults:NO];
-        NSArray *resultsSurvey = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!resultsSurvey) {
-            NSLog(@"Error fetching Event objects parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from Survey MO  results %@",resultsSurvey);
-        //SurveyMO *surveyMOResults=(SurveyMO *)resultsSurvey[0];
-        
-        //NSLog(@"Return values from MO desc value %@",surveyMOResults.surveyData);
 
+        if([mandatoryFieldEmpty isEqualToString:@"Y"])
+        {
+            [CommonUtils showMessage:@"Please enter mandatory information" :self];
+            return;
+        }
+        
+        
+        //--------Get confirmation and save---
+        UIAlertController *alertController=[UIAlertController
+                             alertControllerWithTitle:@"Confirmation"
+                             message:[NSString stringWithFormat:@"Would you like to submit data?"]
+                             preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* okAction = [UIAlertAction
+                                   actionWithTitle:@"Yes"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       
+ 
+        
+                                SurveyMO *surveyMO = (SurveyMO *)[NSEntityDescription insertNewObjectForEntityForName:@"Survey" inManagedObjectContext:managedObjectContext];
+                                surveyMO.eventID=eventID;
+                                surveyMO.instituteID=instituteID;
+                                surveyMO.surveyData=surveyDataConcat;
+                                surveyMO.sync=@"N";
+                                surveyMO.surveyorID=[[NSUserDefaults standardUserDefaults] stringForKey:@"userid"];
+                                surveyMO.surveyDateTime=currentDateTime;
+                                surveyMO.eventName=eventName;
+                                surveyMO.surveyorName=[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+                                surveyMO.instituteName=instituteName;
+                                
+                                
+                                NSError *error = nil;
+                                if ([managedObjectContext save:&error] == NO) {
+                                    NSAssert(NO, @"Error saving context parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
+                                }
+                                
+                                
+                                //NSLog(@"Before Fetch Survey Data");
+                                //---To Fetch----
+                                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Survey"];
+                                //[request setReturnsObjectsAsFaults:NO];
+                                NSArray *resultsSurvey = [managedObjectContext executeFetchRequest:request error:&error];
+                                if (!resultsSurvey) {
+                                    NSLog(@"Error fetching Event objects parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
+                                }
+                                
+                                //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+                                //NSLog(@"Return values from Survey MO  results %@",resultsSurvey);
+                                //SurveyMO *surveyMOResults=(SurveyMO *)resultsSurvey[0];
+                                //NSLog(@"Return values from MO desc value %@",surveyMOResults.surveyData);
+                                
+
+                                [self clearScreen];
+                                [CommonUtils showMessage:@"Survey data saved" :self];
+                                
+                                                                          }];
+                
+                UIAlertAction* noAction = [UIAlertAction
+                                           actionWithTitle:@"No"
+                                           style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction * action)
+                                           {
+                                               
+                                               
+                                               
+                                           }];
+                
+                
+                [alertController addAction:okAction];
+                [alertController addAction:noAction];
+    
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+
+        
         
         
     }
@@ -4650,13 +4152,15 @@ static inline NSString* emptyStringIfNil(NSString *value) {
     return (value == (id)[NSNull null] || value.length == 0 )? value = @"":value; //value? value : @"";
 }
 
-static inline NSString* pathStringIfNil(NSString *value) {
-    
-    return ([value isEqualToString:@"Y"]? @"100" : @"0");
-}
+//static inline NSString* pathStringIfNil(NSString *value) {
+//    
+//    return ([value isEqualToString:@"Y"]? @"100" : @"0");
+//}
 
 ////Keyboard up
 ////03-May-2016
+//
+//#define kOFFSET_FOR_KEYBOARD 352.0
 //
 //-(void)keyboardWillShow {
 //    // Animate the current view out of the way
@@ -4698,11 +4202,11 @@ static inline NSString* pathStringIfNil(NSString *value) {
 //{
 //    [UIView beginAnimations:nil context:NULL];
 //    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
-//    
+//
 //    CGRect rect = self.view.frame;
 //    if (movedUp)
 //    {
-//        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+//        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard 
 //        // 2. increase the size of the view so that the area behind the keyboard is covered up.
 //        rect.origin.y -= kOFFSET_FOR_KEYBOARD;
 //        rect.size.height += kOFFSET_FOR_KEYBOARD;
@@ -4714,7 +4218,7 @@ static inline NSString* pathStringIfNil(NSString *value) {
 //        rect.size.height -= kOFFSET_FOR_KEYBOARD;
 //    }
 //    self.view.frame = rect;
-//    
+//
 //    [UIView commitAnimations];
 //}
 //
@@ -4724,14 +4228,14 @@ static inline NSString* pathStringIfNil(NSString *value) {
 //    [super viewWillAppear:animated];
 //    // register for keyboard notifications
 //    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillShow)
-//                                                 name:UIKeyboardWillShowNotification
-//                                               object:nil];
-//    
+//                                         selector:@selector(keyboardWillShow)
+//                                             name:UIKeyboardWillShowNotification
+//                                           object:nil];
+//
 //    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillHide)
-//                                                 name:UIKeyboardWillHideNotification
-//                                               object:nil];
+//                                         selector:@selector(keyboardWillHide)
+//                                             name:UIKeyboardWillHideNotification
+//                                           object:nil];
 //}
 //
 //- (void)viewWillDisappear:(BOOL)animated
@@ -4739,13 +4243,318 @@ static inline NSString* pathStringIfNil(NSString *value) {
 //    [super viewWillDisappear:animated];
 //    // unregister for keyboard notifications while not visible.
 //    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:UIKeyboardWillShowNotification
-//                                                  object:nil];
-//    
+//                                             name:UIKeyboardWillShowNotification
+//                                           object:nil];
+//
 //    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:UIKeyboardWillHideNotification
-//                                                  object:nil];
+//                                             name:UIKeyboardWillHideNotification
+//                                           object:nil];
 //}
+//
+////-----------end of textfield keyboard scroll up
+
+
+
+
+- (void)segmentControlAction:(UISegmentedControl *)segment
+{
+    // lazy load data for a segment choice (write this based on your data)
+    //[self fetchAccounts];//:segmentedControl.selectedSegmentIndex];
+    
+    
+    if(segmentedControl.selectedSegmentIndex == 0)
+    {
+     
+        
+  
+            screenView1.hidden=NO;
+            screenView2.hidden=YES;
+            screenView3.hidden=YES;
+
+
+        
+    }
+    else if(segmentedControl.selectedSegmentIndex == 1){
+        
+        
+
+            screenView1.hidden=YES;
+            screenView2.hidden=NO;
+            screenView3.hidden=YES;
+        
+    }
+    else if(segmentedControl.selectedSegmentIndex == 2){
+        
+        
+
+            screenView1.hidden=YES;
+            screenView2.hidden=YES;
+            screenView3.hidden=NO;
+        
+    }
+    else{
+    
+        
+            screenView1.hidden=NO;
+            screenView2.hidden=YES;
+            screenView3.hidden=YES;
+ 
+        
+    }
+    
+    [UIView  beginAnimations: @"Showinfo"context: nil];
+    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.75];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.navigationController.view cache:NO];
+    [UIView commitAnimations];
+
+}
+
+
+- (void) displayEventHeader{
+    
+    
+    UIView *headerView = [[UIView alloc] init];
+    //headerView.layer.borderWidth=1.0;
+    //    headerView.layer.borderColor=[UIColor borderBlueColor].CGColor;
+    //    headerView.layer.shadowRadius=10.0;
+    headerView.backgroundColor = [UIColor lightBlueColor];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];//[UIColor whiteColor];
+    headerView.layer.shadowOffset = CGSizeMake(0, 3);
+    headerView.layer.shadowRadius = 10.0;
+    headerView.layer.shadowColor = [UIColor grayColor].CGColor;
+    headerView.layer.shadowOpacity = 0.8;
+    headerView.layer.cornerRadius = 15.0;
+    //headerView.layer.doubleSided=YES;
+    headerView.translatesAutoresizingMaskIntoConstraints=NO;
+    [self.view addSubview:headerView];
+    
+    //create the frame that will contain our label
+    //CGRect labelFrame = CGRectMake(40, 60, 240, 80);
+    
+    //NSLog(@" frame width %lf",headerView.bounds.size.width);
+    //NSLog(@" frame height %lf",headerView.bounds.size.height);
+
+    
+    UIImageView *imageView =[[UIImageView alloc] init];//]WithFrame:CGRectMake(50,50,80,80)];
+    imageView.image=eventImage;
+    imageView.contentMode=UIViewContentModeCenter;
+    imageView.layer.masksToBounds=YES;
+    //[imageView.layer setBorderColor:[UIColor borderBlueColor].CGColor];
+    //[imageView.layer setBorderWidth:2.0f];
+    //[imageView.layer setCornerRadius:15.0f];
+    [imageView.layer setShadowColor:[UIColor grayColor].CGColor];
+    imageView.translatesAutoresizingMaskIntoConstraints=NO;
+    [headerView addSubview:imageView];
+    
+    
+    //move the frame position
+    //labelFrame.origin.y += labelFrame.size.height + 0.1f;
+    //headerView.bounds.origin.y +=  15.0f;
+    UILabel *lblEventName = [[UILabel alloc] init];//WithFrame:headerView.frame];
+    lblEventName = [[UILabel alloc] init];//WithFrame:headerView.frame];
+    lblEventName.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:50];//[UIFont systemFontOfSize:64.0f];
+    lblEventName.textAlignment =  NSTextAlignmentLeft;
+    lblEventName.textColor = [UIColor whiteColor];
+    //lblCustomerNumber.layer.borderColor = [UIColor blackColor].CGColor;
+    //lblCustomerNumber.layer.borderWidth = 1.0;
+    //lblEventName.text=[NSString stringWithFormat:@"%@",dashboardData.totalCASABalance];
+    lblEventName.text=[NSString stringWithFormat:@"%@",eventName];
+    lblEventName.translatesAutoresizingMaskIntoConstraints=NO;
+    [headerView addSubview:lblEventName];
+//    
+//    UILabel *lblCurrency = [[UILabel alloc] init];//WithFrame:headerView.frame];
+//    lblCurrency = [[UILabel alloc] init];//WithFrame:headerView.frame];
+//    lblCurrency.font = [UIFont fontWithName:@"HelveticaNeue" size:12];//[UIFont systemFontOfSize:64.0f];
+//    lblCurrency.textAlignment =  NSTextAlignmentLeft;
+//    lblCurrency.textColor = [UIColor whiteColor];
+//    //lblCurrency.text=dashboardData.accountCurrency;
+//    lblCurrency.text=eventID;
+//    lblCurrency.translatesAutoresizingMaskIntoConstraints=NO;
+//    [headerView addSubview:lblCurrency];
+//    
+    
+    UILabel *lblInstituteName = [[UILabel alloc] init];//WithFrame:headerView.frame];
+    lblInstituteName = [[UILabel alloc] init];//WithFrame:headerView.frame];
+    lblInstituteName.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+    lblInstituteName.textAlignment =  NSTextAlignmentLeft;
+    lblInstituteName.textColor = [UIColor whiteColor];
+    lblInstituteName.text= [NSString stringWithFormat:@"%@",instituteName];
+    lblInstituteName.translatesAutoresizingMaskIntoConstraints=NO;
+    [headerView addSubview:lblInstituteName];
+    
+    UIView *lineView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 200, self.view.bounds.size.width, 1)];
+    lineView.backgroundColor = [UIColor whiteColor];
+    lineView.translatesAutoresizingMaskIntoConstraints=NO;
+    [headerView addSubview:lineView];
+    
+    
+    //---header UIView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:headerView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.23 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:headerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.15 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:headerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.1 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:headerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.8 constant:0]];
+    
+    
+    
+    //---lblCIFNumber
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblEventName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterY multiplier:0.7 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblEventName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    //------currency
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblCurrency attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblCurrency attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    //---------available balance label
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblInstituteName attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterY multiplier:1.5 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblInstituteName attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    
+    //------line view----//
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterY multiplier:1.7 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeHeight multiplier:0.02 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:headerView attribute:NSLayoutAttributeWidth multiplier:0.6 constant:0]];
+
+
+   //------Image View----//
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.23 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:0.16 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.1 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.1 constant:0]];
+
+
+    
+}
+
+//Clear screen
+-(void) clearScreen{
+
+
+        UITextField *textField;
+        UITextView *textView;
+        UISwitch *switchComponent;
+
+        NSMutableArray *cells = [[NSMutableArray alloc] init];
+    
+        //-------TableViewPage1 clear screen-----
+        for (NSInteger j = 0; j < [tableViewPage1 numberOfSections]; ++j)
+        {
+            
+            for (NSInteger i = 0; i < [tableViewPage1 numberOfRowsInSection:j]; ++i)
+            {
+                if([tableViewPage1 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]] != nil)
+                {
+                    [cells addObject:[tableViewPage1 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+                }
+            }
+
+        }
+        //-------TableViewPage2 clear screen-----
+        for (NSInteger j = 0; j < [tableViewPage2 numberOfSections]; ++j)
+        {
+            
+            for (NSInteger i = 0; i < [tableViewPage2 numberOfRowsInSection:j]; ++i)
+            {
+                if([tableViewPage2 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]] != nil)
+                {
+                    [cells addObject:[tableViewPage2 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+                }
+            }
+
+        }
+        //-------TableViewPage3 clear screen-----
+        for (NSInteger j = 0; j < [tableViewPage3 numberOfSections]; ++j)
+        {
+            
+            for (NSInteger i = 0; i < [tableViewPage3 numberOfRowsInSection:j]; ++i)
+            {
+                if([tableViewPage3 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]] != nil)
+                {
+                    [cells addObject:[tableViewPage3 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]]];
+                }
+            }
+
+        }
+    
+        for (UITableViewCell *cell in cells)
+        {
+            for(UIView *view in cell.contentView.subviews)
+            {
+                if ([view isKindOfClass:[UITextField class]]) {
+                    
+                    textField = (UITextField *)view;
+                    
+                    textField.text=@"";
+                    
+                    
+                }
+                if ([view isKindOfClass:[UITextView class]]) {
+                    
+                    textView = (UITextView *)view;
+                    textView.text=@"";
+                    
+                    
+                }
+                if([view isKindOfClass:[UISwitch class]]){
+                    
+                    switchComponent=(UISwitch *)view;
+                    [self operateSwitchOFF:switchComponent];
+                }
+                
+                
+            }
+        }
+
+        //----assign keyvalue as SeqNo in the dictionary so that all SeqNo numbers will be captured initially
+        EventTemplateMO *eventTemplateDataMO;
+        for (int i=0; i<=resultsEventTemplate.count-1; i++)
+        {
+            eventTemplateDataMO=(EventTemplateMO *)resultsEventTemplate[i];
+            
+            //Store Survey Data
+            [surveyDataDictionary setObject:@"" forKey:eventTemplateDataMO.seqNo];
+
+        }
+
+        //move to page-1 after save
+        segmentedControl.selectedSegmentIndex = 0;
+    
+        //if more than one page then move to page-1
+        if(segmentedControl.numberOfSegments>1)
+        {
+            [self segmentControlAction:segmentedControl];
+        }
+
+}
+
+
+
+static inline NSString* removeSpecialCharacters(NSString *data)
+{
+
+    NSString *value;
+    value=emptyStringIfNil(data);
+    value=[value stringByReplacingOccurrencesOfString:@"|" withString:@""];
+    value=[value stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    return value;
+
+}
+
+
+
 
 @end
 

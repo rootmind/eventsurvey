@@ -11,3 +11,22 @@
 
 
 #endif /* SurveyData_h */
+
+#import <UIKit/UIKit.h>
+
+@interface SurveyData : NSObject
+
+- (id)initWithJSONDictionary:(NSDictionary *)jsonDictionary;
+
+@property (readonly) NSString *eventID;
+@property (readonly) NSString *sync;
+@property (readonly) NSString *instituteID;
+@property (readonly) NSString *surveyorID;
+@property (readonly) NSString *surveyData;
+@property (readonly) NSString *eventName;
+@property (readonly) NSString *surveyorName;
+@property (readonly) NSString *surveyDataTime;
+@property (readonly) NSString *instituteName;
+@property (readonly) NSString *recordFound;
+
+@end

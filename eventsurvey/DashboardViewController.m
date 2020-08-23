@@ -2098,14 +2098,14 @@
     
     
     
-    //if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-    //{
-        
-        DataSyncViewController *dataSyncViewController = [[DataSyncViewController alloc]initWithNibName:nil bundle:nil];
-
-        [self.navigationController pushViewController:dataSyncViewController animated:YES];
-        
-        
+//    //if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
+//    //{
+//        
+//        DataSyncViewController *dataSyncViewController = [[DataSyncViewController alloc]initWithNibName:nil bundle:nil];
+//
+//        [self.navigationController pushViewController:dataSyncViewController animated:YES];
+//        
+//        
         
     //}
     

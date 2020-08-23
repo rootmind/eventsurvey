@@ -21,7 +21,7 @@
 @end
 
 
-@interface PopoverViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating,UISplitViewControllerDelegate, NSFetchedResultsControllerDelegate>
+@interface PopoverViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISplitViewControllerDelegate, NSFetchedResultsControllerDelegate>
 
 
 @property (strong, nonatomic) NSString *userid;

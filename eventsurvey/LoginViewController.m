@@ -163,7 +163,7 @@ NSUInteger numberOfImages=3;
     
     
     lblUserid = [[UILabel alloc] init];
-    lblUserid.font = [UIFont systemFontOfSize:18];
+    lblUserid.font = [UIFont systemFontOfSize:23];
     lblUserid.text=@"User id";
     lblUserid.contentMode=UIControlContentHorizontalAlignmentLeft;
     lblUserid.translatesAutoresizingMaskIntoConstraints=NO;
@@ -172,7 +172,7 @@ NSUInteger numberOfImages=3;
     
     
     lblPassword = [[UILabel alloc] init];
-    lblPassword.font = [UIFont systemFontOfSize:18];
+    lblPassword.font = [UIFont systemFontOfSize:23];
     lblPassword.text=@"Password";
     lblPassword.contentMode=UIControlContentHorizontalAlignmentLeft;
     lblPassword.translatesAutoresizingMaskIntoConstraints=NO;
@@ -186,15 +186,16 @@ NSUInteger numberOfImages=3;
     txtUserid.layer.borderWidth=0.5;
     txtUserid.layer.borderColor=[UIColor blackColor].CGColor;
     txtUserid.layer.cornerRadius=5.0;
-    txtUserid.font = [UIFont systemFontOfSize:18];
+    txtUserid.font = [UIFont systemFontOfSize:23];
     txtUserid.placeholder = @"Enter userid";
     txtUserid.autocorrectionType = UITextAutocorrectionTypeNo;
+    txtUserid.autocapitalizationType = UITextAutocapitalizationTypeNone;
     txtUserid.keyboardType = UIKeyboardTypeDefault;
     txtUserid.returnKeyType = UIReturnKeyDone;
     txtUserid.clearButtonMode = UITextFieldViewModeWhileEditing;
     txtUserid.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     txtUserid.delegate = self;
-    txtUserid.text= @"mani";  //@"";
+    txtUserid.text= @"";  //@"";
     
     //    if(keychainUserid!=nil)
     //   {
@@ -209,9 +210,10 @@ NSUInteger numberOfImages=3;
     txtPassword.layer.borderWidth=0.5;
     txtPassword.layer.borderColor=[UIColor blackColor].CGColor;
     txtPassword.layer.cornerRadius=5.0;
-    txtPassword.font = [UIFont systemFontOfSize:18];
+    txtPassword.font = [UIFont systemFontOfSize:23];
     txtPassword.placeholder = @"Enter Password";
     txtPassword.autocorrectionType = UITextAutocorrectionTypeNo;
+    txtUserid.autocapitalizationType = UITextAutocapitalizationTypeNone;
     txtPassword.keyboardType = UIKeyboardTypeDefault;
     txtPassword.returnKeyType = UIReturnKeyDone;
     txtPassword.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -223,7 +225,7 @@ NSUInteger numberOfImages=3;
     //    }
     [txtPassword setSecureTextEntry:YES];
     txtPassword.delegate=self;
-    txtPassword.text=@"password";
+    txtPassword.text=@"";
     txtPassword.translatesAutoresizingMaskIntoConstraints=NO;
     [self.view addSubview:txtPassword];
     
@@ -259,7 +261,7 @@ NSUInteger numberOfImages=3;
     
     //Full screen width
     //20-Jun-2016
-    UIScrollView *scr=[[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/4, self.view.frame.size.height/2, self.view.frame.size.width/2, self.view.frame.size.width/3.5)];
+    UIScrollView *scr=[[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/4, self.view.frame.size.height/1.5, self.view.frame.size.width/2, self.view.frame.size.width/3.5)];
     //UIScrollView *scr=[[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/8, self.view.frame.size.height/2, self.view.frame.size.width/1.35, self.view.frame.size.width/2)];
     scr.tag = 1;
     scr.autoresizingMask=UIViewAutoresizingNone;
@@ -281,34 +283,46 @@ NSUInteger numberOfImages=3;
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblUserid attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.40 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblUserid attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-110]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblUserid attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-200]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.40 constant:0]];
+    //----
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.50 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.2 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0]];
     
-//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtUserid attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.05 constant:0]];
     
     //-------password
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblPassword attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.55 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblPassword attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.60 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblPassword attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-110]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lblPassword attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-200]];
+
+    //-------
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.55 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.70 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.2 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:txtPassword attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.05 constant:0]];
+
     
     //-----login button
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.70 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.90 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.2 constant:0]];
-    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btnLogin attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.05 constant:0]];
+
     
     //    //-------scroll
     //
@@ -428,8 +442,8 @@ NSUInteger numberOfImages=3;
     
     
     //20-Jun-2016
-      UIImageView *logoImage =[[UIImageView alloc] init];// initWithFrame:CGRectMake(50,50,80,80)];
-     logoImage.image=[UIImage imageNamed:@"logo.png"];
+     UIImageView *logoImage =[[UIImageView alloc] init];// initWithFrame:CGRectMake(50,50,80,80)];
+     logoImage.image=[UIImage imageNamed:@"loginlogo-icon.png"];
      logoImage.contentMode = UIViewContentModeScaleAspectFit;
      logoImage.layer.masksToBounds=YES;
      //[logoImage.layer setBorderColor:[UIColor grayColor].CGColor];
@@ -440,36 +454,36 @@ NSUInteger numberOfImages=3;
      [self.view addSubview:logoImage];
     
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.5 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.25 constant:0]];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:0.4 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.3 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0]];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.3 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:logoImage attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.5 constant:0]];
     
     
-    //20-Jun-2016
-    UIImageView *rclogoImage =[[UIImageView alloc] init];// initWithFrame:CGRectMake(50,50,80,80)];
-    rclogoImage.image=[UIImage imageNamed:@"rclogo.png"];
-    rclogoImage.contentMode = UIViewContentModeScaleAspectFit;
-    rclogoImage.layer.masksToBounds=YES;
-    //[logoImage.layer setBorderColor:[UIColor grayColor].CGColor];
-    //[logoImage.layer setBorderWidth:2.0f];
-    //[logoImage.layer setCornerRadius:15.0f];
-    //[logoImage.layer setShadowColor:[UIColor grayColor].CGColor];
-    rclogoImage.translatesAutoresizingMaskIntoConstraints=NO;
-    [self.view addSubview:rclogoImage];
-    
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.8 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:0.2 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.2 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.2 constant:0]];
-    
+//    //20-Jun-2016
+//    UIImageView *rclogoImage =[[UIImageView alloc] init];// initWithFrame:CGRectMake(50,50,80,80)];
+//    rclogoImage.image=[UIImage imageNamed:@"khalifa-logo.png"];
+//    rclogoImage.contentMode = UIViewContentModeScaleAspectFit;
+//    rclogoImage.layer.masksToBounds=YES;
+//    //[logoImage.layer setBorderColor:[UIColor grayColor].CGColor];
+//    //[logoImage.layer setBorderWidth:2.0f];
+//    //[logoImage.layer setCornerRadius:15.0f];
+//    //[logoImage.layer setShadowColor:[UIColor grayColor].CGColor];
+//    rclogoImage.translatesAutoresizingMaskIntoConstraints=NO;
+//    [self.view addSubview:rclogoImage];
+//    
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:0.25 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0]];
+//    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rclogoImage attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.5 constant:0]];
+//    
     
     
     //20-Jun-2016
@@ -972,12 +986,13 @@ NSUInteger numberOfImages=3;
         
         
 
+        userid=[self.txtUserid.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
-        NSLog(@"Login Before Fetch Users");
+        NSLog(@"Login Before Fetch Users %@",userid);
         //---To Fetch----
         NSFetchRequest *requestUsers= [NSFetchRequest fetchRequestWithEntityName:@"Users"];
-        [requestUsers setReturnsObjectsAsFaults:NO];
-        [requestUsers setPredicate:[NSPredicate predicateWithFormat:@"(userid == %@) AND (status==%@)", self.txtUserid.text,@"ACTIVE"]];
+        //[requestUsers setReturnsObjectsAsFaults:NO];
+        [requestUsers setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ && status == %@", self.userid,@"ACTIVE"]];
         NSArray *resultsUsers = [managedObjectContext executeFetchRequest:requestUsers error:&error];
         if (!resultsUsers) {
             NSLog(@"Error fetching Users objects parseResponseUsers: %@\n%@", [error localizedDescription], [error userInfo]);
@@ -985,7 +1000,7 @@ NSUInteger numberOfImages=3;
         
         //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
         
-        NSLog(@"Return values from Users MO  results %@",resultsUsers);
+        //NSLog(@"Return values from Users MO  results %@",resultsUsers);
         
         if([resultsUsers count]<=0)
         {
@@ -1021,7 +1036,10 @@ NSUInteger numberOfImages=3;
                             return;
                         }
                 
+                        NSLog(@"userid userName server %@,%@",users.userid,users.name);
+                        
                         userid=users.userid;
+                        userName=users.name;
                         lastLoginDate=users.lastLoginDate;
                         sessionid=users.sessionid;
                         userGroup=users.userGroup;
@@ -1037,299 +1055,32 @@ NSUInteger numberOfImages=3;
         else{
         
             UsersMO *usersMO=(UsersMO *)resultsUsers[0];
-            
-            userid=usersMO.userid;
-            userName=usersMO.name;
-            lastLoginDate=usersMO.lastLoginDate;
-            sessionid=usersMO.sessionid;
-            userGroup=usersMO.userGroup;
-
         
-            [self assignUserMenu];
+        
+            if([encryptedPassword isEqualToString:usersMO.password])
+            {
+            
+                userid=usersMO.userid;
+                NSLog(@"userid userName %@,%@",usersMO.userid,usersMO.name);
+                userName=usersMO.name;
+                lastLoginDate=usersMO.lastLoginDate;
+                sessionid=usersMO.sessionid;
+                userGroup=usersMO.userGroup;
+
+            
+                [self assignUserMenu];
+            }
+            else{
+            
+                [CommonUtils showMessage:@"Invalid userid or password":self];
+            
+            }
         
         
         }
         
      
-                //UITabBarController *detailTabBar = (UITabBarController *) self.splitViewController.viewControllers[1];
-                //UINavigationController *detailNavigationController = (UINavigationController *)detailTabBar.selectedViewController;
-                
-                
-        //        if([menuId length]<=0)
-        //        {
-        //            SearchViewController *searchViewController = [[SearchViewController alloc]initWithNibName:nil bundle:nil];
-        //            
-        //            [detailNavigationController pushViewController:searchViewController animated:YES];
-        //            return;
-        //        }
-                
-                
-//                if([menuId length]<=0)
-//                {
-//                    DashboardViewController *dashboardViewController = [[DashboardViewController alloc]initWithNibName:nil bundle:nil];
-//                    
-//                    [detailNavigationController pushViewController:dashboardViewController animated:YES];
-//                 
-//                }
-//                if([menuId isEqualToString:@"DASHBOARD"])
-//                {
-//                    DashboardViewController *dashboardViewController = [[DashboardViewController alloc]initWithNibName:nil bundle:nil];
-//                    
-//                    [detailNavigationController pushViewController:dashboardViewController animated:YES];
-//                    
-//                }
-//                
-//                else if([menuId isEqualToString:@"SEARCH"])
-//                {
-//        //            NSLog(@"To invoke search screen1 %@",menuId);
-//        //            
-//        //            SearchViewController *searchViewController = [[SearchViewController alloc]initWithNibName:nil bundle:nil];
-//        //            
-//        //            [detailNavigationController pushViewController:searchViewController animated:YES];
-//        //            
-//                }
-//                else if ([menuId isEqualToString:@"SA" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//                        PersonalViewController *personalViewController = [[PersonalViewController alloc]initWithNibName:nil bundle:nil];
-//                        personalViewController.actionMode=@"NEW";
-//                        //personalViewController.viewMode=@"N";
-//                        personalViewController.accountType=@"SA"; //Savings Account
-//                        personalViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:personalViewController animated:YES];
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"CA" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//                        PersonalViewController *personalViewController = [[PersonalViewController alloc]initWithNibName:nil bundle:nil];
-//                        personalViewController.actionMode=@"NEW";
-//                        //personalViewController.viewMode=@"N";
-//                        personalViewController.accountType=@"CA"; //Current Account
-//                        personalViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:personalViewController animated:YES];
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"FD" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//                        PersonalViewController *personalViewController = [[PersonalViewController alloc]initWithNibName:nil bundle:nil];
-//                        personalViewController.actionMode=@"NEW";
-//                        personalViewController.accountType=@"FD"; //Fixed Deposit
-//                        personalViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:personalViewController animated:YES];
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"PL" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//        //                PersonalLoanViewController *personalLoanViewController = [[PersonalLoanViewController alloc]initWithNibName:nil bundle:nil];
-//        //                personalLoanViewController.actionMode=@"NEW";
-//        //                personalLoanViewController.accountType=@"PL"; //Personal Loan
-//        //                personalLoanViewController.recordStatus=@"INPROGRESS";
-//        //                [detailNavigationController pushViewController:personalLoanViewController animated:YES];
-//        //                
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"AL" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//        //                
-//        //                AutoLoansViewController *autoLoansViewController = [[AutoLoansViewController alloc]initWithNibName:nil bundle:nil];
-//        //                autoLoansViewController.actionMode=@"NEW";
-//        //                autoLoansViewController.accountType=@"AL"; //Auto Loan
-//        //                autoLoansViewController.recordStatus=@"INPROGRESS";
-//        //                [detailNavigationController pushViewController:autoLoansViewController animated:YES];
-//        //                
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"CC" ]) //--Credit Card
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//        //                CreditCardViewController *creditCardViewController = [[CreditCardViewController alloc]initWithNibName:nil bundle:nil];
-//        //                creditCardViewController.actionMode=@"NEW";
-//        //                creditCardViewController.accountType=@"CC";
-//        //                creditCardViewController.recordStatus=@"INPROGRESS";
-//        //                [detailNavigationController pushViewController:creditCardViewController animated:YES];
-//        //                
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"QUEUEMAKER" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"UPDATE";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"QUEUEAPPROVER" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"APPROVER"]) {
-//
-//                        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"UPDATE";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"CREATE";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"IMAGEUPLOAD" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"]) {
-//                        
-//                        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"UPDATE";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                else if ([menuId isEqualToString:@"IMAGEVIEW" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"]) {
-//                        
-//                        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"UPDATE";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-        //        else if ([menuId isEqualToString:@"KYC" ])
-        //        {
-        //            
-        //            if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"]) {
-        //                
-        //                KYCViewController *kycViewController = [[KYCViewController alloc]initWithNibName:nil bundle:nil];
-        //                kycViewController.actionMode=@"NEW";
-        //                
-        //                [self.navigationController pushViewController:kycViewController animated:YES];
-        //                
-        //                
-        //            }
-        //            
-        //        }
-//                else if ([menuId isEqualToString:@"ENQUIRY" ])
-//                {
-//                    
-//                     QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"ENQUIRY";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//                        
-//        //                EnquiryViewController *enquiryViewController = [[EnquiryViewController alloc]initWithNibName:nil bundle:nil];
-//        //                enquiryViewController.actionMode=@"ENQUIRY";
-//        //                enquiryViewController.menuId=menuId;
-//        //                //enquiryViewController.recordStatus=@"INPROGRESS";
-//        //                [self.navigationController pushViewController:enquiryViewController animated:YES];
-//                        
-//                    
-//                    
-//                }
-//
-//                else if ([menuId isEqualToString:@"RO" ])
-//                {
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"])
-//                    {
-//                        
-//        //                RoDViewController *rodViewController = [[RoDViewController alloc]initWithNibName:nil bundle:nil];
-//        //                rodViewController.actionMode=@"NEW";
-//        //                rodViewController.accountType=@"AL"; //--Revolving Overdraft
-//        //                [detailNavigationController pushViewController:rodViewController animated:YES];
-//        //                
-//                        
-//                    }
-//                    
-//                }
-//
-//                else if ([menuId isEqualToString:@"SIGN" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"]) {
-//                        
-//                        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-//                        queueViewController.actionMode=@"UPDATE";
-//                        queueViewController.menuId=menuId;
-//                        queueViewController.recordStatus=@"INPROGRESS";
-//                        [detailNavigationController pushViewController:queueViewController animated:YES];
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                
-//                
-//                else if ([menuId isEqualToString:@"CHGPSWD" ])
-//                {
-//                    
-//                    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"userGroup"] isEqualToString:@"MAKER"]) {
-//                        
-//        //                PasswordViewController *passwordViewController = [[PasswordViewController alloc]initWithNibName:nil bundle:nil];
-//        //                //passwordViewController.actionMode=@"UPDATE";
-//        //                passwordViewController.menuId=menuId;
-//        //                //passwordViewController.recordStatus=@"INPROGRESS";
-//        //                [detailNavigationController pushViewController:passwordViewController animated:YES];
-//        //                
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                
+        
         
         
         
@@ -1387,44 +1138,52 @@ NSUInteger numberOfImages=3;
         if ([managedObjectContext save:&error] == NO) {
             NSAssert(NO, @"Error saving context parseResponseUserAuditMO: %@\n%@", [error localizedDescription], [error userInfo]);
         }
-        
-        
-        NSLog(@"Login Before Fetch UserAudit");
-        //---To Fetch----
-        NSFetchRequest *requestUserAudit= [NSFetchRequest fetchRequestWithEntityName:@"UserAudit"];
-        [requestUserAudit setReturnsObjectsAsFaults:NO];
-        //NSError *error = nil;
-        NSArray *resultsUserAudit = [managedObjectContext executeFetchRequest:requestUserAudit error:&error];
-        if (!resultsUserAudit) {
-            NSLog(@"Error fetching UserAudit objects parseResponseUserAudit: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        NSLog(@"Return values from UserAudit MO  results %@",resultsUserAudit);
-        
+//
+//        
+//        NSLog(@"Login Before Fetch UserAudit");
+//        //---To Fetch----
+//        NSFetchRequest *requestUserAudit= [NSFetchRequest fetchRequestWithEntityName:@"UserAudit"];
+//        //[requestUserAudit setReturnsObjectsAsFaults:NO];
+//        //NSError *error = nil;
+//        NSArray *resultsUserAudit = [managedObjectContext executeFetchRequest:requestUserAudit error:&error];
+//        if (!resultsUserAudit) {
+//            NSLog(@"Error fetching UserAudit objects parseResponseUserAudit: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        NSLog(@"Return values from UserAudit MO  results %@",resultsUserAudit);
+    
         
         //-------userMenu------
         
-        NSLog(@"Login Before Fetch UserMenu");
-        //---To Fetch----
-        NSFetchRequest *requestUserMenu= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
-        [requestUserMenu setReturnsObjectsAsFaults:NO];
-        //NSError *error = nil;
-        NSArray *resultsUserMenu = [managedObjectContext executeFetchRequest:requestUserMenu error:&error];
-        if (!resultsUserMenu) {
-            NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)resultsUserMenu[0];
-        
-        NSLog(@"Return values from UserMenu MO  results %@",resultsUserMenu);
-        //MST_UserMenuMO *userMenuMO=(MST_UserMenuMO *)results[0];
-        
-        // NSLog(@"Return values from MO UserMenuMO desc value %@\n%@",userMenuMO.menuID, userMenuMO.desc);
-        
-        QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:queueViewController animated:YES];
+//        NSLog(@"Login Before Fetch UserMenu");
+//        //---To Fetch----
+//        NSFetchRequest *requestUserMenu= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
+//        //NSError *error=nil;
+//        //[requestUserMenu setReturnsObjectsAsFaults:NO];
+//        [requestUserMenu setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ && menuID == %@", self.userid,@"SURVEY"]];
+//        NSArray *resultsUserMenu = [managedObjectContext executeFetchRequest:requestUserMenu error:&error];
+//        if (!resultsUserMenu) {
+//            NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        //MST_EventMO *eventDataMO=(MST_EventMO *)resultsUserMenu[0];
+//        
+//        //NSLog(@"Return values from UserMenu MO  results %@",resultsUserMenu);
+//        //MST_UserMenuMO *userMenuMO=(MST_UserMenuMO *)results[0];
+//        
+//        // NSLog(@"Return values from MO UserMenuMO desc value %@\n%@",userMenuMO.menuID, userMenuMO.desc);
+//    
+//        if([resultsUserMenu count] >0)
+//        {
+            QueueViewController *queueViewController = [[QueueViewController alloc]initWithNibName:nil bundle:nil];
+            [self.navigationController pushViewController:queueViewController animated:YES];
+//        }
+//        else
+//        {
+//            [CommonUtils showMessage:@"You don't have access rights on Survey" :self];
+//        
+//        }
 
-        
         
     }
     

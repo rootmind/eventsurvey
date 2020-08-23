@@ -15,7 +15,9 @@
 #import "UIColor+Constants.h"
 #import "UIImage+Constants.h"
 #import "QueueViewController.h"
-
+#import "StatusViewController.h"
+#import "SurveyData.h"
+#import <QuartzCore/CALayer.h>
 
 
 
@@ -100,12 +102,23 @@
 //
 //@synthesize menuId;
 
+@synthesize tableView;
+
 @synthesize managedObjectContext;
 @synthesize managedObjectModel;
 @synthesize persistentStoreCoordinator;
 
 @synthesize eventDataArray;
 @synthesize resultsEvent;
+@synthesize tabBar;
+@synthesize surveyDataArray;
+@synthesize surveyData;
+
+@synthesize userMenuAccess;
+
+@synthesize dateFormatter;
+@synthesize currentDate;
+@synthesize eventImage;
 
 //int hours, minutes, seconds,secondsLeft;
 
@@ -127,15 +140,26 @@
     //[self.splitViewController.displayModeButtonItem action];
     
     
-    //self.navigationItem.title=@"Queue";
+    self.navigationItem.title=@"Event Queue";
     
     
     [CommonUtils loadActivityIndicator:self];
     
     
     
-    
-    
+//    self.tabBar=[[UITabBarController alloc]init];
+//    
+//    StatusViewController *statusViewController=[[StatusViewController alloc]initWithNibName:nil bundle:nil];
+//    statusViewController.title=@"Status";
+//    
+//    statusViewController.tabBarItem.image=[[UIImage imageNamed:@"home-icon.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//
+//    UINavigationController *statusNavigationController = [[UINavigationController alloc] initWithRootViewController:statusViewController];
+//
+//    self.tabBar.viewControllers=[NSArray arrayWithObjects:statusNavigationController, nil];
+//
+//
+//    [self.view addSubview:self.tabBar.view];
     
     /*UIImageView *wallet =[[UIImageView alloc] initWithFrame:CGRectMake(50,50,80,80)];
      wallet.image=[UIImage imageNamed:@"money-wallet-icon.png"];
@@ -217,17 +241,17 @@
     [self.view addSubview:screenView];
     
     //---Screen UIView
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.05 constant:0]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.86 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.90 constant:0]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:screenView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.97 constant:0]];
     
     
     //UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
     //tableView.autoresizingMask =UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     tableView.delegate = self;
@@ -403,12 +427,10 @@
     
     self.navigationItem.rightBarButtonItem =rightNavButton ;
     
-    UIBarButtonItem* leftNavButton=[[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(deleteSurveyData)];
+    UIBarButtonItem* leftNavButton=[[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
     
     self.navigationItem.leftBarButtonItem =leftNavButton ;
 
-    
-    
     
     CoreDataController *coreDataController=[CoreDataController sharedCoreDataController];
 
@@ -437,19 +459,28 @@
 //    NSLog(@"Return values from Queue EventUser MO  results %@",eventUserDataMO.description);
     
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd/MM/yyyy"];
+    //-----Current Date
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    dateFormatter.timeZone = [NSTimeZone systemTimeZone];
+    NSString *strCurrentDate = [dateFormatter stringFromDate:[NSDate date]];
+    currentDate = [dateFormatter dateFromString:strCurrentDate];
+    NSLog(@"Current Date %@",currentDate);
     
-    NSString *currentDateTime = [formatter stringFromDate:[NSDate date]];
     
-    NSLog(@"Queue Before Fetch Event %@",currentDateTime);
     //---To Fetch----
     NSFetchRequest *requestEvent = [NSFetchRequest fetchRequestWithEntityName:@"MST_Event"];
-    [requestEvent setReturnsObjectsAsFaults:NO];
+    //[requestEvent setReturnsObjectsAsFaults:NO];
     
     NSLog(@"userid filter %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]));
     
-    [requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ AND startDate >= %@ AND %@ <= expiryDate1 ",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]),currentDateTime,currentDateTime]];
+    //[requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ AND startDate >= %@ AND %@ <= expiryDate1 ",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]),currentDateTime,currentDateTime]];
+    
+    [requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ AND dtStartDate <= %@ AND %@ <= dtExpiryDate",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]),currentDate,currentDate]];
+
+
+    //[requestEvent setPredicate:[NSPredicate predicateWithFormat:@"userid == %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"])]];
+
 
     resultsEvent = [managedObjectContext executeFetchRequest:requestEvent error:&error];
     if (!resultsEvent) {
@@ -458,10 +489,18 @@
     
     //MST_expiry *eventDataMO=(MST_EventMO *)results[0];
     
-    NSLog(@"Return values from Event MO  results %@",resultsEvent);
+    //NSLog(@"Return values from Event MO  results %@",resultsEvent);
     //MST_EventMO *eventDataMO=(MST_EventMO *)resultsEvent[0];
     
     //NSLog(@"Return values from MO desc value %@",eventDataMO.desc);
+    
+    
+ 
+    
+    
+    
+    
+    
     
 //    NSLog(@"Before Fetch Users");
 //    //---To Fetch----
@@ -532,7 +571,7 @@
     
     
     
-    [self doValidate];
+    //[self doValidate];
     
     //[self initializeFetchedResultsController];
     
@@ -545,6 +584,30 @@
     
     //self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", accountName.count];
     
+    
+    NSLog(@"Before Fetch UserMenu");
+    //---To Fetch----
+    NSFetchRequest *requestUserMenu= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
+    //[request setReturnsObjectsAsFaults:NO];
+    [requestUserMenu setPredicate:[NSPredicate predicateWithFormat:@"userid == %@ AND menuID == %@ AND assignFlag == %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"]), @"SURVEY", @"Y"]];
+    NSArray *resultsUserMenu = [managedObjectContext executeFetchRequest:requestUserMenu error:&error];
+    if (!resultsUserMenu) {
+        NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+
+    if([resultsUserMenu count]>0)
+    {
+        userMenuAccess=@"Y";
+    }
+    else
+    {
+        userMenuAccess=@"N";
+    
+    }
+    //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+
+    //NSLog(@"Return values from UserMenu MO  results %@",resultsUserMenu);
+
     
     
     
@@ -744,21 +807,27 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    return 100;
+    return 150;
 
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    
-    return nil;
+    if(section == 0)
+    {
+        
+        return [NSString stringWithFormat:@"     Userid:%@\n     User Name:%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"userid"],[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]];
+        
+    }
+    else
+        return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section ==0)
     {
-        return 0.00f;
+        return 50.00f;
     }
     return 15.0f;
 }
@@ -793,25 +862,23 @@
      
      }*/
     
-    cell.backgroundColor=[UIColor pumice];//[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];//[UIColor lightGrayColor];
-    cell.layer.borderWidth=0.5f;
-    cell.layer.cornerRadius=15.0f;
-    cell.layer.borderColor=[UIColor borderColor].CGColor;
-    cell.layer.shadowRadius=3.0f;
-    cell.layer.shadowOffset = CGSizeMake(0, 3);
-    cell.layer.shadowColor = [UIColor blackColor].CGColor;
-    cell.layer.shadowOpacity = 0.8;
     
-    
-    //NSString *selectedFriend =[NSString initWithFormat @"%@", [[friends objectAtIndex: storyIndex] objectForKey: @"firstname"]];
-    
-    UIFont *myFont = [UIFont boldSystemFontOfSize:14.0f];//[ UIFont fontWithName: @"Arial-BoldMT" size: 14.0 ];
-    cell.textLabel.font  = myFont;
-    //cell.textLabel.textColor=[UIColor blueColor];
-    UIFont *mySecondFont = [UIFont boldSystemFontOfSize:10.0f]; //[ UIFont fontWithName: @"Arial-BoldMT" size: 12.0 ];
-    cell.detailTextLabel.font  = mySecondFont;
-    //cell.detailTextLabel.textColor=[UIColor blueColor];
-    
+
+//        NSDate *startDate=[dateFormatter dateFromString:eventDataMO.startDate];
+//        NSDate *expiryDate=[dateFormatter dateFromString:eventDataMO.expiryDate1];
+//
+//        NSLog(@"Start DateMO %@",eventDataMO.startDate);
+//        NSLog(@"Expiry DateMO %@",eventDataMO.expiryDate1);
+//
+//        NSLog(@"Start Date %@",startDate);
+//        NSLog(@"Expiry Date %@",expiryDate);
+//        NSLog(@"Current Date %@",currentDate);
+//
+//    
+//        if(currentDate >= startDate && currentDate <= expiryDate)
+//        {
+
+        //}
     
     //top shadow
     //UIView *topShadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 10)];
@@ -826,11 +893,6 @@
     
     //UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(3,2, 20, 25)];
     //imv.image=[UIImage imageNamed:@"money-wallet-icon.png"];
-    
-    //cell.imageView.image=[[UIImage imageNamed:@"briefcase.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    
-    
     
     //    CAGradientLayer *gradient = [CAGradientLayer layer];
     //    gradient.frame = cell.bounds;
@@ -856,7 +918,6 @@
     //personalData = [personalArray objectAtIndex:indexPath.section];
     
     
-    MST_EventMO *eventDataMO=(MST_EventMO *)resultsEvent[indexPath.section];
     
     
     
@@ -871,10 +932,8 @@
 //    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",personalData.recordStatus];
     //cell.detailTextLabel.numberOfLines=2;
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ \n%@ \n%@ \nStartDate:%@ EndDate:%@",eventDataMO.code, eventDataMO.desc, eventDataMO.instituteName, eventDataMO.startDate,eventDataMO.expiryDate1];
-    cell.textLabel.numberOfLines=0;
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ \n%@",eventDataMO.userid,eventDataMO.status];
+    
     
     
     
@@ -885,32 +944,116 @@
 
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView1 cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+
+    @try{
+    
+    
+
     static NSString *MyIdentifier = @"MyReuseIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    UITableViewCell *cell = [tableView1 dequeueReusableCellWithIdentifier:MyIdentifier];
     
     
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:MyIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        //cell.accessoryType = UITableViewCellAccessoryNone;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:MyIdentifier];
         
-        UIView *bgColorView = [[UIView alloc] init];
-        bgColorView.backgroundColor = [UIColor lightBluishColor];
-        bgColorView.layer.masksToBounds = YES;
-        cell.selectedBackgroundView = bgColorView;
+            //cell.accessoryView = [UIImageView accessoryImage];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+
+
+
+            MST_EventMO *eventDataMO=(MST_EventMO *)resultsEvent[indexPath.section];
+    
+            cell.backgroundColor=[UIColor whiteColor];
+            cell.layer.borderWidth=0.5f;
+            cell.layer.cornerRadius=15.0f;
+            cell.layer.borderColor=[UIColor borderColor].CGColor;
+            cell.layer.shadowRadius=3.0f;
+            cell.layer.shadowOffset = CGSizeMake(0, 3);
+            cell.layer.shadowColor = [UIColor blackColor].CGColor;
+            cell.layer.shadowOpacity = 0.8;
+            
+            
+            //NSString *selectedFriend =[NSString initWithFormat @"%@", [[friends objectAtIndex: storyIndex] objectForKey: @"firstname"]];
+            
+            UIFont *firstFont = [ UIFont fontWithName: @"HelveticaNeue-Light" size: 36.0 ];
+            cell.textLabel.font  = firstFont;
+            cell.textLabel.textColor=[UIColor blueColor];
+            UIFont *secondFont = [ UIFont fontWithName: @"HelveticaNeue-Light" size: 18.0 ]; //[UIFont boldSystemFontOfSize:18.0f]; //
+            cell.detailTextLabel.font  = secondFont;
+            cell.detailTextLabel.textColor=[UIColor grayColor];
         
-           cell.accessoryView = [UIImageView accessoryImage];
+
+            if([eventDataMO.imageFound isEqualToString:@"Y"])
+            {
+                cell.imageView.image= [CommonUtils resizeImage:[UIImage imageWithData:eventDataMO.image]:100 :100];
+                
+                
+                //[[UIImage imageWithData:eventDataMO.image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            }
+            else
+            {
+                cell.imageView.image= [CommonUtils resizeImage:[UIImage imageNamed:@"companylogo-icon.png"]:100 :100];
+                
+                //[[UIImage imageNamed:@"companylogo-icon.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            }
+            //cell.imageView.image=eventImage;
+            //cell.imageView.layer.cornerRadius=eventImage.size.width/2;
+            //cell.imageView.layer.borderColor=[UIColor grayColor].CGColor;
+            //cell.imageView.layer.borderWidth=0.5;
+            cell.imageView.layer.masksToBounds=YES;
+
+
+            //--------------Disply Survey Data Count----
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Survey"];
+            NSError *error=nil;
+            [request setPredicate:[NSPredicate predicateWithFormat:@"eventID == %@ AND instituteID == %@ AND sync == %@",eventDataMO.code,eventDataMO.instituteID, @"N"]];
+            
+            NSArray *resultsSurveyData = [managedObjectContext executeFetchRequest:request error:&error];
+            if (!resultsSurveyData) {
+                NSLog(@"Error fetching buildJSONSaveSurveyData objects parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
+            }
+            
+            //NSLog(@"buildJSONSaveSurveyData results %@",resultsSurveyData);
+           
+           
+            
+//            cell.textLabel.text = [NSString stringWithFormat:@"%@ \n%@ \n%@ \nStartDate:%@\nEndDate:%@\nSurvey Data Pending Sync : %ld %@",eventDataMO.code, eventDataMO.desc, eventDataMO.instituteName, eventDataMO.startDate,eventDataMO.expiryDate1,(unsigned long)[resultsSurveyData count],  eventDataMO.imageFound];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", eventDataMO.desc];
+            cell.textLabel.numberOfLines=0;
+        
+            //cell.detailTextLabel.text = [NSString stringWithFormat:@"Survey Data Pending Sync : %ld \n%@ \n%@",(unsigned long)[resultsSurveyData count],eventDataMO.userid,eventDataMO.status];
+        
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %ld",eventDataMO.instituteName,(unsigned long)[resultsSurveyData count]];
         
     }
     
+//    UIView *bgColorView = [[UIView alloc] init];
+//    bgColorView.backgroundColor = [UIColor lightBluishColor];
+//    bgColorView.layer.masksToBounds = YES;
+//    cell.selectedBackgroundView = bgColorView;
     
-    //cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
     
     return cell;
+    
+    
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"Exception in cellForRowAtIndexPath %@ reason %@ " , [exception name], [exception reason]);
+        
+        [CommonUtils showMessage:[exception reason] :self];
+    }
+    @finally {
+        
+        NSLog(@"finally in cellForRowAtIndexPath");
+    }
 }
 
 
@@ -931,26 +1074,41 @@
     //                                               animated:YES];
     //    }
     
-    
-    
-    NSUInteger row = indexPath.section;//row;
-    
-    MST_EventMO *eventDataMO=(MST_EventMO *)resultsEvent[indexPath.section];
 
-    //[NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
-    
-    if (row != NSNotFound)
+    if([userMenuAccess isEqualToString:@"Y"])
     {
+        NSUInteger row = indexPath.section;//row;
         
-        SurveyViewController *surveyViewController = [[SurveyViewController alloc]initWithNibName:nil bundle:nil];
-        surveyViewController.eventID=eventDataMO.code;
-        surveyViewController.eventName=eventDataMO.desc;
-        surveyViewController.instituteID=eventDataMO.instituteID;
-        surveyViewController.instituteName=eventDataMO.instituteName;
-        
-        [self.navigationController pushViewController:surveyViewController animated:YES];
+        MST_EventMO *eventDataMO=(MST_EventMO *)resultsEvent[indexPath.section];
 
         
+        if (row != NSNotFound)
+        {
+            
+            SurveyViewController *surveyViewController = [[SurveyViewController alloc]initWithNibName:nil bundle:nil];
+            surveyViewController.eventID=eventDataMO.code;
+            surveyViewController.eventName=eventDataMO.desc;
+            surveyViewController.instituteID=eventDataMO.instituteID;
+            surveyViewController.instituteName=eventDataMO.instituteName;
+            surveyViewController.eventImage=[[UIImage imageWithData:eventDataMO.image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            //[self.navigationController pushViewController:surveyViewController animated:YES];
+            
+            
+            [UIView  beginAnimations: @"Showinfo"context: nil];
+            [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+            [UIView setAnimationDuration:0.75];
+            [self.navigationController pushViewController:surveyViewController animated:NO];
+            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
+            [UIView commitAnimations];
+
+        }
+
+    }
+    else
+    {
+        [CommonUtils showMessage:@"You don't have access to survey" :self];
+    }
         
         //personalData = [personalArray objectAtIndex:indexPath.section];
         
@@ -1001,7 +1159,6 @@
 //        }
 
 
-    }
     
     
     //[NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
@@ -1013,27 +1170,27 @@
 - (void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath{
     
 }
-- (void) doValidate {
-    
-    // ------validation starts---------
+//- (void) doValidate {
+//    
+//    // ------validation starts---------
+//
+//    [NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
+//    
+//    [self buildJSON];
+//    
+//    [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
+//    
+//}
 
-    [NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
-    
-    [self buildJSON];
-    
-    [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
-    
-}
-
-- (void) buildJSON {
-    
-    
-    //NSDictionary *jsonDictionary;
-    //NSData *newData;
-    
-    @try{
-        
-        
+//- (void) buildJSON {
+//    
+//    
+//    //NSDictionary *jsonDictionary;
+//    //NSData *newData;
+//    
+//    @try{
+//        
+//        
 //            NSManagedObjectContext *managedObjectContext = ((CoreDataController *) [UIApplication sharedApplication].delegate).managedObjectContext;
 //     
 //            MST_Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"MST_Event" inManagedObjectContext:managedObjectContext];
@@ -1150,24 +1307,24 @@
         
 
         
-    }
-    @catch (NSException *exception) {
-        
-        NSLog(@"Exception in buildJSON code %@ reason %@ " , [exception name], [exception reason]);
-        
-        [CommonUtils showMessage:[exception reason] :self];
-        
-     
-    }
-    @finally {
-        
-        [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
-        
-        NSLog(@"finally in buildJSON Code");
-    }
-    
-    
-}
+//    }
+//    @catch (NSException *exception) {
+//        
+//        NSLog(@"Exception in buildJSON code %@ reason %@ " , [exception name], [exception reason]);
+//        
+//        [CommonUtils showMessage:[exception reason] :self];
+//        
+//     
+//    }
+//    @finally {
+//        
+//        [NSThread detachNewThreadSelector:@selector(stopActivityIndicator) toTarget:self withObject:nil];
+//        
+//        NSLog(@"finally in buildJSON Code");
+//    }
+//    
+//    
+//}
 //- (void) parseResponse:(NSData *) data :(NSString *)methodAction :(NSString *) dataFile{
 //    
 //    
@@ -1810,23 +1967,41 @@ static inline NSString* emptyStringIfNil(NSString *value) {
     NSLog(@"download clicked");
     
     //[NSThread detachNewThreadSelector:@selector(startActivityIndicator) toTarget:self withObject:nil];
+    //NSString *status=@"";
+    //dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    //Background Thread
+    
+
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            
+            //self.navigationItem.title=@"Event Queue";
+            //self.navigationItem.title=@"Start Users";
+            [self buildJSONUsers];
+            //[CommonUtils showMessage:@"buildJSONUsers" :self];
+            //self.navigationItem.title=@"Start UserMenu";
+            [self buildJSONUserMenu];
+            //self.navigationItem.title=@"Start Event";
+            [self buildJSONEvent];
+            //[CommonUtils showMessage:@"buildJSONEvent" :self];
+            //self.navigationItem.title=@"Start Event Template";
+            [self buildJSONEventTemplate];
+            //[CommonUtils showMessage:@"buildJSONEventTemplate" :self];
+            //self.navigationItem.title=@"Start List Master";
+            [self buildJSONListMaster];
+            //[CommonUtils showMessage:@"buildJSONListMaster" :self];
+            //[CommonUtils showMessage:@"buildJSONSaveSurveyData" :self];
+            //self.navigationItem.title=@"Start Save Survey";
+            [self buildJSONSaveSurveyData];
+            
+            //[tableView reloadData];
+                
+        });
+    //});
     
     
-    //Download MST_Event data
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self buildJSONEvent];
-        //[CommonUtils showMessage:@"buildJSONEvent" :self];
-        [self buildJSONEventTemplate];
-        //[CommonUtils showMessage:@"buildJSONEventTemplate" :self];
-        [self buildJSONListMaster];
-        //[CommonUtils showMessage:@"buildJSONListMaster" :self];
-        [self buildJSONSaveSurveyData];
-        //[CommonUtils showMessage:@"buildJSONSaveSurveyData" :self];
-        [self buildJSONUsers];
-        //[CommonUtils showMessage:@"buildJSONUsers" :self];
-        [self buildJSONUserMenu];
-        //[CommonUtils showMessage:@"buildJSONUserMenu" :self];
-    });
+    [CommonUtils showMessage:@"Sync completed" :self];
     
     //[self buildJSONEventUser];
     // [self buildJSONInstitute];
@@ -1888,7 +2063,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         NSMutableArray *eventDataDownloadArray = [[NSMutableArray alloc] init];
         EventData *eventData=nil;
         
-
+        
         if([dataDictionary count]>0)
         {
             NSArray *array = [dataDictionary objectForKey:dataFile];
@@ -1938,13 +2113,19 @@ static inline NSString* emptyStringIfNil(NSString *value) {
                 eventMO.instituteID=eventData.instituteID;
                 eventMO.instituteName=eventData.instituteName;
                 eventMO.startDate=eventData.startDate;
-                 NSLog(@"Queue eventData.expiryDate  %@",eventData.expiryDate);
-                //eventMO.expiryDate=eventData.expiryDate;
-                
-                
-                
-                
-                NSLog(@"Results in EventMO Save %@",eventMO.desc);
+                //NSLog(@"Queue eventData.expiryDate  %@",eventData.expiryDate);
+                eventMO.expiryDate1=eventData.expiryDate;
+                eventMO.dtStartDate=[dateFormatter dateFromString:eventData.startDate];
+                eventMO.dtExpiryDate=[dateFormatter dateFromString:eventData.expiryDate];
+                NSLog(@"dtStartDate %@",eventMO.dtStartDate);
+                NSLog(@"dtExpiryDate %@",eventMO.dtExpiryDate);
+                NSLog(@"eventData.imageFound %@",eventData.imageFound);
+                eventMO.imageFound=eventData.imageFound;
+                //eventMO.avatarImageFound=eventData.avatarImageFound;
+                if([eventData.imageFound isEqualToString:@"Y"])
+                {
+                    eventMO.image=[[NSData alloc] initWithBase64EncodedString:eventData.image options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                }
                 
             }
         }
@@ -1952,19 +2133,20 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         if ([managedObjectContext save:&error] == NO) {
             NSAssert(NO, @"Error saving context parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
         }
-        
+
         
         NSLog(@"Before Fetch Event");
         //---To Fetch----
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MST_Event"];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
+        [request setPredicate:[NSPredicate predicateWithFormat:@"userid == %@",emptyStringIfNil([[NSUserDefaults standardUserDefaults] stringForKey:@"userid"])]];
+        resultsEvent = [managedObjectContext executeFetchRequest:request error:&error];
+        if (!resultsEvent) {
             NSLog(@"Error fetching Event objects parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
         }
         
         //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
         
-        NSLog(@"Return values from Event MO  results %@",results);
+        //NSLog(@"Return values from Event MO  results %@",results);
         //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
         
         //NSLog(@"Return values from MO desc value %@",eventDataMO.desc);
@@ -2076,6 +2258,8 @@ static inline NSString* emptyStringIfNil(NSString *value) {
             eventTemplateMO.fieldName=eventTemplateData.fieldName;
             eventTemplateMO.status= eventTemplateData.status;
             eventTemplateMO.listTableName=eventTemplateData.listTableName;
+            eventTemplateMO.maxLength=eventTemplateData.maxLength;
+            eventTemplateMO.pageNo=eventTemplateData.pageNo;
             eventTemplateMO.makerID=eventTemplateData.makerID;
             //eventTemplateMO.makerDateTime=eventTemplateData.makerDateTime;
             eventTemplateMO.modifierID=eventTemplateData.modifierID;
@@ -2094,17 +2278,17 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         
         
-        NSLog(@"Before Fetch EventTemplate");
-        //---To Fetch----
-        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_EventTemplate"];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
-            NSLog(@"Error fetching EventTemplate objects parseResponseEventTemplate: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from EventTemplate MO  results %@",results);
+//        NSLog(@"Before Fetch EventTemplate");
+//        //---To Fetch----
+//        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_EventTemplate"];
+//        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+//        if (!results) {
+//            NSLog(@"Error fetching EventTemplate objects parseResponseEventTemplate: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+//        
+//        NSLog(@"Return values from EventTemplate MO  results %@",results);
         //EventTemplateMO *eventTemplateDataMO=(EventTemplateMO *)results[0];
         
         //NSLog(@"Return values from MO desc value %@",eventTemplateDataMO.component);
@@ -2226,18 +2410,18 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         
         
-        NSLog(@"Before Fetch ListMaster");
-        //---To Fetch----
-        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_ListMaster"];
-        [request setReturnsObjectsAsFaults:NO];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
-            NSLog(@"Error fetching ListMaster objects parseResponseListMaster: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from ListMaster MO  results %@",results);
+//        NSLog(@"Before Fetch ListMaster");
+//        //---To Fetch----
+//        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_ListMaster"];
+//        [request setReturnsObjectsAsFaults:NO];
+//        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+//        if (!results) {
+//            NSLog(@"Error fetching ListMaster objects parseResponseListMaster: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+//        
+//        NSLog(@"Return values from ListMaster MO  results %@",results);
         //MST_ListMasterMO *listMasterDataMO=(MST_ListMasterMO *)results[0];
         
         //NSLog(@"Return values from MO ListMaster desc value %@",listMasterDataMO.tableName);
@@ -2338,43 +2522,47 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         //---To Insert----
         
-        for (int i=0; i<=usersDataArray.count-1; i++) {
+            NSError *error = nil;
             
-            UsersMO *usersMO = (UsersMO *)[NSEntityDescription insertNewObjectForEntityForName:@"Users" inManagedObjectContext:managedObjectContext];
-            
-            usersData = [usersDataArray objectAtIndex:i];
-            
-            usersMO.userid=usersData.userid;
-            usersMO.password=usersData.password;
-            usersMO.name=usersData.name;
-            usersMO.status=usersData.status;
-            usersMO.lastLoginDate=usersData.lastLoginDate;
-            usersMO.userGroup=usersData.userGroup;
-            usersMO.sessionid=usersData.sessionid;
-            
-            //NSLog(@"Results %@",eventMO.desc);
-            
-        }
+            for (int i=0; i<=usersDataArray.count-1; i++) {
+                
+                UsersMO *usersMO = (UsersMO *)[NSEntityDescription insertNewObjectForEntityForName:@"Users" inManagedObjectContext:managedObjectContext];
+                
+                usersData = [usersDataArray objectAtIndex:i];
+                
+                usersMO.userid=usersData.userid;
+                usersMO.password=usersData.password;
+                NSLog(@"Before Insert Users %@ %@",usersData.userid,usersData.name);
+                usersMO.name=usersData.name;
+                usersMO.status=usersData.status;
+                usersMO.lastLoginDate=usersData.lastLoginDate;
+                usersMO.userGroup=usersData.userGroup;
+                usersMO.sessionid=usersData.sessionid;
+                
+
+            }
         
-        NSError *error = nil;
-        if ([managedObjectContext save:&error] == NO) {
+                        //NSLog(@"Results %@",eventMO.desc);
+            if ([managedObjectContext save:&error] == NO) {
             NSAssert(NO, @"Error saving context parseResponseUsers: %@\n%@", [error localizedDescription], [error userInfo]);
         }
         
+
+
         
         
-        NSLog(@"Before Fetch Users");
-        //---To Fetch----
-        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"Users"];
-        [request setReturnsObjectsAsFaults:NO];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
-            NSLog(@"Error fetching Users objects parseResponseUsers: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from Users MO  results %@",results);
+//        NSLog(@"Before Fetch Users");
+//        //---To Fetch----
+//        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"Users"];
+//        [request setReturnsObjectsAsFaults:NO];
+//        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+//        if (!results) {
+//            NSLog(@"Error fetching Users objects parseResponseUsers: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+//        
+//        NSLog(@"Return values from Users MO  results %@",results);
         //UsersMO *usersMO=(UsersMO *)results[0];
         
         //NSLog(@"Return values from MO UsersMO desc value %@\n%@",usersMO.userid, usersMO.userGroup);
@@ -2498,18 +2686,18 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         
         
-        NSLog(@"Before Fetch UserMenu");
-        //---To Fetch----
-        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
-        [request setReturnsObjectsAsFaults:NO];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
-            NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from UserMenu MO  results %@",results);
+//        NSLog(@"Before Fetch UserMenu");
+//        //---To Fetch----
+//        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
+//        [request setReturnsObjectsAsFaults:NO];
+//        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+//        if (!results) {
+//            NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
+//        }
+//        
+//        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
+//        
+//        NSLog(@"Return values from UserMenu MO  results %@",results);
         //MST_UserMenuMO *userMenuMO=(MST_UserMenuMO *)results[0];
         
        // NSLog(@"Return values from MO UserMenuMO desc value %@\n%@",userMenuMO.menuID, userMenuMO.desc);
@@ -2549,14 +2737,14 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         NSLog(@"Login Before Fetch UserAudit");
         //---To Fetch----
         NSFetchRequest *requestUserAudit= [NSFetchRequest fetchRequestWithEntityName:@"UserAudit"];
-        [requestUserAudit setReturnsObjectsAsFaults:NO];
+        //[requestUserAudit setReturnsObjectsAsFaults:NO];
         NSError *error = nil;
         NSArray *resultsUserAuditData = [managedObjectContext executeFetchRequest:requestUserAudit error:&error];
         if (!resultsUserAuditData) {
             NSLog(@"Error fetching UserAudit objects parseResponseUserAudit: %@\n%@", [error localizedDescription], [error userInfo]);
         }
         
-        NSLog(@"Return values from UserAudit MO  results %@",resultsUserAuditData);
+        //NSLog(@"Return values from UserAudit MO  results %@",resultsUserAuditData);
         
         //UserAuditMO *userAuditMO;
         
@@ -2591,16 +2779,21 @@ static inline NSString* emptyStringIfNil(NSString *value) {
                     //NSLog(@"valid user :%@",users.validUser);
                     
                     
-                    
-                    
-                    
                 });//dispatch end
                 
                 
             }]; //ConnectHost End
             
         }
+
+        NSLog(@"Delete UserAudit");
         
+        //---To Delete----
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"UserAudit"];
+        NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+        NSError *deleteError = nil;
+        [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
+
         
     }
     @catch (NSException *exception) {
@@ -2634,7 +2827,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         
         //---To Fetch----
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Survey"];
-        [request setReturnsObjectsAsFaults:NO];
+        //[request setReturnsObjectsAsFaults:NO];
         NSError *error=nil;
         [request setPredicate:[NSPredicate predicateWithFormat:@"sync == %@", @"N"]];
         
@@ -2646,6 +2839,8 @@ static inline NSString* emptyStringIfNil(NSString *value) {
         NSLog(@"buildJSONSaveSurveyData results %@",resultsSurveyData);
         
         SurveyMO *surveyMO;
+               
+        NSMutableArray *jsonMutableArray=nil;
         
         if([resultsSurveyData count]>0)
         {
@@ -2653,7 +2848,7 @@ static inline NSString* emptyStringIfNil(NSString *value) {
             {
                 
                 surveyMO=(SurveyMO *)resultsSurveyData[i];
-                NSLog(@" SaveSurveyData surveyMO   %@\n%@\n%@",surveyMO.eventID,surveyMO.surveyData,surveyMO.sync);
+                NSLog(@" SaveSurveyData surveyMO   %@\n%@\n%@\n%@\n%@\n%@\n%@\n%@\n%@",surveyMO.eventID,surveyMO.surveyData,surveyMO.sync,surveyMO.instituteID,surveyMO.surveyorID,surveyMO.surveyDateTime,surveyMO.eventName,surveyMO.surveyorName,surveyMO.instituteName);
                 
                 
                 
@@ -2666,15 +2861,15 @@ static inline NSString* emptyStringIfNil(NSString *value) {
                 //         NSLog(@"Return values from SaveSurveyData surveyDataDictionary  results %@",surveyDataDictionary);
                 //-------
                 jsonDictionary= @{
-                                  @"eventID":surveyMO.eventID,
-                                  @"instituteID":surveyMO.instituteID,//@"INS002",
-                                  @"surveyData": surveyMO.surveyData, //@"Lee|West Godavari|29/06/2016|MultiText|Ram|Male",
-                                  @"sync":surveyMO.sync, //@"N"
-                                  @"surveyorID":surveyMO.surveyorID,
-                                  @"surveyDateTime":surveyMO.surveyDateTime,
-                                  @"eventName":surveyMO.eventName,
-                                  @"surveyorName":surveyMO.surveyorName,
-                                  @"instituteName":surveyMO.instituteName,
+                                  @"eventID": emptyStringIfNil(surveyMO.eventID),
+                                  @"instituteID":emptyStringIfNil(surveyMO.instituteID),//@"INS002",
+                                  @"surveyData": emptyStringIfNil(surveyMO.surveyData), //@"Lee|West Godavari|29/06/2016|MultiText|Ram|Male",
+                                  @"sync":emptyStringIfNil(surveyMO.sync), //@"N"
+                                  @"surveyorID":emptyStringIfNil(surveyMO.surveyorID),
+                                  @"surveyDateTime":emptyStringIfNil(surveyMO.surveyDateTime),
+                                  @"eventName":emptyStringIfNil(surveyMO.eventName),
+                                  @"surveyorName":emptyStringIfNil(surveyMO.surveyorName),
+                                  @"instituteName":emptyStringIfNil(surveyMO.instituteName),
                                 
                                   };
                 
@@ -2684,24 +2879,38 @@ static inline NSString* emptyStringIfNil(NSString *value) {
                 //jsonDictionary=[NSDictionary dictionaryWithObject:resultsSurveyData forKey:resultsSurveyData];
                 
                 //NSString *jsonString = [container JSONRepresentation];
-                
-                NSMutableArray *jsonMutableArray=nil;
-                
-                
-                
                 //Connect Host Start
-                [CommonUtils connectHost :@"insertSurveyData" :jsonDictionary:self:@"N":jsonMutableArray:nil: ^(NSDictionary *dictionary){
+                [CommonUtils connectHost :@"insertSurveyDeviceData" :jsonDictionary:self:@"N":jsonMutableArray:nil: ^(NSDictionary *dictionary){
                     
                     
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        //[self parseResponseSurveyData:dictionary:@"insertSurveyData":@"surveyWrapper"];
+                    
+                        [self parseResponseSurveyData:dictionary:@"insertSurveyDeviceData":@"surveyDeviceDataWrapper"];
                         
-                        //NSLog(@"valid user :%@",users.validUser);
+                        //---To Update sync status in ipad----
+
+                        if([surveyDataArray count]>0)
+                        {
+                            surveyData = [surveyDataArray objectAtIndex:0];
+                         
+                            if([surveyData.sync isEqualToString:@"Y"])
+                            {
+                                
+                                    surveyMO.sync=@"Y";
+                                    NSLog(@"surveymo sync %@",surveyMO.sync);
+                                
+                                    NSError *error = nil;
+                                    if ([managedObjectContext save:&error] == NO) {
+                                        NSAssert(NO, @"Error saving context parseResponseEvent: %@\n%@", [error localizedDescription], [error userInfo]);
+                                    }
+                            
+                            
+                            }
                         
-                        
-                        
-                        
+                        }
+
+
                         
                     });//dispatch end
                     
@@ -2733,77 +2942,21 @@ static inline NSString* emptyStringIfNil(NSString *value) {
     @try {
         
         // Create a new array to hold the locations
-        NSMutableArray *userMenuDataArray = [[NSMutableArray alloc] init];
-        UserMenuData *userMenuData=nil;
-        
+        surveyDataArray = [[NSMutableArray alloc] init];
+
         
         NSArray *array = [dataDictionary objectForKey:dataFile];
         // Iterate through the array of dictionaries
         for(NSDictionary *dict in array) {
             
-            userMenuData = [[UserMenuData alloc] initWithJSONDictionary:dict];
+            surveyData = [[SurveyData alloc] initWithJSONDictionary:dict];
             
             //NSLog(@" eventData Code %@",eventData.code);
             
-            [userMenuDataArray addObject:userMenuData];
+            [surveyDataArray addObject:surveyData];
         }
         
-        NSLog(@"UserMenu data count %lu",(unsigned long)userMenuDataArray.count);
-        
-        NSLog(@"UserMenu Before Delete");
-        
-        //---To Delete----
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"MST_UserMenu"];
-        NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
-        
-        NSError *deleteError = nil;
-        [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
-        
-        NSLog(@"Before Insert UserMenu");
-        
-        //---To Insert----
-        
-        for (int i=0; i<=userMenuDataArray.count-1; i++) {
-            
-            MST_UserMenuMO *userMenuMO = (MST_UserMenuMO *)[NSEntityDescription insertNewObjectForEntityForName:@"MST_UserMenu" inManagedObjectContext:managedObjectContext];
-            
-            userMenuData = [userMenuDataArray objectAtIndex:i];
-            
-            userMenuMO.userid=userMenuData.userid;
-            userMenuMO.desc=userMenuData.desc;
-            userMenuMO.menuID=userMenuData.menuID;
-            userMenuMO.assignFlag=userMenuData.assignFlag;
-            userMenuMO.menuIDValue=userMenuData.menuIDValue;
-            
-            
-            
-            //NSLog(@"Results %@",eventMO.desc);
-            
-        }
-        
-        NSError *error = nil;
-        if ([managedObjectContext save:&error] == NO) {
-            NSAssert(NO, @"Error saving context parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        
-        
-        NSLog(@"Before Fetch UserMenu");
-        //---To Fetch----
-        NSFetchRequest *request= [NSFetchRequest fetchRequestWithEntityName:@"MST_UserMenu"];
-        [request setReturnsObjectsAsFaults:NO];
-        NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-        if (!results) {
-            NSLog(@"Error fetching UserMenu objects parseResponseUserMenu: %@\n%@", [error localizedDescription], [error userInfo]);
-        }
-        
-        //MST_EventMO *eventDataMO=(MST_EventMO *)results[0];
-        
-        NSLog(@"Return values from UserMenu MO  results %@",results);
-        //MST_UserMenuMO *userMenuMO=(MST_UserMenuMO *)results[0];
-        
-        // NSLog(@"Return values from MO UserMenuMO desc value %@\n%@",userMenuMO.menuID, userMenuMO.desc);
-        
+        NSLog(@"Survey data count %lu",(unsigned long)surveyDataArray.count);
         
         
     }

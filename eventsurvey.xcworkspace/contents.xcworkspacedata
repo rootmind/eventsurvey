@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:eventsurvey/Classes/UsersMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/UsersMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/UserAuditMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/UserAuditMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/SurveyMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/SurveyMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_UserMenuMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_UserMenuMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_ListMasterMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_ListMasterMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/EventTemplateMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/EventTemplateMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_EventMO+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey/Classes/MST_EventMO+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
+      location = "group:eventsurvey.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>

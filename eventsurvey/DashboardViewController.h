@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "DashboardData.h"
-#import "DataSyncViewController.h"
+//#import "DataSyncViewController.h"
 
 
 @interface DashboardViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,UISplitViewControllerDelegate>

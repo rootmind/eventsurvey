@@ -41,8 +41,12 @@
             //hostServerURL=@"http://192.168.1.37:8083";
               //hostServerURL=@"http://192.168.1.38:8086";
         
+        hostServerURL=@"http://mobileapps.kustar.ac.ae:7089/EventSurveyWeb/EventSurvey";
         //hostServerURL=@"http://rootmindtech.ddns.net:8086";
-        hostServerURL=@"http://192.168.1.110:8084/EventSurveyWeb/EventSurvey";
+        //hostServerURL=@"http://192.168.1.110:8084/EventSurveyWeb/EventSurvey";
+        //hostServerURL=@"http://rootmindtech.ddns.net:8084/EventSurveyWeb/EventSurvey";
+        //hostServerURL=@"https://rootmindtech.ddns.net/EventSurveyWeb/EventSurvey";
+        
         
         //hostServerURL=@"http://59.93.127.81:8082";
         //hostServerURL=@"http://192.168.2.10:8083";

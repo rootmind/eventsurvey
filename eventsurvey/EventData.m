@@ -27,6 +27,9 @@
         _userid = [jsonDictionary objectForKey:@"userid"];
         _instituteID = [jsonDictionary objectForKey:@"instituteID"];
         _instituteName = [jsonDictionary objectForKey:@"instituteName"];
+        _image = [jsonDictionary objectForKey:@"image"];
+        _imageFound = [jsonDictionary objectForKey:@"imageFound"];
+        _avatarImageFound = [jsonDictionary objectForKey:@"avatarImageFound"];
         _recordFound = [jsonDictionary objectForKey:@"recordFound"];
         
     }

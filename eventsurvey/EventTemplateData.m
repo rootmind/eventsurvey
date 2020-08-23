@@ -29,6 +29,8 @@
        _fieldName = [jsonDictionary objectForKey:@"fieldName"];
        _status = [jsonDictionary objectForKey:@"status"];
        _listTableName = [jsonDictionary objectForKey:@"listTableName"];
+       _maxLength = [jsonDictionary objectForKey:@"maxLength"];
+       _pageNo = [jsonDictionary objectForKey:@"pageNo"];
        _makerID = [jsonDictionary objectForKey:@"makerID"];
        _makerDateTime = [jsonDictionary objectForKey:@"makerDateTime"];
        _modifierID = [jsonDictionary objectForKey:@"modifierID"];

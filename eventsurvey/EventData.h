@@ -26,6 +26,9 @@
 @property (readonly) NSString *userid;
 @property (readonly) NSString *instituteID;
 @property (readonly) NSString *instituteName;
+@property (readonly) NSString *image;
+@property (readonly) NSString *imageFound;
+@property (readonly) NSString *avatarImageFound;
 @property (readonly) NSString *recordFound;
 
 @end

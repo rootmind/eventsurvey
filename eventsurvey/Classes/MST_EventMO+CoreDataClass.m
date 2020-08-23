@@ -27,5 +27,10 @@
 @dynamic desc;
 @dynamic code;
 @dynamic expiryDate1;
+@dynamic dtStartDate;
+@dynamic dtExpiryDate;
+@dynamic image;
+@dynamic imageFound;
+@dynamic avatarImageFound;
 
 @end

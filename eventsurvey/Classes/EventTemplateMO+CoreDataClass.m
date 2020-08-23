@@ -20,6 +20,8 @@
 @dynamic fieldName;
 @dynamic status;
 @dynamic listTableName;
+@dynamic maxLength;
+@dynamic pageNo;
 @dynamic makerID;
 @dynamic makerDateTime;
 @dynamic modifierID;

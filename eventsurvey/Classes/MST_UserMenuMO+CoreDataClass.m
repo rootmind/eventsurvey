@@ -10,4 +10,16 @@
 
 @implementation MST_UserMenuMO
 
+
++ (NSFetchRequest<MST_UserMenuMO *> *)fetchRequest {
+	return [[NSFetchRequest alloc] initWithEntityName:@"MST_UserMenu"];
+}
+
+@dynamic assignFlag;
+@dynamic desc;
+@dynamic menuID;
+@dynamic menuIDValue;
+@dynamic userid;
+
+
 @end

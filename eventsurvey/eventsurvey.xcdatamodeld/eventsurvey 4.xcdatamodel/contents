@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="MST_Event" representedClassName="MST_EventMO" syncable="YES">
+        <attribute name="avatarImageFound" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dtExpiryDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dtStartDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="expiryDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="expiryDate1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imageFound" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instituteID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instituteName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="makerDateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -16,7 +21,7 @@
         <attribute name="tableName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="MST_EventTemplate" syncable="YES">
+    <entity name="MST_EventTemplate" representedClassName="EventTemplateMO" syncable="YES">
         <attribute name="component" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventRefNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,26 +31,28 @@
         <attribute name="makerDateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="makerID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mandatory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxLength" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modifierDateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modifierID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pageNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seqNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="viewOrder" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="MST_ListMaster" syncable="YES">
+    <entity name="MST_ListMaster" representedClassName="MST_ListMasterMO" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sync" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tableName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="MST_UserMenu" syncable="YES">
+    <entity name="MST_UserMenu" representedClassName="MST_UserMenuMO" syncable="YES">
         <attribute name="assignFlag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="menuID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="menuIDValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Survey" syncable="YES">
+    <entity name="Survey" representedClassName="SurveyMO" syncable="YES">
         <attribute name="eventID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instituteID" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,11 +63,11 @@
         <attribute name="surveyorName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sync" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="UserAudit" syncable="YES">
+    <entity name="UserAudit" representedClassName="UserAuditMO" syncable="YES">
         <attribute name="loginDateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Users" syncable="YES">
+    <entity name="Users" representedClassName="UsersMO" syncable="YES">
         <attribute name="lastLoginDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -72,8 +79,8 @@
     <fetchRequest name="FetchRequest" entity="MST_Event"/>
     <configuration name="Configuration"/>
     <elements>
-        <element name="MST_Event" positionX="-63" positionY="-18" width="128" height="255"/>
-        <element name="MST_EventTemplate" positionX="-63" positionY="90" width="128" height="255"/>
+        <element name="MST_Event" positionX="-63" positionY="-18" width="128" height="330"/>
+        <element name="MST_EventTemplate" positionX="-63" positionY="90" width="128" height="285"/>
         <element name="MST_ListMaster" positionX="-54" positionY="144" width="128" height="105"/>
         <element name="MST_UserMenu" positionX="-36" positionY="153" width="128" height="120"/>
         <element name="Survey" positionX="-18" positionY="162" width="128" height="180"/>

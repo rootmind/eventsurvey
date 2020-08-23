@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *fieldName;
 @property (nullable, nonatomic, retain) NSString *status;
 @property (nullable, nonatomic, retain) NSString *listTableName;
+@property (nullable, nonatomic, retain) NSString *maxLength;
+@property (nullable, nonatomic, retain) NSString *pageNo;
 @property (nullable, nonatomic, retain) NSString *makerID;
 @property (nullable, nonatomic, retain) NSDate *makerDateTime;
 @property (nullable, nonatomic, retain) NSString *modifierID;

@@ -19,7 +19,7 @@
 //@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 
-@property (nonatomic, retain) UITabBarController *tabBar;
+//@property (nonatomic, retain) UITabBarController *tabBar;
 //@property (nonatomic, retain) UITabBarController *detailTabBar;
 
 //
