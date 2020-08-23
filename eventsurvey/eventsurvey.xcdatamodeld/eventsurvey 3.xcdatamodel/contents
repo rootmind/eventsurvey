@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G1004" minimumToolsVersion="Automatic">
+    <entity name="MST_Event" representedClassName="MST_EventMO" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expiryDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="makerDateTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="makerID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifierDateTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifierID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tableName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <fetchRequest name="FetchRequest" entity="MST_Event"/>
+    <configuration name="Configuration"/>
+    <elements>
+        <element name="MST_Event" positionX="-63" positionY="-18" width="128" height="180"/>
+    </elements>
+</model>
